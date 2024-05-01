@@ -1,5 +1,6 @@
 package net.abraxator.moresnifferflowers.blocks;
 
+import net.minecraft.state.property.*;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -15,10 +16,6 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.DirectionProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.BlockMirror;
 import net.minecraft.util.DyeColor;
@@ -139,6 +136,11 @@ public class CaulorflowerBlock extends Block implements Fertilizable, ModCropBlo
     @Override
     public BlockState mirror(BlockState pState, BlockMirror pMirror) {
         return pState.rotate(pMirror.getRotation(pState.get(FACING)));
+    }
+
+    @Override
+    public IntProperty getAgeProperty() {
+        return null;
     }
 
 //    @Override

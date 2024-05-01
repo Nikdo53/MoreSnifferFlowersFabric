@@ -51,7 +51,7 @@ public class DawnberryVineBlock extends MultifaceGrowthBlock implements Fertiliz
         pBuilder.add(AGE, IS_SHEARED);
     }
 
-    protected IntProperty getAgeProperty() {
+    public IntProperty getAgeProperty() {
         return AGE;
     }
 
@@ -131,10 +131,6 @@ public class DawnberryVineBlock extends MultifaceGrowthBlock implements Fertiliz
 
     @Override
     public void randomTick(BlockState pState, ServerWorld pLevel, BlockPos pPos, Random pRandom) {
-        var grow = canCropGrow(this, pLevel, pPos, pState.get(AGE), getMaxAge());
-        if(grow.getLeft()) {
-            pLevel.setBlockState(pPos, pState.with(AGE, grow.getRight() + 1));
-        }
     }
 
     @Override

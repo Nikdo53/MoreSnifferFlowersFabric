@@ -20,7 +20,7 @@ public class ModItems {
     public static final Item DAWNBERRY_VINE_SEEDS = registerItem( "dawnberry_vine_seeds", new AliasedBlockItem(ModBlocks.DAWNBERRY_VINE, new FabricItemSettings()));
     public static final Item DAWNBERRY = registerItem("dawnberry", new Item(new FabricItemSettings().food(new FoodComponent.Builder().hunger(4).saturationModifier(0.6F).snack().build())));
 
-    public static final Item AMBUSH_SEEDS = registerItem("ambush_seeds", new AliasedBlockItem(ModBlocks.AMBUSH, new FabricItemSettings()));
+    public static final Item AMBUSH_SEEDS = registerItem("ambush_seeds", new AliasedBlockItem(ModBlocks.AMBUSH_BOTTOM, new FabricItemSettings()));
 //    public static final Item AMBUSH_BANNER_PATTERN = registerItem("ambush_banner_pattern", new BannerPatternItem(ModTags.ModBannerPatternTags.AMBUSH_BANNER_PATTERN, new FabricItemSettings().maxCount(1)));
     public static final Item AMBER_SHARD = registerItem("amber_shard", new Item(new FabricItemSettings()));
 //        @Override
