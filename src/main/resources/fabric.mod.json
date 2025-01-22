@@ -2,10 +2,10 @@
 	"schemaVersion": 1,
 	"id": "moresnifferflowers",
 	"version": "${version}",
-	"name": "More Sniffer Flowers",
-	"description": "Sniffer Flowers, but there's More of them and they actually do something",
+	"name": "MoreSnifferFlowers",
+	"description": "This is an example description! Tell everyone what your mod is about!",
 	"authors": [
-		"Nikdo53, Abraxator"
+		"Nikdo53"
 	],
 	"contact": {
 		"homepage": "https://fabricmc.net/",
@@ -16,23 +16,23 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"net.abraxator.moresnifferflowers.MoreSnifferFlowers"
-		],
-		"client": [
-			"net.abraxator.moresnifferflowers.MoreSnifferFlowersClient"
+			"net.nikdo53.moresnifferflowers.MoreSnifferFlowers"
 		],
 		"fabric-datagen": [
-			"net.abraxator.moresnifferflowers.MoreSnifferFlowersDataGenerator"
+			"net.nikdo53.moresnifferflowers.MoreSnifferFlowersDataGenerator"
+		],
+		"client":[
+			"net.nikdo53.moresnifferflowers.MoreSnifferFlowersClient"
 		]
 	},
 	"mixins": [
-		"moresnifferflowers.fabric.mixins.json"
+		"moresnifferflowers.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.15.9",
-		"minecraft": "~1.20.4",
-		"java": ">=17",
-		"fabric-api": "0.96.0+1.20.4"
+		"fabricloader": ">=0.16.10",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*"
 	},
 	"suggests": {
 		"another-mod": "*"
