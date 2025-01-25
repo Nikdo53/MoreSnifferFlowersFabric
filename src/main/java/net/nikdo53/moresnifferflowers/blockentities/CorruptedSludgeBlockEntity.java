@@ -1,11 +1,14 @@
 package net.nikdo53.moresnifferflowers.blockentities;
 
+import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.server.level.ServerPlayer;
 import net.nikdo53.moresnifferflowers.entities.CorruptedProjectile;
 import net.nikdo53.moresnifferflowers.init.ModBlockEntities;
 import net.nikdo53.moresnifferflowers.init.ModBlocks;
 import net.nikdo53.moresnifferflowers.init.ModStateProperties;
 import net.nikdo53.moresnifferflowers.init.ModTags;
-import net.nikdo53.moresnifferflowers.networking.CorruptedSludgePacket;
 import net.nikdo53.moresnifferflowers.networking.ModPacketHandler;
 import net.nikdo53.moresnifferflowers.recipes.CorruptionRecipe;
 import net.minecraft.client.Minecraft;
@@ -110,7 +113,10 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
                 Optional<Block> corrupted = CorruptionRecipe.getCorruptedBlock(pContext.affectedState().getBlock(), pLevel);
                 BlockPos blockPos = BlockPos.containing(pPos);
                 corrupted.ifPresent(block -> {
-                    ModPacketHandler.CHANNEL.send(PacketDistributor.ALL.noArg(), new CorruptedSludgePacket(startPos.toVector3f(), pPos.toVector3f(), dirNormal.toVector3f()));
+                    FriendlyByteBuf buf = PacketByteBufs.create();
+                    buf.writeVector3f(dirNormal.toVector3f());
+
+                    ServerPlayNetworking.send((ServerPlayer) p, ModPacketHandler.CORRUPTED_SLUDGE_PACKET_ID, PacketByteBufs.(startPos.toVector3f(), pPos.toVector3f(), dirNormal.toVector3f()));
                     if(pLevel.getBlockState(BlockPos.containing(pPos)).getBlock() instanceof net.nikdo53.moresnifferflowers.blocks.Corruptable corruptable) {
                         corruptable.onCorrupt(pLevel, blockPos, pLevel.getBlockState(BlockPos.containing(pPos)), block);
                     } else {

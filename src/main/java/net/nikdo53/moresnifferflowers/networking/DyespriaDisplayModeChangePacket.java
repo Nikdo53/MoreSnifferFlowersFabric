@@ -1,7 +1,7 @@
 package net.nikdo53.moresnifferflowers.networking;
 
-import net.abraxator.moresnifferflowers.components.DyespriaMode;
-import net.abraxator.moresnifferflowers.items.DyespriaItem;
+import net.nikdo53.moresnifferflowers.components.DyespriaMode;
+import net.nikdo53.moresnifferflowers.items.DyespriaItem;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.DistExecutor;

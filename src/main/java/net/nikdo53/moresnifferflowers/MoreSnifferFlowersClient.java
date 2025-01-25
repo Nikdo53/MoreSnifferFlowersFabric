@@ -1,12 +1,9 @@
 package net.nikdo53.moresnifferflowers;
 
-import io.github.fabricators_of_create.porting_lib.event.common.AddPackFindersEvent;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.BlockEntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.ChestBoatModel;
 import net.minecraft.client.renderer.Sheets;
@@ -14,14 +11,8 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.packs.PackType;
-import net.minecraft.server.packs.PathPackResources;
-import net.minecraft.server.packs.repository.Pack;
-import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.nikdo53.moresnifferflowers.client.ModColorHandler;
-import net.nikdo53.moresnifferflowers.client.gui.screen.RebrewingStandScreen;
 import net.nikdo53.moresnifferflowers.client.model.ModModelLayerLocations;
 import net.nikdo53.moresnifferflowers.client.model.block.BondripiaModel;
 import net.nikdo53.moresnifferflowers.client.model.block.CropressorModel;
@@ -39,13 +30,13 @@ import net.nikdo53.moresnifferflowers.client.renderer.entity.CorruptedProjectile
 import net.nikdo53.moresnifferflowers.client.renderer.entity.DragonflyRenderer;
 import net.nikdo53.moresnifferflowers.client.renderer.entity.ModBoatRenderer;
 import net.nikdo53.moresnifferflowers.init.*;
-import net.nikdo53.moresnifferflowers.networking.ModNetworkingConstants;
+import net.nikdo53.moresnifferflowers.networking.ModPacketHandler;
 
 public class MoreSnifferFlowersClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        ModNetworkingConstants.registerS2CPackets();
+        ModPacketHandler.registerS2CPackets();
         ModColorHandler.onRegisterBlockColorHandlers();
         ModColorHandler.onRegisterBlockColorHandlers();
         ModItemProperties.register();
