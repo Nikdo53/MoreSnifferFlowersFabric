@@ -13,6 +13,29 @@ import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.nikdo53.moresnifferflowers.MoreSnifferFlowers;
+import net.nikdo53.moresnifferflowers.blocks.BoblingHeadBlock;
+import net.nikdo53.moresnifferflowers.blocks.DawnberryVineBlock;
+import net.nikdo53.moresnifferflowers.blocks.*;
+import net.nikdo53.moresnifferflowers.blocks.corrupted.CorruptedGrassBlock;
+import net.nikdo53.moresnifferflowers.blocks.corrupted.CorruptedLeavesBlock;
+import net.nikdo53.moresnifferflowers.blocks.corrupted.CorruptedSlimeLayerBlock;
+import net.nikdo53.moresnifferflowers.blocks.corrupted.CorruptedSludgeBlock;
+import net.nikdo53.moresnifferflowers.blocks.cropressor.CropressorBlockBase;
+import net.nikdo53.moresnifferflowers.blocks.cropressor.CropressorBlockOut;
+import net.nikdo53.moresnifferflowers.blocks.giantcrops.GiantCropBlock;
+import net.nikdo53.moresnifferflowers.blocks.rebrewingstand.RebrewingStandBlockBase;
+import net.nikdo53.moresnifferflowers.blocks.rebrewingstand.RebrewingStandBlockTop;
+import net.nikdo53.moresnifferflowers.blocks.signs.ModHangingSignBlock;
+import net.nikdo53.moresnifferflowers.blocks.signs.ModStandingSignBlock;
+import net.nikdo53.moresnifferflowers.blocks.signs.ModWallHangingSign;
+import net.nikdo53.moresnifferflowers.blocks.signs.ModWallSignBlock;
+import net.nikdo53.moresnifferflowers.blocks.vivicus.*;
+import net.nikdo53.moresnifferflowers.blocks.xbush.AmbushBlockLower;
+import net.nikdo53.moresnifferflowers.blocks.xbush.AmbushBlockUpper;
+import net.nikdo53.moresnifferflowers.blocks.xbush.GarbushBlockLower;
+import net.nikdo53.moresnifferflowers.blocks.xbush.GarbushBlockUpper;
+import net.nikdo53.moresnifferflowers.items.GiantCropItem;
+import net.nikdo53.moresnifferflowers.worldgen.configurations.tree.corrupted.CorruptedTreeGrower;
 
 import java.util.function.Supplier;
 
@@ -120,9 +143,10 @@ public class ModBlocks {
     public static final RegistryObject<Block> BOBLING_HEAD = registerBlockNoItem("bobling_head", () -> new BoblingHeadBlock(BlockBehaviour.Properties.copy(Blocks.MOSS_BLOCK).noOcclusion()));
     public static final RegistryObject<Block> BOBLING_SACK = registerBlockNoItem("bobling_sack", () -> new BoblingSackBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_LEAVES)));
 
-    public static final RegistryObject<Block> POTTED_DYESPRIA = registerBlockNoItem("potted_dyespria", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, DYESPRIA_PLANT, BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)));
+  /*  public static final RegistryObject<Block> POTTED_DYESPRIA = registerBlockNoItem("potted_dyespria", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, DYESPRIA_PLANT, BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)));
     public static final RegistryObject<Block> POTTED_CORRUPTED_SAPLING = registerBlockNoItem("potted_corrupted_sapling", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, CORRUPTED_SAPLING, BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)));
     public static final RegistryObject<Block> POTTED_VIVICUS_SAPLING = registerBlockNoItem("potted_vivicus_sapling", () -> new FlowerPotBlock(() -> (FlowerPotBlock) Blocks.FLOWER_POT, VIVICUS_SAPLING, BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)));
+   */
 
 
     private static <T extends Block> RegistryObject<T> registerBlockNoItem(String name, Supplier<T> block) {
@@ -144,6 +168,14 @@ public class ModBlocks {
     private static <T extends Block> RegistryObject<Item> registerGiantCropItem(String name, RegistryObject<T> block) {
         return ModItems.ITEMS.register(name, () -> new GiantCropItem(block.get(),
                 new Item.Properties()));
+    }
+
+    public static Block vivicusStair(Block pBaseBlock) {
+        return new VivicusStairBlock(pBaseBlock.defaultBlockState(), BlockBehaviour.Properties.copy(pBaseBlock));
+    }
+
+    public static Block stair(Block pBaseBlock) {
+        return new StairBlock(pBaseBlock.defaultBlockState(), BlockBehaviour.Properties.copy(pBaseBlock));
     }
 
 }
