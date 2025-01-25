@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataProvider;
-import net.nikdo53.moresnifferflowers.data.loot.ModBlockLoottableProvider;
+import net.nikdo53.moresnifferflowers.data.loot.ModLootGenerator;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -16,7 +16,7 @@ public class MoreSnifferFlowersDataGenerator implements DataGeneratorEntrypoint 
 	public void onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
 		FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 
-		// pack.addProvider(ModBlockLoottableProvider::new);
-	}
+		 pack.addProvider(ModLootGenerator::new);
 
+	}
 }

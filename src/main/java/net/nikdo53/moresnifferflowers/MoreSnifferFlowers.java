@@ -15,9 +15,8 @@ public class MoreSnifferFlowers implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		ModItems.ITEMS.register();
 		ModBlocks.BLOCKS.register();
-
+		ModItems.ITEMS.register();
 	}
 
 	public static ResourceLocation loc(String path) {
