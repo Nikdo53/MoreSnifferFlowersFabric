@@ -3,9 +3,12 @@ package net.nikdo53.moresnifferflowers.networking;
 import me.pepperbell.simplenetworking.S2CPacket;
 import me.pepperbell.simplenetworking.SimpleChannel;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 import net.nikdo53.moresnifferflowers.components.DyespriaMode;
 import net.nikdo53.moresnifferflowers.items.DyespriaItem;
 import net.minecraft.network.FriendlyByteBuf;
@@ -29,8 +32,10 @@ public record DyespriaDisplayModeChangePacket(int dyespriaModeId) implements S2C
     public static class Handler {
 
         public static boolean onMessage(DyespriaDisplayModeChangePacket message, Executor ctx) {
-           // ctx.execute(() ->
-                  //  ServerPlayer.displayClientMessage(DyespriaItem.getCurrentModeComponent(DyespriaMode.byIndex(message.dyespriaModeId)), true);
+            ctx.execute(() ->
+            {
+               // Player.displayClientMessage(DyespriaItem.getCurrentModeComponent(DyespriaMode.byIndex(message.dyespriaModeId)), true);
+            });
             return true;
         }
     }
