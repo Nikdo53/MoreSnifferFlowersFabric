@@ -1,6 +1,7 @@
 {
 	"gui_light": "front",
 	"ambientocclusion": false,
+ 	"render_type": "cutout",
 	"display": {
         "ground": {
             "rotation": [ 0, 0, 0 ],
@@ -24,7 +25,6 @@
         }
       },
 	"porting_lib:loader": "porting_lib:obj",
-	"render_type": "cutout",
 	"flip-v": true,
 	"model": "moresnifferflowers:models/block/obj/dyescrapia_plant_r.obj",
 	"textures": {

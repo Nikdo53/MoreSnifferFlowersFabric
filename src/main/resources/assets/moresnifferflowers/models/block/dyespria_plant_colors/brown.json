@@ -1,5 +1,5 @@
 {
-  "parent": "moresnifferflowers:block/dyespria_plant_stage3",
+  "parent": "moresnifferflowers:misc/dyespria_plant_stage3",
 	"textures": {
 		"texture0": "moresnifferflowers:block/obj/dyespria_plant_0_brown",
 		"particle": "moresnifferflowers:block/obj/dyespria_plant_0_brown",

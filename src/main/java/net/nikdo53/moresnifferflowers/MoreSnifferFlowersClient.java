@@ -1,16 +1,19 @@
 package net.nikdo53.moresnifferflowers;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.ChestBoatModel;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.Sheets;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.nikdo53.moresnifferflowers.client.ModColorHandler;
 import net.nikdo53.moresnifferflowers.client.model.ModModelLayerLocations;
@@ -37,12 +40,34 @@ public class MoreSnifferFlowersClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ModColorHandler.onRegisterBlockColorHandlers();
-        ModColorHandler.onRegisterBlockColorHandlers();
+        ModColorHandler.onRegisterItemColorHandlers();
         ModItemProperties.register();
         ModMenuTypes.renderScreens();
         onRegisterEntityRenderers();
         onRegisterBlockEntityRenderer();
         onRegisterParticles();
+        onEntityRenderersRegisterLayerDefinitions();
+        registerWoodTypes(ModWoodTypes.CORRUPTED);
+        registerWoodTypes(ModWoodTypes.VIVICUS);
+        registerRenderTypes();
+
+    }
+
+    private static void registerRenderTypes() {
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.DYESPRIA_PLANT.get(), RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.DYESCRAPIA_PLANT.get(), RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.GLOOMBERRY_VINE.get(), RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.REBREWING_STAND_BOTTOM.get(), RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.REBREWING_STAND_TOP.get(), RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.CROPRESSOR_CENTER.get(), RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.GIANT_BEETROOT.get(), RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.GIANT_CARROT.get(), RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.GIANT_NETHERWART.get(), RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.GIANT_POTATO.get(), RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.GIANT_WHEAT.get(), RenderType.cutout());
+
+
+
     }
 
     public static void registerWoodTypes(WoodType woodType) {
@@ -92,6 +117,8 @@ public class MoreSnifferFlowersClient implements ClientModInitializer {
         BlockEntityRenderers.register(ModBlockEntities.MOD_HANGING_SIGN.get(), HangingSignRenderer::new);
         BlockEntityRenderers.register(ModBlockEntities.VIVICUS_HANGING_SIGN.get(), VivicusHangingSignRenderer::new);
         BlockEntityRenderers.register(ModBlockEntities.BONDRIPIA.get(), BondripiaBlockEntityRenderer::new);
+
+
     }
 
     public static void onRegisterParticles() {

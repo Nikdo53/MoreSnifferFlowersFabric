@@ -15,6 +15,11 @@ public class ModRecipeTypes {
    // public static final RegistryObject<RecipeType<CorruptionRecipe>> CORRUPTION = register("corruption");
 
     static <T extends Recipe<?>> RegistryObject<RecipeType<T>> register(final String id) {
-        return RECIPE_TYPES.register(id, () -> RecipeType.register(MoreSnifferFlowers.MOD_ID));
+        return RECIPE_TYPES.register(id, () -> new RecipeType<>() {
+            @Override
+            public String toString() {
+                return MoreSnifferFlowers.MOD_ID + ":" + id;
+            }
+        });
     }
 }

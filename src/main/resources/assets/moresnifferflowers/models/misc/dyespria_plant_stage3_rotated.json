@@ -1,6 +1,7 @@
 {
 	"gui_light": "front",
 	"ambientocclusion": false,
+ 	"render_type": "cutout",
 	"display": {
         "ground": {
             "rotation": [ 0, 0, 0 ],
@@ -24,13 +25,12 @@
         }
       },
 	"porting_lib:loader": "porting_lib:obj",
-	"render_type": "cutout",
 	"flip-v": true,
-	"model": "moresnifferflowers:models/block/obj/dyescrapia_plant_r.obj",
+	"model": "moresnifferflowers:models/block/obj/dyespria_plant_thick_rotated.obj",
 	"textures": {
-		"texture0": "moresnifferflowers:block/obj/dyescrapia_plant_0",
-		"particle": "moresnifferflowers:block/obj/dyescrapia_plant_0",
-		"texture1": "moresnifferflowers:block/obj/dyescrapia_plant_1"
+		"texture0": "moresnifferflowers:block/obj/dyespria_plant_0",
+		"particle": "moresnifferflowers:block/dyespria_plant_stage2",
+		"texture1": "moresnifferflowers:block/obj/dyespria_plant_1"
 
 	}
 }

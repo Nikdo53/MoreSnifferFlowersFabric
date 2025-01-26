@@ -41,7 +41,7 @@ public interface ModCropBlock extends BonemealableBlock {
 
     default void makeGrowOnTick(Block block, BlockState blockState, Level level, BlockPos blockPos) {
         if (!isMaxAge(blockState) && level.isAreaLoaded(blockPos, 1) && level.getRawBrightness(blockPos, 0) >= 9) {
-            float f = getGrowthSpeed(blockState, level, blockPos);
+          //  float f = getGrowthSpeed(blockState, level, blockPos);
 
             level.setBlock(blockPos, blockState.setValue(getAgeProperty(), (blockState.getValue(getAgeProperty()) + 1)), 2);
 
@@ -84,14 +84,16 @@ public interface ModCropBlock extends BonemealableBlock {
             for(int j = -1; j <= 1; ++j) {
                 float f1 = 0.0F;
                 BlockState blockstate = pLevel.getBlockState(blockpos.offset(i, 0, j));
-                if (blockstate.canSustainPlant(pLevel, blockpos.offset(i, 0, j), net.minecraft.core.Direction.UP, (IPlantable) pState.getBlock())) {
+             /*   if (blockstate.canSustainPlant(pLevel, blockpos.offset(i, 0, j), net.minecraft.core.Direction.UP, (IPlantable) pState.getBlock())) {
                     f1 = 1.0F;
-               /*     if (blockstate.isFertile(pLevel, pPos.offset(i, 0, j))) {
+                    if (blockstate.isFertile(pLevel, pPos.offset(i, 0, j))) {
                         f1 = 3.0F;
                     }
 
-                */
+
                 }
+
+              */
 
                 if (i != 0 || j != 0) {
                     f1 /= 4.0F;
