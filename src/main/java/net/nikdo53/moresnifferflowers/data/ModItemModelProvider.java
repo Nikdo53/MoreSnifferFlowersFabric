@@ -1,10 +1,10 @@
 package net.nikdo53.moresnifferflowers.data;
 
-import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
-import net.abraxator.moresnifferflowers.init.ModItems;
+import io.github.fabricators_of_create.porting_lib.data.ExistingFileHelper;
+import io.github.fabricators_of_create.porting_lib.models.generators.item.ItemModelProvider;
+import net.nikdo53.moresnifferflowers.MoreSnifferFlowers;
+import net.nikdo53.moresnifferflowers.init.ModItems;
 import net.minecraft.data.PackOutput;
-import net.minecraftforge.client.model.generators.ItemModelProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
 
 public class ModItemModelProvider extends ItemModelProvider {
     public ModItemModelProvider(PackOutput output, ExistingFileHelper existingFileHelper) {

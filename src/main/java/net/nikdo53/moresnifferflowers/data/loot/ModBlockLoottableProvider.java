@@ -1,10 +1,11 @@
 package net.nikdo53.moresnifferflowers.data.loot;
 
-import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
-import net.abraxator.moresnifferflowers.blocks.BonmeeliaBlock;
-import net.abraxator.moresnifferflowers.init.ModBlocks;
-import net.abraxator.moresnifferflowers.init.ModItems;
-import net.abraxator.moresnifferflowers.init.ModStateProperties;
+import io.github.fabricators_of_create.porting_lib.data.ModdedBlockLootSubProvider;
+import net.nikdo53.moresnifferflowers.MoreSnifferFlowers;
+import net.nikdo53.moresnifferflowers.blocks.BonmeeliaBlock;
+import net.nikdo53.moresnifferflowers.init.ModBlocks;
+import net.nikdo53.moresnifferflowers.init.ModItems;
+import net.nikdo53.moresnifferflowers.init.ModStateProperties;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -31,13 +32,13 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class ModBlockLoottableProvider extends BlockLootSubProvider {
+public class ModBlockLoottableProvider extends ModdedBlockLootSubProvider {
     public ModBlockLoottableProvider() {
         super(Set.of(), FeatureFlags.REGISTRY.allFlags());
     }
 
     @Override
-    protected void generate() {
+    public void generate() {
         add(ModBlocks.DAWNBERRY_VINE.get(), noDrop());
         dropSelf(ModBlocks.GLOOMBERRY_VINE.get());
 
@@ -272,9 +273,11 @@ public class ModBlockLoottableProvider extends BlockLootSubProvider {
                         )
         );
 
-        dropPottedContents(ModBlocks.POTTED_DYESPRIA.get());
+    /*    dropPottedContents(ModBlocks.POTTED_DYESPRIA.get());
         dropPottedContents(ModBlocks.POTTED_CORRUPTED_SAPLING.get());
         dropPottedContents(ModBlocks.POTTED_VIVICUS_SAPLING.get());
+
+     */
         
         dropOther(ModBlocks.CORRUPTED_SIGN.get(), ModItems.CORRUPTED_SIGN.get());
         dropOther(ModBlocks.CORRUPTED_WALL_SIGN.get(), ModItems.CORRUPTED_SIGN.get());

@@ -1,6 +1,6 @@
 package net.nikdo53.moresnifferflowers.data.loot;
 
-import net.abraxator.moresnifferflowers.init.ModBuiltinLoottables;
+import net.nikdo53.moresnifferflowers.init.ModBuiltinLoottables;
 import net.minecraft.data.loot.LootTableSubProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffects;

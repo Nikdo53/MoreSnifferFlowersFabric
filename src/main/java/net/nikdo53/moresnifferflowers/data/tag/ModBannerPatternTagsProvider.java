@@ -1,20 +1,22 @@
 package net.nikdo53.moresnifferflowers.data.tag;
 
-import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
-import net.abraxator.moresnifferflowers.init.ModBannerPatterns;
-import net.abraxator.moresnifferflowers.init.ModTags;
+import io.github.fabricators_of_create.porting_lib.data.ExistingFileHelper;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.nikdo53.moresnifferflowers.MoreSnifferFlowers;
+import net.nikdo53.moresnifferflowers.init.ModBannerPatterns;
+import net.nikdo53.moresnifferflowers.init.ModTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.world.level.block.entity.BannerPattern;
-import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
 
-public class ModBannerPatternTagsProvider extends TagsProvider<BannerPattern> {
+public class ModBannerPatternTagsProvider extends FabricTagProvider<BannerPattern> {
     public ModBannerPatternTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> provider, ExistingFileHelper helper) {
-        super(output, Registries.BANNER_PATTERN, provider, MoreSnifferFlowers.MOD_ID, helper);
+        super((FabricDataOutput) output, Registries.BANNER_PATTERN, provider);
     }
 
     @Override

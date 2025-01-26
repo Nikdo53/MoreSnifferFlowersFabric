@@ -1,15 +1,18 @@
 package net.nikdo53.moresnifferflowers.networking;
 
+import me.pepperbell.simplenetworking.S2CPacket;
+import me.pepperbell.simplenetworking.SimpleChannel;
+import net.fabricmc.fabric.api.networking.v1.PacketSender;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.multiplayer.ClientPacketListener;
+import net.minecraft.server.level.ServerPlayer;
 import net.nikdo53.moresnifferflowers.components.DyespriaMode;
 import net.nikdo53.moresnifferflowers.items.DyespriaItem;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.DistExecutor;
-import net.minecraftforge.network.NetworkEvent;
 
-import java.util.function.Supplier;
+import java.util.concurrent.Executor;
 
-public record DyespriaDisplayModeChangePacket(int dyespriaModeId) {
+public record DyespriaDisplayModeChangePacket(int dyespriaModeId) implements S2CPacket {
     public DyespriaDisplayModeChangePacket(FriendlyByteBuf buf) {
         this(buf.readByte());
     }
@@ -17,8 +20,22 @@ public record DyespriaDisplayModeChangePacket(int dyespriaModeId) {
     public void encode(FriendlyByteBuf buf) {
         buf.writeByte(dyespriaModeId());
     }
-    
-    public class Handler {
+
+    @Override
+    public void handle(Minecraft client, ClientPacketListener listener, PacketSender responseSender, SimpleChannel channel) {
+        Handler.onMessage(this, client);
+    }
+
+    public static class Handler {
+
+        public static boolean onMessage(DyespriaDisplayModeChangePacket message, Executor ctx) {
+            ctx.execute(() ->
+                    ctx..displayClientMessage(DyespriaItem.getCurrentModeComponent(DyespriaMode.byIndex(message.dyespriaModeId)), true);
+            return true;
+        }
+    }
+
+   /* public class Handler {
         public static void handle(DyespriaDisplayModeChangePacket packet, Supplier<NetworkEvent.Context> context) {
             context.get().enqueueWork(() -> {
                 DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> () -> handlePacket(packet, context));
@@ -36,4 +53,6 @@ public record DyespriaDisplayModeChangePacket(int dyespriaModeId) {
             return true;
         }   
     }
+
+    */
 }

@@ -1,28 +1,31 @@
 package net.nikdo53.moresnifferflowers.data.advancement;
 
-import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
-import net.abraxator.moresnifferflowers.init.ModAdvancementCritters;
-import net.abraxator.moresnifferflowers.init.ModBlocks;
-import net.abraxator.moresnifferflowers.init.ModItems;
-import net.abraxator.moresnifferflowers.init.ModTags;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.nikdo53.moresnifferflowers.MoreSnifferFlowers;
+import net.nikdo53.moresnifferflowers.init.ModAdvancementCritters;
+import net.nikdo53.moresnifferflowers.init.ModBlocks;
+import net.nikdo53.moresnifferflowers.init.ModItems;
+import net.nikdo53.moresnifferflowers.init.ModTags;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricAdvancementProvider;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.FrameType;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger;
 import net.minecraft.advancements.critereon.LocationPredicate;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Items;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.common.data.ForgeAdvancementProvider;
 
 import java.util.function.Consumer;
 
-public class ModAdvancementGenerator implements ForgeAdvancementProvider.AdvancementGenerator {
+public class ModAdvancementGenerator extends FabricAdvancementProvider {
+
+    public ModAdvancementGenerator(FabricDataOutput output) {
+        super(output);
+    }
 
     @Override
-    public void generate(HolderLookup.Provider provider, Consumer<Advancement> consumer, ExistingFileHelper existingFileHelper) {
+    public void generateAdvancement(Consumer<Advancement> consumer) {
         var root = Advancement.Builder.advancement()
                 .display(
                         Items.SNIFFER_EGG.getDefaultInstance(),

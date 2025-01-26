@@ -1,7 +1,7 @@
 package net.nikdo53.moresnifferflowers.data.recipe.builder;
 
 import com.google.gson.JsonObject;
-import net.abraxator.moresnifferflowers.init.ModRecipeSerializers;
+import net.nikdo53.moresnifferflowers.init.ModRecipeSerializers;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.CriterionTriggerInstance;

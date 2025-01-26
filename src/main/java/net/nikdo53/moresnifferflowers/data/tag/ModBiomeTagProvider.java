@@ -1,21 +1,29 @@
 package net.nikdo53.moresnifferflowers.data.tag;
 
-import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
-import net.abraxator.moresnifferflowers.init.ModTags;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
+import net.nikdo53.moresnifferflowers.init.ModTags;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
-public class ModBiomeTagProvider extends TagsProvider<Biome> {
-    public ModBiomeTagProvider(PackOutput p_275432_, CompletableFuture<HolderLookup.Provider> p_275222_, @Nullable ExistingFileHelper existingFileHelper) {
-        super(p_275432_, Registries.BIOME, p_275222_, MoreSnifferFlowers.MOD_ID, existingFileHelper);
+public class ModBiomeTagProvider extends FabricTagProvider<Biome> {
+
+    /**
+     * Constructs a new {@link FabricTagProvider} with the default computed path.
+     *
+     * <p>Common implementations of this class are provided.
+     *
+     * @param output           the {@link FabricDataOutput} instance
+     * @param registryKey
+     * @param registriesFuture the backing registry for the tag type
+     */
+    public ModBiomeTagProvider(FabricDataOutput output, ResourceKey<? extends Registry<Biome>> registryKey, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+        super(output, registryKey, registriesFuture);
     }
 
     @Override

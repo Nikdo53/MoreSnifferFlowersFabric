@@ -1,16 +1,16 @@
 package net.nikdo53.moresnifferflowers.data;
 
-import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
-import net.abraxator.moresnifferflowers.init.ModTrimMaterials;
-import net.abraxator.moresnifferflowers.init.ModTrimPatterns;
-import net.abraxator.moresnifferflowers.worldgen.configurations.ModConfiguredFeatures;
-import net.abraxator.moresnifferflowers.worldgen.placement.*;
-import net.abraxator.moresnifferflowers.worldgen.structures.ModStructures;
+import io.github.fabricators_of_create.porting_lib.data.DatapackBuiltinEntriesProvider;
+import net.nikdo53.moresnifferflowers.MoreSnifferFlowers;
+import net.nikdo53.moresnifferflowers.init.ModTrimMaterials;
+import net.nikdo53.moresnifferflowers.init.ModTrimPatterns;
+import net.nikdo53.moresnifferflowers.worldgen.configurations.ModConfiguredFeatures;
+import net.nikdo53.moresnifferflowers.worldgen.placement.*;
+import net.nikdo53.moresnifferflowers.worldgen.structures.ModStructures;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;

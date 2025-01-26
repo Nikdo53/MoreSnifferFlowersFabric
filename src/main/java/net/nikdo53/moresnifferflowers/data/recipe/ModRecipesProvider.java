@@ -1,10 +1,11 @@
 package net.nikdo53.moresnifferflowers.data.recipe;
 
-import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
-import net.abraxator.moresnifferflowers.init.ModBlocks;
-import net.abraxator.moresnifferflowers.init.ModItems;
-import net.abraxator.moresnifferflowers.init.ModRecipeSerializers;
-import net.abraxator.moresnifferflowers.init.ModTags;
+import io.github.fabricators_of_create.porting_lib.tags.Tags;
+import net.nikdo53.moresnifferflowers.MoreSnifferFlowers;
+import net.nikdo53.moresnifferflowers.init.ModBlocks;
+import net.nikdo53.moresnifferflowers.init.ModItems;
+import net.nikdo53.moresnifferflowers.init.ModRecipeSerializers;
+import net.nikdo53.moresnifferflowers.init.ModTags;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
 import net.minecraft.tags.TagKey;
@@ -12,7 +13,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.common.Tags;
 
 import java.util.function.Consumer;
 
@@ -22,7 +22,7 @@ public class ModRecipesProvider extends RecipeProvider {
     }
 
     @Override
-    protected void buildRecipes(Consumer<FinishedRecipe> pRecipeOutput) {
+    public void buildRecipes(Consumer<FinishedRecipe> pRecipeOutput) {
         trimSmithing(pRecipeOutput, ModItems.AROMA_ARMOR_TRIM_SMITHING_TEMPLATE.get(), MoreSnifferFlowers.loc(getItemName(ModItems.AROMA_ARMOR_TRIM_SMITHING_TEMPLATE.get())));
         trimSmithing(pRecipeOutput, ModItems.CARNAGE_ARMOR_TRIM_SMITHING_TEMPLATE.get(), MoreSnifferFlowers.loc(getItemName(ModItems.CARNAGE_ARMOR_TRIM_SMITHING_TEMPLATE.get())));
         trimSmithing(pRecipeOutput, ModItems.NETHER_WART_ARMOR_TRIM_SMITHING_TEMPLATE.get(), MoreSnifferFlowers.loc(getItemName(ModItems.NETHER_WART_ARMOR_TRIM_SMITHING_TEMPLATE.get())));

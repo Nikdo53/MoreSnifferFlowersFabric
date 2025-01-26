@@ -1,8 +1,8 @@
 package net.nikdo53.moresnifferflowers.data.recipe;
 
-import net.abraxator.moresnifferflowers.data.recipe.builder.CropressingRecipeBuilder;
-import net.abraxator.moresnifferflowers.init.ModBlocks;
-import net.abraxator.moresnifferflowers.init.ModItems;
+import net.nikdo53.moresnifferflowers.data.recipe.builder.CropressingRecipeBuilder;
+import net.nikdo53.moresnifferflowers.init.ModBlocks;
+import net.nikdo53.moresnifferflowers.init.ModItems;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeProvider;
@@ -30,7 +30,7 @@ public class ModCustomRecipeProvider extends RecipeProvider {
     }
 
     @Override
-    protected void buildRecipes(Consumer<FinishedRecipe> pWriter) {
+    public void buildRecipes(Consumer<FinishedRecipe> pWriter) {
         
     }
 }
