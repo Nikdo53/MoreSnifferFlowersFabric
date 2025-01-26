@@ -1,6 +1,5 @@
 package net.nikdo53.moresnifferflowers.blocks;
 
-import net.abraxator.moresnifferflowers.recipes.CorruptionRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
@@ -10,7 +9,8 @@ import java.util.Optional;
 
 public interface Corruptable {
     default Optional<Block> getCorruptedBlock(Block block, Level level) {
-        return CorruptionRecipe.getCorruptedBlock(block, level);
+     //   return CorruptionRecipe.getCorruptedBlock(block, level);
+        return null;
     }
     
     default void onCorrupt(Level level, BlockPos pos, BlockState oldState, Block corruptedBlock) {

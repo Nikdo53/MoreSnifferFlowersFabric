@@ -21,9 +21,6 @@ import java.util.List;
 import java.util.function.Supplier;
 
 public class AddItemsModifier extends LootModifier {
-    public static final Supplier<Codec<AddItemsModifier>> CODEC = Suppliers.memoize(()
-            -> RecordCodecBuilder.create(inst -> codecStart(inst).and(ExtraCodecs.nonEmptyList(ForgeRegistries.ITEMS.getCodec().listOf())
-            .fieldOf("item").forGetter(m -> m.items)).apply(inst, AddItemsModifier::new)));
     public static final List<ResourceLocation> SNIFFERENT_ITEMS_LOC = List.of(snifferentLoc("spindlefern_seeds"), snifferentLoc("spineflower_seeds"), snifferentLoc("lumibulb_seeds"), snifferentLoc("sniffberry_seedling"), snifferentLoc("bloom_plant_nut"), snifferentLoc("globar_sapling"), snifferentLoc("club_moss_patch"), snifferentLoc("amber"));
     public static final List<ResourceLocation> HELLIONS_ITEMS_LOC = List.of(hellionsLoc("stone_pine_sapling"), hellionsLoc("fiddlefern"), hellionsLoc("ivy"));
     public static final List<ResourceLocation> QUARK_ITEMS_LOC = List.of(new ResourceLocation("quark", "ancient_sapling"));
@@ -60,12 +57,14 @@ public class AddItemsModifier extends LootModifier {
     private void modSupport(List<ResourceLocation> itemsLocList, ObjectArrayList<ItemStack> generatedLoot) {
         List<ItemStack> itemList = new ArrayList<>();
 
-        itemsLocList.forEach(resourceLocation -> {
+      /*  itemsLocList.forEach(resourceLocation -> {
             var item = ForgeRegistries.ITEMS.getValue(resourceLocation);
             if(item != null && !item.getDefaultInstance().is(Items.AIR)) {
                 itemList.add(item.getDefaultInstance());
             }
         });
+
+       */
 
         if(itemList.isEmpty()) {
             return;
@@ -82,8 +81,9 @@ public class AddItemsModifier extends LootModifier {
         return new ResourceLocation("snifferplus", path);
     }
 
+
     @Override
     public Codec<? extends IGlobalLootModifier> codec() {
-        return CODEC.get();
+        return null;
     }
 }

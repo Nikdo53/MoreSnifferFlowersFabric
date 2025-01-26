@@ -15,7 +15,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
-import net.minecraftforge.registries.ForgeRegistries;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
@@ -77,7 +76,7 @@ public class CropressingRecipeBuilder implements RecipeBuilder {
             pJson.addProperty("count", count);
 
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("item", ForgeRegistries.ITEMS.getKey(result).toString());
+       //     jsonObject.addProperty("item", ForgeRegistries.ITEMS.getKey(result).toString());
 
             pJson.add("result", jsonObject);
         }

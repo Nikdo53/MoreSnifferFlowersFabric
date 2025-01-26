@@ -1,8 +1,8 @@
 package net.nikdo53.moresnifferflowers.blocks.xbush;
 
-import net.abraxator.moresnifferflowers.init.ModBlocks;
-import net.abraxator.moresnifferflowers.init.ModItems;
-import net.abraxator.moresnifferflowers.init.ModParticles;
+import net.nikdo53.moresnifferflowers.init.ModBlocks;
+import net.nikdo53.moresnifferflowers.init.ModItems;
+import net.nikdo53.moresnifferflowers.init.ModParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Player;
@@ -18,10 +18,12 @@ public class GarbushBlockLower extends AbstractXBushBlockBase {
         super(pProperties);
     }
 
-    @Override
+   /* @Override
     public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
         return ModItems.GARBUSH_SEEDS.get().getDefaultInstance();
     }
+
+    */
 
     @Override
     public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {

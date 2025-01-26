@@ -1,6 +1,7 @@
 package net.nikdo53.moresnifferflowers.blocks;
 
-import net.abraxator.moresnifferflowers.init.ModStateProperties;
+import io.github.fabricators_of_create.porting_lib.common.util.IPlantable;
+import net.nikdo53.moresnifferflowers.init.ModStateProperties;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -20,7 +21,6 @@ import net.minecraft.world.level.block.FarmBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
-import net.minecraftforge.common.ForgeHooks;
 
 ;
 
@@ -42,10 +42,15 @@ public interface ModCropBlock extends BonemealableBlock {
     default void makeGrowOnTick(Block block, BlockState blockState, Level level, BlockPos blockPos) {
         if (!isMaxAge(blockState) && level.isAreaLoaded(blockPos, 1) && level.getRawBrightness(blockPos, 0) >= 9) {
             float f = getGrowthSpeed(blockState, level, blockPos);
-            if (ForgeHooks.onCropsGrowPre(level, blockPos, blockState, level.getRandom().nextInt((int)(25.0F / f) + 1) == 0)) {
+
+            level.setBlock(blockPos, blockState.setValue(getAgeProperty(), (blockState.getValue(getAgeProperty()) + 1)), 2);
+
+          /*  if (ForgeHooks.onCropsGrowPre(level, blockPos, blockState, level.getRandom().nextInt((int)(25.0F / f) + 1) == 0)) {
                 level.setBlock(blockPos, blockState.setValue(getAgeProperty(), (blockState.getValue(getAgeProperty()) + 1)), 2);
                 ForgeHooks.onCropsGrowPost(level, blockPos, blockState);
             }
+
+           */
         }
     }
 
@@ -79,11 +84,13 @@ public interface ModCropBlock extends BonemealableBlock {
             for(int j = -1; j <= 1; ++j) {
                 float f1 = 0.0F;
                 BlockState blockstate = pLevel.getBlockState(blockpos.offset(i, 0, j));
-                if (blockstate.canSustainPlant(pLevel, blockpos.offset(i, 0, j), net.minecraft.core.Direction.UP, (net.minecraftforge.common.IPlantable) pState.getBlock())) {
+                if (blockstate.canSustainPlant(pLevel, blockpos.offset(i, 0, j), net.minecraft.core.Direction.UP, (IPlantable) pState.getBlock())) {
                     f1 = 1.0F;
-                    if (blockstate.isFertile(pLevel, pPos.offset(i, 0, j))) {
+               /*     if (blockstate.isFertile(pLevel, pPos.offset(i, 0, j))) {
                         f1 = 3.0F;
                     }
+
+                */
                 }
 
                 if (i != 0 || j != 0) {

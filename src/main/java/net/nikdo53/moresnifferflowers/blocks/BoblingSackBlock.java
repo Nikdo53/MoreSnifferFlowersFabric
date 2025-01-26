@@ -1,7 +1,7 @@
 package net.nikdo53.moresnifferflowers.blocks;
 
-import net.abraxator.moresnifferflowers.blockentities.BoblingSackBlockEntity;
-import net.abraxator.moresnifferflowers.init.ModBlocks;
+import net.nikdo53.moresnifferflowers.blockentities.BoblingSackBlockEntity;
+import net.nikdo53.moresnifferflowers.init.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.server.level.ServerLevel;

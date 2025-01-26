@@ -2,6 +2,8 @@ package net.nikdo53.moresnifferflowers.data.tag;
 
 import io.github.fabricators_of_create.porting_lib.data.ExistingFileHelper;
 import io.github.fabricators_of_create.porting_lib.tags.Tags;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceKey;
 import net.nikdo53.moresnifferflowers.MoreSnifferFlowers;
 import net.nikdo53.moresnifferflowers.init.ModBlocks;
 import net.nikdo53.moresnifferflowers.init.ModTags;
@@ -17,10 +19,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Function;
 
 public class ModBlockTagsProvider extends IntrinsicHolderTagsProvider<Block> {
-    public ModBlockTagsProvider(PackOutput pOutput, CompletableFuture<HolderLookup.Provider> pLookupProvider, ExistingFileHelper existingFileHelper) {
-        super(pOutput, Registries.BLOCK, pLookupProvider, block -> block.builtInRegistryHolder().key(), MoreSnifferFlowers.MOD_ID, existingFileHelper);
+
+
+    public ModBlockTagsProvider(PackOutput output, ResourceKey<? extends Registry<Block>> registryKey, CompletableFuture<HolderLookup.Provider> lookupProvider, Function<Block, ResourceKey<Block>> keyExtractor) {
+        super(output, registryKey, lookupProvider, keyExtractor);
     }
 
     @Override

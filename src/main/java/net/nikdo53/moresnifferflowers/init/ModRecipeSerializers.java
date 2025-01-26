@@ -17,5 +17,5 @@ public class ModRecipeSerializers {
 
     public static final RegistryObject<CropressingSerializer> CROPRESSING = RECIPE_SERIALIZERS.register("cropressing", CropressingSerializer::new);
     public static final RegistryObject<RecipeSerializer<RebrewedTippedArrowRecipe>> REBREWED_TIPPED_ARROW = RECIPE_SERIALIZERS.register("rebrewed_tipped_arrow", () -> new SimpleCraftingRecipeSerializer<RebrewedTippedArrowRecipe>(RebrewedTippedArrowRecipe::new));
-    public static final RegistryObject<CorruptionSerializer> CORRUPTION = RECIPE_SERIALIZERS.register("corruption", CorruptionSerializer::new);
+   // public static final RegistryObject<CorruptionSerializer> CORRUPTION = RECIPE_SERIALIZERS.register("corruption", CorruptionSerializer::new);
 }

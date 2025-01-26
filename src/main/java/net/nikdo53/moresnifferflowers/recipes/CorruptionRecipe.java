@@ -29,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public record CorruptionRecipe(ResourceLocation id, String source, List<Entry> list) implements Recipe<Container> {
+/* public record CorruptionRecipe(ResourceLocation id, String source, List<Entry> list) implements Recipe<Container> {
     public static final Map<String, Block> HARDCODED_BLOCK = Util.make(Maps.newHashMap(), map -> {
         map.put(ModBlocks.DYESPRIA_PLANT.getId().toString(), ModBlocks.DYESCRAPIA_PLANT.get());
         map.put(ModBlocks.DAWNBERRY_VINE.getId().toString(), ModBlocks.GLOOMBERRY_VINE.get());
@@ -129,4 +129,8 @@ public record CorruptionRecipe(ResourceLocation id, String source, List<Entry> l
             return new Entry(block, weight);
         }
     }
+
+
 }
+
+ */

@@ -1,6 +1,6 @@
 package net.nikdo53.moresnifferflowers.blocks;
 
-import net.abraxator.moresnifferflowers.init.ModItems;
+import net.nikdo53.moresnifferflowers.init.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;

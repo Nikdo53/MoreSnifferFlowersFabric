@@ -2,9 +2,6 @@ package net.nikdo53.moresnifferflowers.networking;
 
 import net.nikdo53.moresnifferflowers.items.DyespriaItem;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraftforge.network.NetworkEvent;
-
-import java.util.function.Supplier;
 
 public record DyespriaModePacket(int amount) {
     public DyespriaModePacket(FriendlyByteBuf buf) {
@@ -15,7 +12,7 @@ public record DyespriaModePacket(int amount) {
         buf.writeInt(amount);
     }
 
-    public static void handle(DyespriaModePacket packet, Supplier<NetworkEvent.Context> context) {
+   /* public static void handle(DyespriaModePacket packet, Supplier<NetworkEvent.Context> context) {
         NetworkEvent.Context ctx = context.get();
         ctx.enqueueWork(() -> {
             var player = ctx.getSender();
@@ -25,4 +22,6 @@ public record DyespriaModePacket(int amount) {
             }
         });
     }
+
+    */
 }

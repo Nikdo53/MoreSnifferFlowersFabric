@@ -5,11 +5,11 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.datafixers.util.Pair;
 import com.mojang.math.Axis;
-import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
-import net.abraxator.moresnifferflowers.entities.boat.ModBoatEntity;
-import net.abraxator.moresnifferflowers.entities.boat.ModChestBoatEntity;
-import net.abraxator.moresnifferflowers.entities.boat.VivicusBoatEntity;
-import net.abraxator.moresnifferflowers.entities.boat.VivicusChestBoatEntity;
+import net.nikdo53.moresnifferflowers.MoreSnifferFlowers;
+import net.nikdo53.moresnifferflowers.entities.boat.ModBoatEntity;
+import net.nikdo53.moresnifferflowers.entities.boat.ModChestBoatEntity;
+import net.nikdo53.moresnifferflowers.entities.boat.VivicusBoatEntity;
+import net.nikdo53.moresnifferflowers.entities.boat.VivicusChestBoatEntity;
 import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.ChestBoatModel;
 import net.minecraft.client.model.ListModel;
@@ -29,7 +29,7 @@ import org.joml.Quaternionf;
 import java.util.Map;
 import java.util.stream.Stream;
 
-import static net.abraxator.moresnifferflowers.client.ModColorHandler.hexToRGB;
+import static net.nikdo53.moresnifferflowers.client.ModColorHandler.hexToRGB;
 
 public class ModBoatRenderer extends BoatRenderer {
     private final Map<ModBoatEntity.Type, Pair<ResourceLocation, ListModel<Boat>>> boatResources;
@@ -101,7 +101,7 @@ public class ModBoatRenderer extends BoatRenderer {
         return new ModelLayerLocation(MoreSnifferFlowers.loc(pPath), pModel);
     }
 
-    @Override
+   // @Override
     public Pair<ResourceLocation, ListModel<Boat>> getModelWithLocation(Boat boat) {
         if(boat instanceof ModBoatEntity modBoat) {
             return this.boatResources.get(modBoat.getModVariant());

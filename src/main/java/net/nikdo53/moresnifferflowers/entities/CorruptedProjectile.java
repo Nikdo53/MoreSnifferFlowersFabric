@@ -4,7 +4,6 @@ import net.nikdo53.moresnifferflowers.init.ModBlocks;
 import net.nikdo53.moresnifferflowers.init.ModEntityTypes;
 import net.nikdo53.moresnifferflowers.init.ModItems;
 import net.nikdo53.moresnifferflowers.init.ModStateProperties;
-import net.nikdo53.moresnifferflowers.recipes.CorruptionRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ItemParticleOption;
@@ -95,17 +94,19 @@ public class CorruptedProjectile extends ThrowableItemProjectile {
                     posAbove,
                     ModBlocks.CORRUPTED_SLIME_LAYER.get().defaultBlockState().setValue(ModStateProperties.LAYER, layer + 1));
         } else {
-            if(!transformBlock(this.level(), pResult.getBlockPos())) {
+           /* if(!transformBlock(this.level(), pResult.getBlockPos())) {
                 transformBlock(this.level(), pResult.getBlockPos().above());
                 this.level().setBlockAndUpdate(
                         pResult.getBlockPos().relative(pResult.getDirection()),
                         ModBlocks.CORRUPTED_SLIME_LAYER.get().defaultBlockState().setValue(ModStateProperties.LAYER, 1));
             }
+
+            */
         }
         this.discard();
     }
     
-    private boolean transformBlock(Level level, BlockPos blockPos) {
+   /* private boolean transformBlock(Level level, BlockPos blockPos) {
         var pos = BlockPos.findClosestMatch(blockPos, 1, 1, blockPos1 -> CorruptionRecipe.canBeCorrupted(level.getBlockState(blockPos1).getBlock(), level));
         var state = level.getBlockState(blockPos);
         
@@ -128,7 +129,9 @@ public class CorruptedProjectile extends ThrowableItemProjectile {
         
         return false;
     }
-    
+
+
+    */
     private static boolean checkState(BlockState state) {
         return state.is(ModBlocks.CORRUPTED_SLIME_LAYER.get()) && state.getValue(ModStateProperties.LAYER) != 8;
     }

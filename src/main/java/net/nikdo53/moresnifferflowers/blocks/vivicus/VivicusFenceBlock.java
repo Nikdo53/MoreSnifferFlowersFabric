@@ -1,7 +1,7 @@
 package net.nikdo53.moresnifferflowers.blocks.vivicus;
 
-import net.abraxator.moresnifferflowers.blocks.ColorableVivicusBlock;
-import net.abraxator.moresnifferflowers.init.ModStateProperties;
+import net.nikdo53.moresnifferflowers.blocks.ColorableVivicusBlock;
+import net.nikdo53.moresnifferflowers.init.ModStateProperties;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.FenceBlock;

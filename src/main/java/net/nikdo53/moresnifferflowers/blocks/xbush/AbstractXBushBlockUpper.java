@@ -1,7 +1,7 @@
 package net.nikdo53.moresnifferflowers.blocks.xbush;
 
-import net.abraxator.moresnifferflowers.blockentities.XbushBlockEntity;
-import net.abraxator.moresnifferflowers.blocks.ModEntityBlock;
+import net.nikdo53.moresnifferflowers.blockentities.XbushBlockEntity;
+import net.nikdo53.moresnifferflowers.blocks.ModEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;

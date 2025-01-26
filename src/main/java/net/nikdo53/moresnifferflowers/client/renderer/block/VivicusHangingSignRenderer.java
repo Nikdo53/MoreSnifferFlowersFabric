@@ -3,9 +3,11 @@ package net.nikdo53.moresnifferflowers.client.renderer.block;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
-import net.abraxator.moresnifferflowers.blocks.ColorableVivicusBlock;
-import net.abraxator.moresnifferflowers.client.ModColorHandler;
-import net.abraxator.moresnifferflowers.init.ModStateProperties;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
+import net.nikdo53.moresnifferflowers.blocks.ColorableVivicusBlock;
+import net.nikdo53.moresnifferflowers.client.ModColorHandler;
+import net.nikdo53.moresnifferflowers.init.ModStateProperties;
 import net.minecraft.client.model.Model;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.Sheets;
@@ -16,16 +18,14 @@ import net.minecraft.world.level.block.SignBlock;
 import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
-@OnlyIn(Dist.CLIENT)
+@Environment(EnvType.CLIENT)
 public class VivicusHangingSignRenderer extends HangingSignRenderer {
     public VivicusHangingSignRenderer(BlockEntityRendererProvider.Context pContext) {
         super(pContext);
     }
     
-    @Override
+   // @Override
     public void renderSignWithText(SignBlockEntity pSignEntity, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, int pPackedOverlay, BlockState pState, SignBlock pSignBlock, WoodType pWoodType, Model pModel) {
         pPoseStack.pushPose();
         pPoseStack.translate(0.5, 0.9375, 0.5);

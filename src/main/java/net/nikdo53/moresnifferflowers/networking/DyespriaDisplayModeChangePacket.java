@@ -29,8 +29,8 @@ public record DyespriaDisplayModeChangePacket(int dyespriaModeId) implements S2C
     public static class Handler {
 
         public static boolean onMessage(DyespriaDisplayModeChangePacket message, Executor ctx) {
-            ctx.execute(() ->
-                    ctx..displayClientMessage(DyespriaItem.getCurrentModeComponent(DyespriaMode.byIndex(message.dyespriaModeId)), true);
+           // ctx.execute(() ->
+                  //  ServerPlayer.displayClientMessage(DyespriaItem.getCurrentModeComponent(DyespriaMode.byIndex(message.dyespriaModeId)), true);
             return true;
         }
     }

@@ -36,7 +36,6 @@ public class MoreSnifferFlowersClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        ModPacketHandler.registerS2CPackets();
         ModColorHandler.onRegisterBlockColorHandlers();
         ModColorHandler.onRegisterBlockColorHandlers();
         ModItemProperties.register();

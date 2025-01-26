@@ -1,16 +1,12 @@
 package net.nikdo53.moresnifferflowers.blockentities;
 
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerPlayer;
 import net.nikdo53.moresnifferflowers.entities.CorruptedProjectile;
 import net.nikdo53.moresnifferflowers.init.ModBlockEntities;
 import net.nikdo53.moresnifferflowers.init.ModBlocks;
 import net.nikdo53.moresnifferflowers.init.ModStateProperties;
 import net.nikdo53.moresnifferflowers.init.ModTags;
+import net.nikdo53.moresnifferflowers.networking.CorruptedSludgePacket;
 import net.nikdo53.moresnifferflowers.networking.ModPacketHandler;
-import net.nikdo53.moresnifferflowers.recipes.CorruptionRecipe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
@@ -107,16 +103,15 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
                 return false;
             }
 
-            if(pGameEvent == GameEvent.BLOCK_PLACE && CorruptionRecipe.canBeCorrupted(pContext.affectedState().getBlock(), pLevel)) {
+        /*    if(pGameEvent == GameEvent.BLOCK_PLACE && CorruptionRecipe.canBeCorrupted(pContext.affectedState().getBlock(), pLevel)) {
                 Vec3 startPos = this.getListenerSource().getPosition(pLevel).get();
                 Vec3 dirNormal = new Vec3(pPos.x - startPos.x, pPos.y - startPos.y, pPos.z - startPos.z).normalize();
                 Optional<Block> corrupted = CorruptionRecipe.getCorruptedBlock(pContext.affectedState().getBlock(), pLevel);
                 BlockPos blockPos = BlockPos.containing(pPos);
                 corrupted.ifPresent(block -> {
-                    FriendlyByteBuf buf = PacketByteBufs.create();
-                    buf.writeVector3f(dirNormal.toVector3f());
 
-                    ServerPlayNetworking.send((ServerPlayer) p, ModPacketHandler.CORRUPTED_SLUDGE_PACKET_ID, PacketByteBufs.(startPos.toVector3f(), pPos.toVector3f(), dirNormal.toVector3f()));
+                    ModPacketHandler.CHANNEL.sendToClientsAround(new CorruptedSludgePacket (startPos.toVector3f(), pPos.toVector3f(), dirNormal.toVector3f()), pLevel, pPos , getListenerRadius());
+
                     if(pLevel.getBlockState(BlockPos.containing(pPos)).getBlock() instanceof net.nikdo53.moresnifferflowers.blocks.Corruptable corruptable) {
                         corruptable.onCorrupt(pLevel, blockPos, pLevel.getBlockState(BlockPos.containing(pPos)), block);
                     } else {
@@ -136,6 +131,8 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
                 return corrupted.isPresent();
             }
 
+         */
+
             if(pGameEvent == GameEvent.BLOCK_DESTROY && pContext.affectedState().is(ModTags.ModBlockTags.CORRUPTED_SLUDGE) && !pPos.equals(this.positionSource.getPosition(pLevel).get()) && pContext.sourceEntity() instanceof Player player) {
                 var projectileNumber = pContext.affectedState().is(ModBlocks.CORRUPTED_LEAVES.get()) || pContext.affectedState().is(ModBlocks.CORRUPTED_LEAVES_BUSH.get())  ? pLevel.random.nextInt(1) + 1 : pLevel.random.nextInt(5) + 1;
                 shootProjectiles(this.positionSource.getPosition(pLevel).get(), projectileNumber, pLevel);
@@ -145,6 +142,8 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
 
             return false;
         }
+
+
         
         public static void shootProjectiles(Vec3 center, int projectileNumber, Level level) {
             var radius = 2.5;

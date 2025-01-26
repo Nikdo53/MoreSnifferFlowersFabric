@@ -1,7 +1,7 @@
 package net.nikdo53.moresnifferflowers.blocks.cropressor;
 
-import net.abraxator.moresnifferflowers.blockentities.CropressorBlockEntity;
-import net.abraxator.moresnifferflowers.blocks.ModEntityBlock;
+import net.nikdo53.moresnifferflowers.blockentities.CropressorBlockEntity;
+import net.nikdo53.moresnifferflowers.blocks.ModEntityBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.Containers;
 import net.minecraft.world.item.Item;

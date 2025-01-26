@@ -1,9 +1,9 @@
 package net.nikdo53.moresnifferflowers.blocks.cropressor;
 
-import net.abraxator.moresnifferflowers.blockentities.CropressorBlockEntity;
-import net.abraxator.moresnifferflowers.init.ModBlocks;
-import net.abraxator.moresnifferflowers.init.ModStateProperties;
-import net.abraxator.moresnifferflowers.init.ModTags;
+import net.nikdo53.moresnifferflowers.blockentities.CropressorBlockEntity;
+import net.nikdo53.moresnifferflowers.init.ModBlocks;
+import net.nikdo53.moresnifferflowers.init.ModStateProperties;
+import net.nikdo53.moresnifferflowers.init.ModTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.StringRepresentable;

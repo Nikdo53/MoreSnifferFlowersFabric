@@ -1,6 +1,6 @@
 package net.nikdo53.moresnifferflowers.blocks;
 
-import net.abraxator.moresnifferflowers.init.ModBlocks;
+import net.nikdo53.moresnifferflowers.init.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;

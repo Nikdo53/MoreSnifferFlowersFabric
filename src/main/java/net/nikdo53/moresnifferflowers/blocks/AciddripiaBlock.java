@@ -1,6 +1,6 @@
 package net.nikdo53.moresnifferflowers.blocks;
 
-import net.abraxator.moresnifferflowers.blockentities.BondripiaBlockEntity;
+import net.nikdo53.moresnifferflowers.blockentities.BondripiaBlockEntity;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

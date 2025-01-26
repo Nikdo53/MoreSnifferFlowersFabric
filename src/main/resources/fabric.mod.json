@@ -19,9 +19,9 @@
 			"net.nikdo53.moresnifferflowers.MoreSnifferFlowers"
 		],
 		"fabric-datagen": [
-			"net.nikdo53.moresnifferflowers.MoreSnifferFlowersDataGenerator"
+			"net.nikdo53.moresnifferflowers.data.ModDatagen"
 		],
-		"client":[
+		"client": [
 			"net.nikdo53.moresnifferflowers.MoreSnifferFlowersClient"
 		]
 	},

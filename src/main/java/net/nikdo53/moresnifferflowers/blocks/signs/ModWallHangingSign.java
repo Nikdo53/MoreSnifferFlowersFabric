@@ -1,6 +1,6 @@
 package net.nikdo53.moresnifferflowers.blocks.signs;
 
-import net.abraxator.moresnifferflowers.blockentities.ModHangingSignBlockEntity;
+import net.nikdo53.moresnifferflowers.blockentities.ModHangingSignBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.WallHangingSignBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;

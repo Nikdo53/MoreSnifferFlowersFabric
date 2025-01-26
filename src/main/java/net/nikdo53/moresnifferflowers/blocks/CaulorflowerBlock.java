@@ -1,9 +1,9 @@
 package net.nikdo53.moresnifferflowers.blocks;
 
 import com.google.common.collect.Maps;
-import net.abraxator.moresnifferflowers.components.Colorable;
-import net.abraxator.moresnifferflowers.components.Dye;
-import net.abraxator.moresnifferflowers.init.ModItems;
+import net.nikdo53.moresnifferflowers.components.Colorable;
+import net.nikdo53.moresnifferflowers.components.Dye;
+import net.nikdo53.moresnifferflowers.init.ModItems;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -35,7 +35,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Map;
 import java.util.Optional;
 
-import static net.abraxator.moresnifferflowers.init.ModStateProperties.*;
+import static net.nikdo53.moresnifferflowers.init.ModStateProperties.*;
 
 public class CaulorflowerBlock extends Block implements BonemealableBlock, ModCropBlock, Colorable {
     public CaulorflowerBlock(Properties pProperties) {

@@ -3,7 +3,11 @@
 	"package": "net.nikdo53.moresnifferflowers.mixin",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
-		"ExampleMixin"
+		"AgeableMobMixin",
+		"FarmBlockMixin",
+		"SpriteResourceLoaderMixin",
+		"ThrownPotionMixin",
+		"SnifferEggMixin"
 	],
 	"injectors": {
 		"defaultRequire": 1

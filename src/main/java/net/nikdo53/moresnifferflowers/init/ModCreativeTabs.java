@@ -1,18 +1,20 @@
 package net.nikdo53.moresnifferflowers.init;
 
-import net.abraxator.moresnifferflowers.MoreSnifferFlowers;
+import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar;
+import io.github.fabricators_of_create.porting_lib.util.RegistryObject;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.minecraft.world.level.block.Block;
+import net.nikdo53.moresnifferflowers.MoreSnifferFlowers;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
-import net.minecraftforge.registries.DeferredRegister;
-import net.minecraftforge.registries.RegistryObject;
 
 public class ModCreativeTabs {
-    public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(
-            BuiltInRegistries.CREATIVE_MODE_TAB.key(), MoreSnifferFlowers.MOD_ID);
 
-    public static final RegistryObject<CreativeModeTab> MORESNIFFERFLOWERS_TAB = TABS.register("moresnifferflowers_tab", () -> CreativeModeTab.builder()
+    public static LazyRegistrar<CreativeModeTab> TABS = LazyRegistrar.create(BuiltInRegistries.CREATIVE_MODE_TAB, MoreSnifferFlowers.MOD_ID);
+
+    public static final RegistryObject<CreativeModeTab> MORESNIFFERFLOWERS_TAB = TABS.register("moresnifferflowers_tab", () -> FabricItemGroup.builder()
             .title(Component.translatable("moresnifferflowers.creative_tab"))
             .icon(() -> new ItemStack(ModItems.CREATIVE_TAB_ICON.get()))
             .displayItems((parameters, output) -> {
@@ -149,7 +151,5 @@ public class ModCreativeTabs {
 
 
             })
-            .withBackgroundLocation(MoreSnifferFlowers.loc("textures/gui/container/tab_items.png"))
-            .withTabsImage(MoreSnifferFlowers.loc("textures/gui/container/tabs.png"))
             .build());
 }

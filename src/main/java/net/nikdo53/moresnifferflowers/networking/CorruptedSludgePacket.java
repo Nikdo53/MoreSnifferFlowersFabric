@@ -2,32 +2,40 @@ package net.nikdo53.moresnifferflowers.networking;
 
 import me.pepperbell.simplenetworking.S2CPacket;
 import me.pepperbell.simplenetworking.SimpleChannel;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.server.network.ServerGamePacketListenerImpl;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
 
 import java.util.concurrent.Executor;
 
-public record CorruptedSludgePacket(Vector3f start, Vector3f target, Vector3f direction) implements S2CPacket {
-    public static void receive(MinecraftServer server, ServerPlayer player, ServerGamePacketListenerImpl handler, PacketByteBufs buf, PacketSender responseSender) {
+public class CorruptedSludgePacket implements S2CPacket {
 
+    private final Vector3f start;
+    private final Vector3f target;
+    private final Vector3f direction;
+
+    public CorruptedSludgePacket(Vector3f start, Vector3f target, Vector3f direction) {
+        this.start = start;
+        this.target = target;
+        this.direction = direction;
+    }
+
+    public CorruptedSludgePacket(FriendlyByteBuf buf){
+        this.start = buf.readVector3f();
+        this.target = buf.readVector3f();
+        this.direction = buf.readVector3f();
     }
 
     public void encode(FriendlyByteBuf buf) {
         buf.writeVector3f(start);
         buf.writeVector3f(target);
         buf.writeVector3f(direction);
-
-        buf.readVector3f();
     }
 
     @Override
@@ -38,24 +46,21 @@ public record CorruptedSludgePacket(Vector3f start, Vector3f target, Vector3f di
     public static class Handler {
 
         public static boolean onMessage(CorruptedSludgePacket message, Executor executor) {
-            executor.execute(new Runnable() {
-                                 @Override
-                                 public void run() {
-                                     ClientLevel level = Minecraft.getInstance().level;
+            executor.execute(() -> {
+                ClientLevel level = Minecraft.getInstance().level;
 
-                                     assert level != null;
-                                     if (level.isClientSide()) {
-                                         float distance = message.start.distance(message.target);
+                assert level != null;
+                if (level.isClientSide()) {
+                    float distance = message.start.distance(message.target);
 
-                                         for (int i = 0; i < 15; i++) {
-                                             double progress = (double) i / 15;
-                                             Vector3f pos = new Vector3f(message.start).add(new Vector3f(message.direction).mul((float) (distance * progress)));
-                                             level.addParticle(new DustParticleOptions(Vec3.fromRGB24(0x0443248).toVector3f(), 1.0F), pos.x, pos.y, pos.z, 0.0D, 0.0D, 0.0D);
-                                         }
-                                     }
-                                 }
-                             });
-                    return true;
+                    for (int i = 0; i < 15; i++) {
+                        double progress = (double) i / 15;
+                        Vector3f pos = new Vector3f(message.start).add(new Vector3f(message.direction).mul((float) (distance * progress)));
+                        level.addParticle(new DustParticleOptions(Vec3.fromRGB24(0x0443248).toVector3f(), 1.0F), pos.x, pos.y, pos.z, 0.0D, 0.0D, 0.0D);
+                    }
+                }
+            });
+            return true;
         }
     }
 

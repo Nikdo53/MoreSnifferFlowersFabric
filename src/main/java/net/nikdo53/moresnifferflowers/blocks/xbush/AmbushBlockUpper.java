@@ -1,7 +1,7 @@
 package net.nikdo53.moresnifferflowers.blocks.xbush;
 
-import net.abraxator.moresnifferflowers.init.ModBlocks;
-import net.abraxator.moresnifferflowers.init.ModItems;
+import net.nikdo53.moresnifferflowers.init.ModBlocks;
+import net.nikdo53.moresnifferflowers.init.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -15,11 +15,12 @@ public class AmbushBlockUpper extends AbstractXBushBlockUpper{
         super(pProperties);
     }
 
-    @Override
+  /*  @Override
     public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
         return ModItems.AMBUSH_SEEDS.get().getDefaultInstance();
     }
 
+   */
     @Override
     public Block getDropBlock() {
         return ModBlocks.AMBER_BLOCK.get();

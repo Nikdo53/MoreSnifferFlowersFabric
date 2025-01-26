@@ -1,6 +1,6 @@
 package net.nikdo53.moresnifferflowers.blocks.corrupted;
 
-import net.abraxator.moresnifferflowers.init.ModBlocks;
+import net.nikdo53.moresnifferflowers.init.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;

@@ -1,8 +1,8 @@
 package net.nikdo53.moresnifferflowers.blocks.corrupted;
 
-import net.abraxator.moresnifferflowers.blockentities.CorruptedSludgeBlockEntity;
-import net.abraxator.moresnifferflowers.blocks.ModEntityBlock;
-import net.abraxator.moresnifferflowers.init.ModStateProperties;
+import net.nikdo53.moresnifferflowers.blockentities.CorruptedSludgeBlockEntity;
+import net.nikdo53.moresnifferflowers.blocks.ModEntityBlock;
+import net.nikdo53.moresnifferflowers.init.ModStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;

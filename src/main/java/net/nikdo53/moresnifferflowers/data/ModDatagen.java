@@ -1,22 +1,16 @@
 package net.nikdo53.moresnifferflowers.data;
 
-import net.nikdo53.moresnifferflowers.MoreSnifferFlowers;
-import net.nikdo53.moresnifferflowers.data.advancement.ModAdvancementGenerator;
-import net.nikdo53.moresnifferflowers.data.advancement.ModAdvancementProvider;
-import net.nikdo53.moresnifferflowers.data.loot.ModLootModifierProvider;
-import net.nikdo53.moresnifferflowers.data.loot.ModLoottableProvider;
-import net.nikdo53.moresnifferflowers.data.recipe.ModRecipesProvider;
-import net.nikdo53.moresnifferflowers.data.tag.*;
+import io.github.fabricators_of_create.porting_lib.data.ExistingFileHelper;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator.Pack;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator.Pack.Factory;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator.Pack.RegistryDependentFactory;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.PackOutput;
-import net.minecraftforge.common.data.DatapackBuiltinEntriesProvider;
-import net.minecraftforge.common.data.ExistingFileHelper;
-import net.minecraftforge.data.event.GatherDataEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.minecraft.data.DataProvider;
+import net.nikdo53.moresnifferflowers.data.advancement.ModAdvancementGenerator;
+
 
 import java.util.concurrent.CompletableFuture;
 
@@ -25,9 +19,42 @@ public class ModDatagen implements DataGeneratorEntrypoint {
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator gen) {
         FabricDataGenerator.Pack pack = gen.createPack();
+        ExistingFileHelper efh = ExistingFileHelper.withResourcesFromArg();
+        ProviderProvider generator = new ProviderProvider(pack, efh);
 
-        pack.addProvider(ModAdvancementGenerator::new);
+        generator.addProvider(ModAdvancementGenerator::new);
+        generator.addProvider(ModItemModelProvider::new);
+        generator.addProvider(ModSoundProvider::new);
+        generator.addProvider(RegistryDataGenerator::new);
 
+    }
+
+    private record ProviderProvider(Pack pack, ExistingFileHelper helper) {
+        public <T extends DataProvider> T addProvider(Factory<T> factory) {
+            return pack.addProvider(factory);
+        }
+
+        public <T extends DataProvider> T addProvider(FabricDataGenerator.Pack.RegistryDependentFactory<T> factory) {
+            return pack.addProvider(factory);
+        }
+
+        public <T extends DataProvider> T addProvider(EFHDependentFactory<T> factory) {
+            return pack.addProvider((FabricDataOutput output) -> factory.create(output, helper));
+        }
+
+        public <T extends DataProvider> T addProvider(EFHRegistryDependentFactory<T> factory) {
+            return pack.addProvider((output, registries) -> factory.create(output, registries, helper));
+        }
+    }
+
+    @FunctionalInterface
+    public interface EFHDependentFactory<T extends DataProvider> {
+        T create(FabricDataOutput output, ExistingFileHelper helper);
+    }
+
+    @FunctionalInterface
+    public interface EFHRegistryDependentFactory<T extends DataProvider> {
+        T create(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registries, ExistingFileHelper helper);
     }
 
 }

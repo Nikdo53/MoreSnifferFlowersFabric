@@ -1,11 +1,11 @@
 package net.nikdo53.moresnifferflowers.blocks;
 
-import net.abraxator.moresnifferflowers.blockentities.DyespriaPlantBlockEntity;
-import net.abraxator.moresnifferflowers.components.Dye;
-import net.abraxator.moresnifferflowers.init.ModAdvancementCritters;
-import net.abraxator.moresnifferflowers.init.ModBlocks;
-import net.abraxator.moresnifferflowers.init.ModItems;
-import net.abraxator.moresnifferflowers.init.ModStateProperties;
+import net.nikdo53.moresnifferflowers.blockentities.DyespriaPlantBlockEntity;
+import net.nikdo53.moresnifferflowers.components.Dye;
+import net.nikdo53.moresnifferflowers.init.ModAdvancementCritters;
+import net.nikdo53.moresnifferflowers.init.ModBlocks;
+import net.nikdo53.moresnifferflowers.init.ModItems;
+import net.nikdo53.moresnifferflowers.init.ModStateProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -173,7 +173,7 @@ public class DyespriaPlantBlock extends BushBlock implements ModCropBlock, ModEn
         makeGrowOnBonemeal(pLevel, pPos, pState);
     }
 
-    @Override
+   /* @Override
     public ItemStack getCloneItemStack(BlockState state, HitResult target, BlockGetter level, BlockPos pos, Player player) {
         if(player.isShiftKeyDown() && isMaxAge(state) && level.getBlockEntity(pos) instanceof DyespriaPlantBlockEntity entity) {
             var stack = ModItems.DYESPRIA.get().getDefaultInstance();
@@ -183,6 +183,8 @@ public class DyespriaPlantBlock extends BushBlock implements ModCropBlock, ModEn
         
         return ModItems.DYESPRIA_SEEDS.get().getDefaultInstance();
     }
+
+    */
 
     @Nullable
     @Override

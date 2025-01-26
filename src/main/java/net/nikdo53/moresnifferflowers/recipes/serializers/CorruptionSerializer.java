@@ -2,19 +2,14 @@ package net.nikdo53.moresnifferflowers.recipes.serializers;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.nikdo53.moresnifferflowers.recipes.CorruptionRecipe;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraftforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class CorruptionSerializer implements RecipeSerializer<CorruptionRecipe> {
-    @Override
+public class CorruptionSerializer {
+ /*   @Override
     public CorruptionRecipe fromJson(ResourceLocation resourceLocation, JsonObject jsonObject) {
         String source = GsonHelper.getAsString(jsonObject, "source");
         
@@ -28,6 +23,18 @@ public class CorruptionSerializer implements RecipeSerializer<CorruptionRecipe> 
     }
 
     @Override
+    public CorruptionRecipe fromNetwork(ResourceLocation recipeId, FriendlyByteBuf buffer) {
+        return null;
+    }
+
+    @Override
+    public void toNetwork(FriendlyByteBuf buffer, CorruptionRecipe recipe) {
+
+    }
+
+  */
+
+  /*  @Override
     public @Nullable CorruptionRecipe fromNetwork(ResourceLocation resourceLocation, FriendlyByteBuf buf) {
         List<CorruptionRecipe.Entry> list = new ArrayList<>();
         String source = buf.readUtf();
@@ -50,4 +57,6 @@ public class CorruptionSerializer implements RecipeSerializer<CorruptionRecipe> 
             buf.writeInt(entry.weight());
         });
     }
+
+   */
 }
