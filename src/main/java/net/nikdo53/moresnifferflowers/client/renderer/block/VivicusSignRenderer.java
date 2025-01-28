@@ -25,7 +25,7 @@ public class VivicusSignRenderer extends SignRenderer {
         super(pContext);
     }
 
-   // @Override
+    @Override
     public void renderSignWithText(SignBlockEntity pSignEntity, PoseStack pPoseStack, MultiBufferSource pBuffer, int pPackedLight, int pPackedOverlay, BlockState pState, SignBlock pSignBlock, WoodType pWoodType, Model pModel) {
         pPoseStack.pushPose();
         pPoseStack.translate(0.5F, 0.75F * this.getSignModelRenderScale(), 0.5F);
@@ -75,6 +75,6 @@ public class VivicusSignRenderer extends SignRenderer {
 
     void renderSignModel(PoseStack pPoseStack, int pPackedLight, int pPackedOverlay, Model pModel, VertexConsumer pVertexConsumer, int color) {
         SignModel signrenderer$signmodel = (SignModel)pModel;
-        signrenderer$signmodel.root.render(pPoseStack, pVertexConsumer, pPackedLight, pPackedOverlay, (color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF, 1);
+        signrenderer$signmodel.root.render(pPoseStack, pVertexConsumer, pPackedLight, pPackedOverlay, 1-((color >> 16) & 0xFF), 1-((color >> 8) & 0xFF), 1-(color & 0xFF), 1);
     }
 }

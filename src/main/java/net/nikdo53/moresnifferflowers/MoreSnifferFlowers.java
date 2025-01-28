@@ -9,7 +9,7 @@ import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.FireBlock;
-import net.minecraft.world.level.block.FlowerPotBlock;
+import net.nikdo53.moresnifferflowers.events.ModeEvents;
 import net.nikdo53.moresnifferflowers.init.*;
 import net.nikdo53.moresnifferflowers.networking.ModPacketHandler;
 import net.nikdo53.moresnifferflowers.worldgen.configurations.ModTrunkPlacerTypes;
@@ -44,17 +44,24 @@ public class MoreSnifferFlowers implements ModInitializer {
 		ModStructureTypes.STRUCTURE_PIECE.register();
 		ModBannerPatterns.BANNER_PATTERNS.register();
 		ModRecipeSerializers.RECIPE_SERIALIZERS.register();
-		
+
+		init();
+		initEvents();
+
+	}
+
+	public static void initEvents(){
+		ModeEvents.init();
 	}
 
 	public static void init() {
 		ModPacketHandler.init();
 
-		/* AxeItem.STRIPPABLES = Maps.newHashMap(AxeItem.STRIPPABLES);
+		AxeItem.STRIPPABLES = Maps.newHashMap(AxeItem.STRIPPABLES);
 		AxeItem.STRIPPABLES.put(ModBlocks.CORRUPTED_LOG.get(), ModBlocks.STRIPPED_CORRUPTED_LOG.get());
 		AxeItem.STRIPPABLES.put(ModBlocks.VIVICUS_LOG.get(), ModBlocks.STRIPPED_VIVICUS_LOG.get());
 
-		 */
+
 
 	/*	FlowerPotBlock pot = (FlowerPotBlock) Blocks.FLOWER_POT;
 		pot.addPlant(ModBlocks.DYESPRIA_PLANT.getId(), ModBlocks.POTTED_DYESPRIA);
