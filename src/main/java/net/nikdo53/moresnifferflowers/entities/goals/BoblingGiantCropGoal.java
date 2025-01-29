@@ -1,5 +1,9 @@
 package net.nikdo53.moresnifferflowers.entities.goals;
 
+import net.minecraft.Util;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.ticks.ScheduledTick;
+import net.nikdo53.moresnifferflowers.blockentities.GiantCropBlockEntity;
 import net.nikdo53.moresnifferflowers.entities.BoblingEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -7,6 +11,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.nikdo53.moresnifferflowers.init.ModBlocks;
+import net.nikdo53.moresnifferflowers.init.ModStateProperties;
 
 import java.util.EnumSet;
 import java.util.List;
@@ -95,6 +101,26 @@ public class BoblingGiantCropGoal extends Goal {
         return !gonnaPlant() && flag;
     }
 
+    @Override
+    public void stop() {
+        if(gonnaPlant()) {
+            var giantBlock = Util.getRandom(List.of(ModBlocks.GIANT_CARROT, ModBlocks.GIANT_BEETROOT, ModBlocks.GIANT_NETHERWART, ModBlocks.GIANT_POTATO, ModBlocks.GIANT_WHEAT), this.bobling.getRandom());
+            var aabb = AABB.ofSize(wantedPos.add(0, 2, 0), 1, 1, 1);
+            var level = this.bobling.level();
+
+            BlockPos.betweenClosedStream(aabb).forEach(pos -> {
+                level.setBlockAndUpdate(pos, giantBlock.get().defaultBlockState().setValue(ModStateProperties.CENTER, pos.equals(BlockPos.containing(this.wantedPos.add(0, 1, 0)))));
+                if (level.getBlockEntity(pos) instanceof GiantCropBlockEntity entity) {
+                    entity.center = this.bobling.getWantedPos().above();
+                    entity.state = 2;
+                }
+
+                var tick = new ScheduledTick<>(level.getBlockState(pos).getBlock(), pos, level.getGameTime() + 50, level.nextSubTickCount());
+                level.getBlockTicks().schedule(tick);
+                this.bobling.remove(Entity.RemovalReason.DISCARDED);
+            });
+        }
+    }
 
     @Override
     public void tick() {

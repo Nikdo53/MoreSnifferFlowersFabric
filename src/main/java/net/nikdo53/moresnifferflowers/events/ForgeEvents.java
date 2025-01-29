@@ -64,7 +64,7 @@ public class ForgeEvents {
     private static void onBlockBreak(BlockEvents.BreakEvent breakEvent) {
 
         if(breakEvent.getLevel().getBlockEntity(breakEvent.getPos()) instanceof GiantCropBlockEntity entity) {
-            BlockPos.betweenClosed(entity.pos1, entity.pos2).forEach(blockPos -> {
+            BlockPos.withinManhattanStream(entity.center, 1, 1, 1).forEach(blockPos -> {
                 breakEvent.getLevel().destroyBlock(blockPos, true);
             });
         }
