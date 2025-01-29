@@ -5,6 +5,7 @@ import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.ChestBoatModel;
 import net.minecraft.client.renderer.RenderType;
@@ -17,6 +18,7 @@ import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.nikdo53.moresnifferflowers.client.ClientEvents;
 import net.nikdo53.moresnifferflowers.client.ModColorHandler;
+import net.nikdo53.moresnifferflowers.client.gui.screen.RebrewingStandScreen;
 import net.nikdo53.moresnifferflowers.client.model.ModModelLayerLocations;
 import net.nikdo53.moresnifferflowers.client.model.block.BondripiaModel;
 import net.nikdo53.moresnifferflowers.client.model.block.CropressorModel;
@@ -70,6 +72,8 @@ public class MoreSnifferFlowersClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.GIANT_WHEAT.get(), RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.AMBER_BLOCK.get(), RenderType.translucent());
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.GARNET_BLOCK.get(), RenderType.translucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.BONMEELIA.get(), RenderType.translucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.BONWILTIA.get(), RenderType.translucent());
 
     }
 

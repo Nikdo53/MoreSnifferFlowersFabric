@@ -1,6 +1,9 @@
 package net.nikdo53.moresnifferflowers.client.gui.menu;
 
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.inventory.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.nikdo53.moresnifferflowers.blockentities.RebrewingStandBlockEntity;
 import net.nikdo53.moresnifferflowers.init.ModItems;
 import net.nikdo53.moresnifferflowers.init.ModMenuTypes;
 import net.nikdo53.moresnifferflowers.init.ModTags;
@@ -14,12 +17,24 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.PotionUtils;
 
+import java.util.Objects;
+
 public class RebrewingStandMenu extends AbstractContainerMenu {
     private final Container rebrewingStand;
     private final ContainerData rebrewingStandData;
 
-    public RebrewingStandMenu(int id, Inventory playerInv) {
-        this(id, playerInv, new SimpleContainer(6), new SimpleContainerData(3));
+    public RebrewingStandMenu(int i, Inventory inventory, FriendlyByteBuf buf) {
+        this(i, inventory, new SimpleContainer(6), new SimpleContainerData(3));
+    }
+
+    private static RebrewingStandBlockEntity getTileEntity(final Inventory playerInventory, final FriendlyByteBuf data) {
+        Objects.requireNonNull(playerInventory, "playerInventory cannot be null");
+        Objects.requireNonNull(data, "data cannot be null");
+        final BlockEntity tileAtPos = playerInventory.player.level().getBlockEntity(data.readBlockPos());
+        if (tileAtPos instanceof RebrewingStandBlockEntity) {
+            return (RebrewingStandBlockEntity) tileAtPos;
+        }
+        throw new IllegalStateException("Tile entity is not correct! " + tileAtPos);
     }
 
     public RebrewingStandMenu(int id, Inventory playerInv, Container rebrewingStandContainer, ContainerData rebrewingStandContainerData) {
@@ -47,6 +62,8 @@ public class RebrewingStandMenu extends AbstractContainerMenu {
 
         addDataSlots(rebrewingStandContainerData);
     }
+
+
 
     @Override
     public ItemStack quickMoveStack(Player pPlayer, int pIndex) {

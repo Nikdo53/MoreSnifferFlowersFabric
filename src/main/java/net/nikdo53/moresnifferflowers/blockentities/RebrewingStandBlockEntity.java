@@ -1,6 +1,7 @@
 package net.nikdo53.moresnifferflowers.blockentities;
 
 import com.google.common.collect.Lists;
+import net.nikdo53.moresnifferflowers.MoreSnifferFlowers;
 import net.nikdo53.moresnifferflowers.blocks.rebrewingstand.RebrewingStandBlockBase;
 import net.nikdo53.moresnifferflowers.client.gui.menu.RebrewingStandMenu;
 import net.nikdo53.moresnifferflowers.init.ModBlockEntities;
@@ -30,10 +31,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.function.Predicate;
 
 public class RebrewingStandBlockEntity extends BaseContainerBlockEntity {
@@ -97,7 +95,7 @@ public class RebrewingStandBlockEntity extends BaseContainerBlockEntity {
         var ogPotionStack = inv.get(1);
         var ingredientStack = inv.get(2);
         var potionBits = getPotionBits();
-        cost = 0;
+        this.cost = 0;
 
         if(fuel < MAX_FUEL && fuelStack.is(ModItems.CROPRESSED_NETHERWART.get())) {
             fuel++;
@@ -107,7 +105,7 @@ public class RebrewingStandBlockEntity extends BaseContainerBlockEntity {
 
         if(!ogPotionStack.isEmpty()) {
             var potionContent = getEffect(ogPotionStack, ingredientStack);
-            this.cost = potionContent != null ? 4 + (potionContent.size() - 2) * 2 : 0;
+            this.cost = potionContent != null ? 4 + (potionContent.size() - 2) * 2 : 17;
 
             if(canBrew()) {
                 brewProgress++;
@@ -117,11 +115,8 @@ public class RebrewingStandBlockEntity extends BaseContainerBlockEntity {
             }
         }
 
-        if(canBrew()) {
-            brewProgress++;
-            if(brewProgress >= MAX_PROGRESS) {
-                brew(level, ogPotionStack, ingredientStack);
-            }
+        if(!canBrew()) {
+            brewProgress = 0;
         }
 
         if(!Arrays.equals(potionBits, lastPotionCount)) {
@@ -151,7 +146,7 @@ public class RebrewingStandBlockEntity extends BaseContainerBlockEntity {
 
             ingredientStack.shrink(1);
             inv.set(1, Items.GLASS_BOTTLE.getDefaultInstance());
-            fuel -= 4;
+            fuel -= this.cost;
             level.playSound(null, getBlockPos(), SoundEvents.BREWING_STAND_BREW, SoundSource.BLOCKS, 1.0F, 1.0F);
         }
 
@@ -174,6 +169,10 @@ public class RebrewingStandBlockEntity extends BaseContainerBlockEntity {
 
     private boolean canBrew() {
         boolean ret = false;
+        boolean correctInvContent = !inv.get(2).isEmpty() && inv.get(1).is(ModItems.EXTRACTED_BOTTLE.get());
+        boolean hasFuel = fuel >= 1 && this.fuel >= this.cost;
+        boolean correctCost = this.cost <= 16;
+
 
         for(int i = 3; i <= 5; i++) {
             if(!inv.get(i).isEmpty() && !inv.get(i).is(ModItems.REBREWED_POTION.get())) {
@@ -181,7 +180,7 @@ public class RebrewingStandBlockEntity extends BaseContainerBlockEntity {
             }
         }
 
-        return ret && inv.get(1).is(ModItems.EXTRACTED_BOTTLE.get()) && fuel >= 1 && !inv.get(2).isEmpty();
+        return ret && correctInvContent && hasFuel && correctCost;
     }
 
     private boolean[] getPotionBits() {
@@ -199,7 +198,7 @@ public class RebrewingStandBlockEntity extends BaseContainerBlockEntity {
     private List<MobEffectInstance> getEffect(ItemStack inputPotion, ItemStack ingredient) {
         List<MobEffectInstance> ret = new ArrayList<>();
         List<Integer> durList = new ArrayList<>();
-        ListTag listTag = ((ListTag) inputPotion.getOrCreateTag().get("custom_potion_effects"));
+        ListTag listTag = ((ListTag) inputPotion.getOrCreateTag().get("CustomPotionEffects"));
         int defaultAmp = 1;
         int defaultDur = 6000;
 
@@ -209,11 +208,11 @@ public class RebrewingStandBlockEntity extends BaseContainerBlockEntity {
 
         for (int i = 0; i < listTag.size(); i++) {
             var potion = listTag.getCompound(i);
-            var id = potion.getString("neoforge:id");
+            var id = potion.getString("fabric:id");
             var amp = potion.getByte("Amplifier") + (ingredient.is(Items.GLOWSTONE_DUST) ? 2 : defaultAmp);
             var dur = potion.getInt("Duration") + (ingredient.is(Items.REDSTONE) ? 12000 : defaultDur);
             var splitId = id.split(":");
-            var instance = new MobEffectInstance(BuiltInRegistries.MOB_EFFECT.get(new ResourceLocation(splitId[0], splitId[1])), dur, amp);
+            var instance = new MobEffectInstance(Objects.requireNonNull(BuiltInRegistries.MOB_EFFECT.get(new ResourceLocation(MoreSnifferFlowers.MOD_ID, "extracted"))), dur, amp);
 
             durList.add(dur);
             ret.add(instance);
@@ -273,6 +272,7 @@ public class RebrewingStandBlockEntity extends BaseContainerBlockEntity {
         ContainerHelper.saveAllItems(pTag, inv);
         pTag.putByte("progress", ((byte) brewProgress));
         pTag.putByte("fuel", ((byte) fuel));
+        pTag.putByte("cost", ((byte) this.cost));
     }
 
     @Override
@@ -282,5 +282,6 @@ public class RebrewingStandBlockEntity extends BaseContainerBlockEntity {
         ContainerHelper.loadAllItems(pTag, inv);
         fuel = pTag.getByte("fuel");
         brewProgress = pTag.getByte("progress");
+        this.cost = pTag.getByte("cost");
     }
 }
