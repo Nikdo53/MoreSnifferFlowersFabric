@@ -1,23 +1,8 @@
 package net.nikdo53.moresnifferflowers.events;
 
 import io.github.fabricators_of_create.porting_lib.entity.events.LivingEntityEvents;
-import io.github.fabricators_of_create.porting_lib.entity.events.PlayerInteractionEvents;
-import io.github.fabricators_of_create.porting_lib.event.client.InteractEvents;
 import io.github.fabricators_of_create.porting_lib.event.common.BlockEvents;
-import net.fabricmc.fabric.api.event.player.UseItemCallback;
-import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.Direction;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.AxeItem;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.gameevent.GameEvent;
 import net.nikdo53.moresnifferflowers.blockentities.BondripiaBlockEntity;
 import net.nikdo53.moresnifferflowers.blockentities.GiantCropBlockEntity;
 import net.nikdo53.moresnifferflowers.init.*;
@@ -25,26 +10,27 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import net.nikdo53.moresnifferflowers.items.JarOfBonmeelItem;
 
-public class ModeEvents {
+public class ForgeEvents {
 
     public static void init(){
-        LivingEntityEvents.JUMP.register(ModeEvents::onLivingJump);
+        LivingEntityEvents.LivingJumpEvent.JUMP.register(ForgeEvents::onLivingJump);
        // UseItemCallback.EVENT.register(ModeEvents::onPlayerInteractRightClickItem);
-        BlockEvents.BLOCK_BREAK.register(ModeEvents::onBlockBreak);
+        BlockEvents.BLOCK_BREAK.register(ForgeEvents::onBlockBreak);
 
     }
 
-    public static void onLivingJump(LivingEntity livingEntity) {
+    public static void onLivingJump(LivingEntityEvents.LivingJumpEvent livingJumpEvent) {
+        LivingEntity livingEntity = livingJumpEvent.getEntity();
         Level level = livingEntity.level();
         Vec3 loc = livingEntity.position();
         BlockPos blockPos = BlockPos.containing(loc);
-        
+
         if(level.getBlockState(blockPos).is(ModBlocks.CORRUPTED_SLIME_LAYER.get()) || level.getBlockState(blockPos.below()).is(ModBlocks.CORRUPTED_SLIME_LAYER.get())) {
             livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().multiply(1, 0.3, 1));
         }
     }
+
 
    /* private static InteractionResultHolder<ItemStack> onPlayerInteractRightClickItem(Player player, Level level, InteractionHand interactionHand) {
         var itemStack = player.getItemInHand(InteractionHand.MAIN_HAND);

@@ -13,36 +13,26 @@ import net.nikdo53.moresnifferflowers.networking.ModPacketHandler;
 import java.util.function.Consumer;
 
 @Environment(EnvType.CLIENT)
-public class ClientEvents  {
+public class ClientEvents {
 
     public static void init() {
 
-   //     MouseInputEvents.AFTER_SCROLL.register(ClientEvents::onInputMouseScrolling);
+        MouseInputEvents.BEFORE_SCROLL.register(ClientEvents::onInputMouseScrolling);
     }
 
-    public static class ModBusEvents{
-        public static void registerLoaders(Consumer<ModelResolver> out){
+    public static class ModBusEvents {
+        public static void registerLoaders(Consumer<ModelResolver> out) {
 
         }
     }
 
-   /* public static void onInputMouseScrolling(double v, double v1){
+    private static boolean onInputMouseScrolling(double v, double v1) {
         LocalPlayer player = Minecraft.getInstance().player;
-        if(player.isCrouching() && v1 < 0 && player.getMainHandItem().is(ModItems.DYESPRIA.get())) {
-            ModPacketHandler.CHANNEL.sendToServer(new DyespriaModePacket((int) event.getScrollDelta()));
-            event.setCanceled(true);
+        if (player.isCrouching() && v1 != 0 && player.getMainHandItem().is(ModItems.DYESPRIA.get())) {
+            ModPacketHandler.CHANNEL.sendToServer(new DyespriaModePacket((int) v1));
+            return true;
         }
+        return false;
     }
-
-    */
-
-  /*  public static void onInputMouseScrolling(MouseScrollingEvent event) {
-        LocalPlayer player = Minecraft.getInstance().player;
-        if(player.isCrouching() && player.getMainHandItem().is(ModItems.DYESPRIA.get())) {
-            event.setCanceled(true);
-            ModPacketHandler.CHANNEL.sendToServer(new DyespriaModePacket((int) event.getScrollDelta()));
-        }
-    }
-
-   */
 }
+

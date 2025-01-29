@@ -18,5 +18,7 @@ public class ModPacketHandler {
         int id = 0;
 
         CHANNEL.registerS2CPacket(CorruptedSludgePacket.class, id++);
+        CHANNEL.registerC2SPacket(DyespriaModePacket.class, id++);
+        CHANNEL.registerS2CPacket(DyespriaDisplayModeChangePacket.class, id++);
     }
 }

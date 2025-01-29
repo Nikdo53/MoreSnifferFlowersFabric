@@ -7,6 +7,7 @@ import io.github.fabricators_of_create.porting_lib.loot.IGlobalLootModifier;
 import io.github.fabricators_of_create.porting_lib.loot.LootModifier;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.Util;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.ExtraCodecs;
 import net.minecraft.world.item.Item;
@@ -57,14 +58,14 @@ public class AddItemsModifier extends LootModifier {
     private void modSupport(List<ResourceLocation> itemsLocList, ObjectArrayList<ItemStack> generatedLoot) {
         List<ItemStack> itemList = new ArrayList<>();
 
-      /*  itemsLocList.forEach(resourceLocation -> {
-            var item = ForgeRegistries.ITEMS.getValue(resourceLocation);
+        itemsLocList.forEach(resourceLocation -> {
+            var item = BuiltInRegistries.ITEM.get(resourceLocation);
             if(item != null && !item.getDefaultInstance().is(Items.AIR)) {
                 itemList.add(item.getDefaultInstance());
             }
         });
 
-       */
+
 
         if(itemList.isEmpty()) {
             return;

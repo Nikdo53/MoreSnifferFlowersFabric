@@ -65,6 +65,7 @@ public class CorruptedSludgePacket implements S2CPacket {
         }
     }
 
+
    /* public class Handler {
 
         public static void handle(CorruptedSludgePacket packet, Supplier<NetworkEvent.Context> context) {

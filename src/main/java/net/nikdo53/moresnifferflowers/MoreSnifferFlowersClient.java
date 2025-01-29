@@ -15,6 +15,7 @@ import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.world.level.block.state.properties.WoodType;
+import net.nikdo53.moresnifferflowers.client.ClientEvents;
 import net.nikdo53.moresnifferflowers.client.ModColorHandler;
 import net.nikdo53.moresnifferflowers.client.model.ModModelLayerLocations;
 import net.nikdo53.moresnifferflowers.client.model.block.BondripiaModel;
@@ -50,6 +51,7 @@ public class MoreSnifferFlowersClient implements ClientModInitializer {
         registerWoodTypes(ModWoodTypes.CORRUPTED);
         registerWoodTypes(ModWoodTypes.VIVICUS);
         registerRenderTypes();
+        ClientEvents.init();
 
     }
 

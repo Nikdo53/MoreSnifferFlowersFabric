@@ -9,7 +9,7 @@ import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.FireBlock;
-import net.nikdo53.moresnifferflowers.events.ModeEvents;
+import net.nikdo53.moresnifferflowers.events.ForgeEvents;
 import net.nikdo53.moresnifferflowers.init.*;
 import net.nikdo53.moresnifferflowers.networking.ModPacketHandler;
 import net.nikdo53.moresnifferflowers.worldgen.configurations.ModTrunkPlacerTypes;
@@ -51,7 +51,7 @@ public class MoreSnifferFlowers implements ModInitializer {
 	}
 
 	public static void initEvents(){
-		ModeEvents.init();
+		ForgeEvents.init();
 	}
 
 	public static void init() {

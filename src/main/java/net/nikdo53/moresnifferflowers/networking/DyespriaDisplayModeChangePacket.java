@@ -1,5 +1,6 @@
 package net.nikdo53.moresnifferflowers.networking;
 
+import me.pepperbell.simplenetworking.C2SPacket;
 import me.pepperbell.simplenetworking.S2CPacket;
 import me.pepperbell.simplenetworking.SimpleChannel;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
@@ -7,7 +8,9 @@ import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientPacketListener;
 import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.minecraft.world.entity.player.Player;
 import net.nikdo53.moresnifferflowers.components.DyespriaMode;
 import net.nikdo53.moresnifferflowers.items.DyespriaItem;
@@ -26,15 +29,15 @@ public record DyespriaDisplayModeChangePacket(int dyespriaModeId) implements S2C
 
     @Override
     public void handle(Minecraft client, ClientPacketListener listener, PacketSender responseSender, SimpleChannel channel) {
-        Handler.onMessage(this, client);
+        Handler.onMessage(this, client, responseSender);
     }
 
     public static class Handler {
 
-        public static boolean onMessage(DyespriaDisplayModeChangePacket message, Executor ctx) {
+        public static boolean onMessage(DyespriaDisplayModeChangePacket message, Executor ctx, PacketSender packetSender) {
             ctx.execute(() ->
             {
-               // Player.displayClientMessage(DyespriaItem.getCurrentModeComponent(DyespriaMode.byIndex(message.dyespriaModeId)), true);
+                Minecraft.getInstance().player.displayClientMessage(DyespriaItem.getCurrentModeComponent(DyespriaMode.byIndex(message.dyespriaModeId)), true);
             });
             return true;
         }
