@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.nikdo53.moresnifferflowers.MoreSnifferFlowers;
 import net.nikdo53.moresnifferflowers.blockentities.GiantCropBlockEntity;
+import net.nikdo53.moresnifferflowers.blocks.GiantCropBlock;
 import net.nikdo53.moresnifferflowers.client.model.ModModelLayerLocations;
 import net.nikdo53.moresnifferflowers.init.ModBlocks;
 import net.nikdo53.moresnifferflowers.init.ModStateProperties;
@@ -56,20 +57,21 @@ public class GiantCropBlockEntityRenderer<T extends GiantCropBlockEntity> implem
 		String path = blockState.getBlock().getDescriptionId().replace("block." + MoreSnifferFlowers.MOD_ID + ".", "");
 		Material TEXTURE = new Material(TextureAtlas.LOCATION_BLOCKS, MoreSnifferFlowers.loc("block/" + path));
 		VertexConsumer vertexConsumer = TEXTURE.buffer(pBufferSource, RenderType::entityCutout);
-		float coolPartialTick = (pBlockEntity.growProgress < 1 && blockState.is(ModTags.ModBlockTags.GIANT_CROPS) && blockState.getValue(ModStateProperties.CENTER)) ? pPartialTick : 0;
+		float coolPartialTick = (pBlockEntity.growProgress < 1 && blockState.getValue(ModStateProperties.CENTER)) ? pPartialTick : 0;
 		float coolGrowProgress = pBlockEntity.getLevel().getGameTime() - pBlockEntity.staticGameTime;
 		
-		if(pBlockEntity.growProgress > 0 && blockState.is(ModTags.ModBlockTags.GIANT_CROPS) && blockState.getValue(ModStateProperties.CENTER)) {
+		if(pBlockEntity.growProgress > 0 && !blockState.getValue(GiantCropBlock.MODEL_POSITION).equals(GiantCropBlock.ModelPos.NONE)) {
 			float yCord = 0.5F;
 			float yScale = 1;
-			
+			var modelPos = blockState.getValue(GiantCropBlock.MODEL_POSITION);
+
 			if(pBlockEntity.growProgress < 1) {
 				yCord = (coolGrowProgress + coolPartialTick) / 4 - 2;
 				yScale = Mth.lerp((coolGrowProgress + coolPartialTick) / 10, 0, 1);
 			}
 			
 			pPoseStack.pushPose();
-			pPoseStack.translate(0.5, yCord, 0.5);
+			pPoseStack.translate(modelPos.x, modelPos.y - yCord, modelPos.z);
 			pPoseStack.scale(1, yScale, 1);
 			pPoseStack.mulPose(new Quaternionf().rotateX((float) (Math.PI)));
 			modelPartMap.get(blockState.getBlock()).render(pPoseStack, vertexConsumer, pPackedLight, pPackedOverlay);

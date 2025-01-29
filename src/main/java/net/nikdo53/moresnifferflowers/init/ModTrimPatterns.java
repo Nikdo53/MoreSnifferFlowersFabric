@@ -1,16 +1,18 @@
 package net.nikdo53.moresnifferflowers.init;
 
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.nikdo53.moresnifferflowers.MoreSnifferFlowers;
 import net.minecraft.Util;
-import net.minecraft.core.Holder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.armortrim.TrimPattern;
-import net.nikdo53.moresnifferflowers.MoreSnifferFlowers;
 
 public class ModTrimPatterns {
+
+
     public static final ResourceKey<TrimPattern> AROMA = ResourceKey.create(Registries.TRIM_PATTERN, MoreSnifferFlowers.loc("aroma"));
     public static final ResourceKey<TrimPattern> CARNAGE = ResourceKey.create(Registries.TRIM_PATTERN, MoreSnifferFlowers.loc("carnage"));
     public static final ResourceKey<TrimPattern> NETHER_WART = ResourceKey.create(Registries.TRIM_PATTERN, MoreSnifferFlowers.loc("nether_wart"));
@@ -32,7 +34,7 @@ public class ModTrimPatterns {
     }
 
     private static void register(BootstapContext<TrimPattern> context, Item item, ResourceKey<TrimPattern> key) {
-        TrimPattern trimPattern = new TrimPattern(key.location(), Holder.direct(item), Component.translatable(Util.makeDescriptionId("trim_pattern", key.location())));
+        TrimPattern trimPattern = new TrimPattern(key.location(), BuiltInRegistries.ITEM.wrapAsHolder(item), Component.translatable(Util.makeDescriptionId("trim_pattern", key.location())));
         context.register(key, trimPattern);
     }
 }
