@@ -22,7 +22,7 @@ import net.minecraft.world.level.block.Block;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.IntStream;
 
 @JeiPlugin
 public class MoreSnifferFlowersJEIPlugin implements IModPlugin {
@@ -56,15 +56,9 @@ public class MoreSnifferFlowersJEIPlugin implements IModPlugin {
     public void registerRecipes(IRecipeRegistration registration) {
         RecipeManager recipeManager = Minecraft.getInstance().level.getRecipeManager();
         List<CropressingRecipe> cropressingRecipes = new ArrayList<>(recipeManager.getAllRecipesFor(ModRecipeTypes.CROPRESSING.get()));
-/*        List<CorruptionRecipe> corruptionRecipes = new ArrayList<>(recipeManager.getAllRecipesFor(ModRecipeTypes.CORRUPTION.get()));
-        
-        for (Map.Entry<Block, Block> entry : CorruptionRecipe.HARDCODED_BLOCK.entrySet()) {
-            ResourceLocation id = ForgeRegistries.BLOCKS.getKey(entry.getKey());
-            corruptionRecipes.add(new CorruptionRecipe(id, id.toString(), List.of(new CorruptionRecipe.Entry(entry.getValue(), 100))));
-        }*/
-        
+
         registration.addRecipes(CropressingRecipeCategory.CROPRESSING, cropressingRecipes);
         registration.addRecipes(RebrewingCategory.REBREWING, JeiRebrewingRecipe.createRecipes());
-     //   registration.addRecipes(CorruptionCategory.CORRUPTION, corruptionRecipes);
+       // registration.addRecipes(CorruptionCategory.CORRUPTING, CorruptionJEIRecipe.createRecipes());
     }
 }

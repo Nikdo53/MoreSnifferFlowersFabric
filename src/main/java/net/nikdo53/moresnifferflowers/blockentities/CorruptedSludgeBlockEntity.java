@@ -30,15 +30,13 @@ import java.util.Set;
 
 public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEventListener.Holder<CorruptedSludgeBlockEntity.CorruptedSludgeListener> {
     public CorruptedSludgeListener corruptedSludgeListener;
-    public int usesLeft;
+    public int usesLeft = -1;
     public int stateChange;
     public GameEventListener listener;
     
     public CorruptedSludgeBlockEntity(BlockPos pPos, BlockState pBlockState) {
         super(ModBlockEntities.CORRUPTED_SLUDGE.get(), pPos, pBlockState);
         this.corruptedSludgeListener = new CorruptedSludgeListener(new BlockPositionSource(pPos));
-        this.usesLeft = Minecraft.getInstance().level.random.nextIntBetweenInclusive(16, 32);
-        this.stateChange = usesLeft / 4;
         this.listener = new CorruptedSludgeListener(new BlockPositionSource(pPos));
     }
 
@@ -47,7 +45,7 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
          
         if(this.usesLeft <= 0) {
             CorruptedSludgeListener.shootProjectiles(this.getBlockPos().getCenter(), this.level.random.nextIntBetweenInclusive(8, 16), this.level);
-            this.level.destroyBlock(this.getBlockPos(), true);
+            this.level.destroyBlock(this.getBlockPos(), false);
             
             return;
         }
@@ -66,12 +64,14 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
         tag.putInt("uses", usesLeft);
+        tag.putInt("stateChange", stateChange);
     }
 
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        usesLeft = tag.getInt("uses");
+        this.usesLeft = tag.getInt("uses");
+        this.stateChange = tag.getInt("stateChange");
     }
 
     public static class CorruptedSludgeListener implements GameEventListener {
@@ -94,25 +94,31 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
         @Override
         public boolean handleGameEvent(ServerLevel pLevel, GameEvent pGameEvent, GameEvent.Context pContext, Vec3 pPos) {
             CorruptedSludgeBlockEntity entity;
-
+            
             if(pLevel.getBlockEntity(BlockPos.containing(this.positionSource.getPosition(pLevel).get())) instanceof CorruptedSludgeBlockEntity entity1) {
                 entity = entity1;
             } else return false;
+            
+            boolean validEvent = (pGameEvent != GameEvent.BLOCK_PLACE || pGameEvent != GameEvent.BLOCK_DESTROY);
 
-            if(entity.usesLeft <= 0 || entity.getBlockState().getValue(ModStateProperties.CURED)) {
+            if (entity.usesLeft == -1) {
+                entity.usesLeft = pLevel.random.nextIntBetweenInclusive(16, 32) - 1;
+                entity.stateChange = entity.usesLeft / 4;
+            }
+
+            if(entity.usesLeft <= 0 || entity.getBlockState().getValue(ModStateProperties.CURED) || !validEvent) {
                 return false;
             }
 
-        /*    if(pGameEvent == GameEvent.BLOCK_PLACE && CorruptionRecipe.canBeCorrupted(pContext.affectedState().getBlock(), pLevel)) {
+/*            if(pGameEvent == GameEvent.BLOCK_PLACE && CorruptionRecipe.canBeCorrupted(pContext.affectedState().getBlock(), pLevel)) {
                 Vec3 startPos = this.getListenerSource().getPosition(pLevel).get();
                 Vec3 dirNormal = new Vec3(pPos.x - startPos.x, pPos.y - startPos.y, pPos.z - startPos.z).normalize();
                 Optional<Block> corrupted = CorruptionRecipe.getCorruptedBlock(pContext.affectedState().getBlock(), pLevel);
                 BlockPos blockPos = BlockPos.containing(pPos);
                 corrupted.ifPresent(block -> {
-
                     ModPacketHandler.CHANNEL.sendToClientsAround(new CorruptedSludgePacket (startPos.toVector3f(), pPos.toVector3f(), dirNormal.toVector3f()), pLevel, pPos , getListenerRadius());
 
-                    if(pLevel.getBlockState(BlockPos.containing(pPos)).getBlock() instanceof net.nikdo53.moresnifferflowers.blocks.Corruptable corruptable) {
+                    if(pLevel.getBlockState(BlockPos.containing(pPos)).getBlock() instanceof net.abraxator.moresnifferflowers.blocks.Corruptable corruptable) {
                         corruptable.onCorrupt(pLevel, blockPos, pLevel.getBlockState(BlockPos.containing(pPos)), block);
                     } else {
                         pLevel.setBlockAndUpdate(BlockPos.containing(pPos), block.withPropertiesOf(pContext.affectedState()));
@@ -129,12 +135,10 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
                 });
 
                 return corrupted.isPresent();
-            }
+            }*/
 
-         */
-
-            if(pGameEvent == GameEvent.BLOCK_DESTROY && pContext.affectedState().is(ModTags.ModBlockTags.CORRUPTED_SLUDGE) && !pPos.equals(this.positionSource.getPosition(pLevel).get()) && pContext.sourceEntity() instanceof Player player) {
-                var projectileNumber = pContext.affectedState().is(ModBlocks.CORRUPTED_LEAVES.get()) || pContext.affectedState().is(ModBlocks.CORRUPTED_LEAVES_BUSH.get())  ? pLevel.random.nextInt(1) + 1 : pLevel.random.nextInt(5) + 1;
+            if(pGameEvent == GameEvent.BLOCK_DESTROY && pContext.affectedState().is(ModTags.ModBlockTags.CORRUPTED_SLUDGE) && !pPos.equals(this.positionSource.getPosition(pLevel).get())) {
+                var projectileNumber = (pContext.affectedState().is(ModBlocks.CORRUPTED_LEAVES.get()) || pContext.affectedState().is(ModBlocks.CORRUPTED_LEAVES_BUSH.get())  ? pLevel.random.nextInt(1) : pLevel.random.nextInt(5)) + 2;
                 shootProjectiles(this.positionSource.getPosition(pLevel).get(), projectileNumber, pLevel);
                 entity.updateUses();
                 return true;
@@ -142,8 +146,6 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
 
             return false;
         }
-
-
         
         public static void shootProjectiles(Vec3 center, int projectileNumber, Level level) {
             var radius = 2.5;

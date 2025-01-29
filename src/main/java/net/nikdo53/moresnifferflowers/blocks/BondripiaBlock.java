@@ -9,6 +9,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -23,13 +24,14 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock, ModCropBlock {
+public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock, ModCropBlock, Corruptable {
     public BondripiaBlock(Properties p_49795_) {
         super(p_49795_);
         this.defaultBlockState()
@@ -74,7 +76,7 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, RandomSource random) {
         if(state.getValue(ModStateProperties.CENTER) && random.nextDouble() <= 0.3D && isMaxAge(state)) {
-            List<BlockPos> list = new ArrayList<>(BlockPos.betweenClosedStream(pos.north().east(), pos.south().west()).map(BlockPos::immutable).toList());
+            List<BlockPos> list = new java.util.ArrayList<>(BlockPos.betweenClosedStream(pos.north().east(), pos.south().west()).map(BlockPos::immutable).toList());
             Collections.shuffle(list);
             list = list.subList(0, random.nextInt(6));
             list.forEach(blockPos -> {
@@ -96,7 +98,6 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
                 for (int i = 0; i < 10; i++) {
                     if (isBondripable(pLevel, currentPos)) {
                         BlockState blockState = pLevel.getBlockState(currentPos);
-
 
                         if (blockState.getBlock() instanceof BonemealableBlock bonemealable && bonemealable.isValidBonemealTarget(pLevel, currentPos, blockState, false)) {
                             bonemealable.performBonemeal(pLevel, pRandom, currentPos, blockState);
@@ -130,7 +131,12 @@ public class BondripiaBlock extends SporeBlossomBlock implements ModEntityBlock,
             level.levelEvent(1047, blockPos, 0);
         }
     }
-    
+
+    @Override
+    public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
+        onCorruptByEntity(entity, pos, state, this, level);
+    }
+
     public void grow(Level level, BlockPos blockPos) {
         if(level.getBlockEntity(blockPos) instanceof BondripiaBlockEntity entity) {
             makeGrowOnBonemeal(level, entity.center, level.getBlockState(entity.center));
