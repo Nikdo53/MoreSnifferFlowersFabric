@@ -22,7 +22,7 @@ import net.nikdo53.moresnifferflowers.blocks.corrupted.CorruptedSlimeLayerBlock;
 import net.nikdo53.moresnifferflowers.blocks.corrupted.CorruptedSludgeBlock;
 import net.nikdo53.moresnifferflowers.blocks.cropressor.CropressorBlockBase;
 import net.nikdo53.moresnifferflowers.blocks.cropressor.CropressorBlockOut;
-import net.nikdo53.moresnifferflowers.blocks.giantcrops.GiantCropBlock;
+import net.nikdo53.moresnifferflowers.blocks.GiantCropBlock;
 import net.nikdo53.moresnifferflowers.blocks.rebrewingstand.RebrewingStandBlockBase;
 import net.nikdo53.moresnifferflowers.blocks.rebrewingstand.RebrewingStandBlockTop;
 import net.nikdo53.moresnifferflowers.blocks.signs.ModHangingSignBlock;
