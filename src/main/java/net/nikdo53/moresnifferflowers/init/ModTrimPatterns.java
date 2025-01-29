@@ -11,8 +11,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.armortrim.TrimPattern;
 
 public class ModTrimPatterns {
-
-
     public static final ResourceKey<TrimPattern> AROMA = ResourceKey.create(Registries.TRIM_PATTERN, MoreSnifferFlowers.loc("aroma"));
     public static final ResourceKey<TrimPattern> CARNAGE = ResourceKey.create(Registries.TRIM_PATTERN, MoreSnifferFlowers.loc("carnage"));
     public static final ResourceKey<TrimPattern> NETHER_WART = ResourceKey.create(Registries.TRIM_PATTERN, MoreSnifferFlowers.loc("nether_wart"));
