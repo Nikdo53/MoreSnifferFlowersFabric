@@ -3,7 +3,6 @@ package net.nikdo53.moresnifferflowers.init;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.level.block.state.properties.*;
 import net.nikdo53.moresnifferflowers.blockentities.CropressorBlockEntity;
-import net.nikdo53.moresnifferflowers.entities.BoblingEntity;
 
 public class ModStateProperties {
     public static final IntegerProperty AGE_1 = IntegerProperty.create("age", 0, 1);
@@ -14,7 +13,7 @@ public class ModStateProperties {
     public static final BooleanProperty FLIPPED = BooleanProperty.create("flipped");
     public static final EnumProperty<DyeColor> COLOR = EnumProperty.create("color", DyeColor.class);
     public static final BooleanProperty SHEARED = BooleanProperty.create("sheared");
-    public static final EnumProperty<BoblingEntity.Type> VIVICUS_TYPE = EnumProperty.create("vivicus_type", BoblingEntity.Type.class);
+    public static final BooleanProperty VIVICUS_TYPE = BooleanProperty.create("vivicus_type");
     public static final IntegerProperty LAYER = BlockStateProperties.LAYERS;
     public static final BooleanProperty CENTER = BooleanProperty.create("center");
     public static final BooleanProperty EMPTY = BooleanProperty.create("empty");

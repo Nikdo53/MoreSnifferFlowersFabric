@@ -5,7 +5,7 @@ import net.nikdo53.moresnifferflowers.init.ModEntityTypes;
 
 public class ModEvents {
 
-/*    public static void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
+   /* public static void onEntityAttributeCreation(EntityAttributeCreationEvent event) {
         event.put(ModEntityTypes.BOBLING.get(), BoblingEntity.createAttributes().build());
     }*/
 

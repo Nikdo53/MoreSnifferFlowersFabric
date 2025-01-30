@@ -72,8 +72,8 @@ public class MoreSnifferFlowersClient implements ClientModInitializer {
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.GIANT_WHEAT.get(), RenderType.cutout());
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.AMBER_BLOCK.get(), RenderType.translucent());
         BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.GARNET_BLOCK.get(), RenderType.translucent());
-        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.BONMEELIA.get(), RenderType.translucent());
-        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.BONWILTIA.get(), RenderType.translucent());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.BONMEELIA.get(), RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.BONWILTIA.get(), RenderType.cutout());
 
     }
 

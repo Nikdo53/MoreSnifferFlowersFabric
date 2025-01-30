@@ -1,6 +1,7 @@
 package net.nikdo53.moresnifferflowers.blockentities;
 
 import com.google.common.collect.Lists;
+import net.minecraft.world.effect.MobEffect;
 import net.nikdo53.moresnifferflowers.MoreSnifferFlowers;
 import net.nikdo53.moresnifferflowers.blocks.rebrewingstand.RebrewingStandBlockBase;
 import net.nikdo53.moresnifferflowers.client.gui.menu.RebrewingStandMenu;
@@ -208,11 +209,11 @@ public class RebrewingStandBlockEntity extends BaseContainerBlockEntity {
 
         for (int i = 0; i < listTag.size(); i++) {
             var potion = listTag.getCompound(i);
-            var id = potion.getString("fabric:id");
+            var id = potion.getInt("Id");
             var amp = potion.getByte("Amplifier") + (ingredient.is(Items.GLOWSTONE_DUST) ? 2 : defaultAmp);
             var dur = potion.getInt("Duration") + (ingredient.is(Items.REDSTONE) ? 12000 : defaultDur);
-            var splitId = id.split(":");
-            var instance = new MobEffectInstance(Objects.requireNonNull(BuiltInRegistries.MOB_EFFECT.get(new ResourceLocation(MoreSnifferFlowers.MOD_ID, "extracted"))), dur, amp);
+           // var splitId = id.split(":");
+            var instance = new MobEffectInstance(Objects.requireNonNull(BuiltInRegistries.MOB_EFFECT.get(BuiltInRegistries.MOB_EFFECT.getKey(Objects.requireNonNull(MobEffect.byId(id))))), dur, amp);
 
             durList.add(dur);
             ret.add(instance);
