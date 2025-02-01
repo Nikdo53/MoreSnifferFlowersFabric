@@ -44,6 +44,7 @@ public class MoreSnifferFlowers implements ModInitializer {
 		ModBannerPatterns.BANNER_PATTERNS.register();
 		ModRecipeSerializers.RECIPE_SERIALIZERS.register();
 		ModEntityTypes.init();
+		ModAdvancementCritters.init();
 
 		ModCauldronInteractions.bootstrap();
 		init();
