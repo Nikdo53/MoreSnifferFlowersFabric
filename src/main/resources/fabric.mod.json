@@ -2,14 +2,16 @@
 	"schemaVersion": 1,
 	"id": "moresnifferflowers",
 	"version": "${version}",
-	"name": "MoreSnifferFlowers",
-	"description": "This is an example description! Tell everyone what your mod is about!",
+	"name": "More Sniffer Flowers",
+	"description": "Minecraft mod expanding upon the sniffer, adding entire new mechanics, while keeping it somewhat vanilla friendly",
 	"authors": [
-		"Nikdo53"
+		"Nikdo53",
+		"Abraxator"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"issues": "https://github.com/Nikdo53/MoreSnifferFlowersFabric/issues",
+		"sources": "https://github.com/Nikdo53/MoreSnifferFlowersFabric",
+		"discord": "https://discord.gg/susFRftyRJ"
 	},
 	"license": "MIT",
 	"icon": "assets/moresnifferflowers/icon.png",
@@ -23,6 +25,9 @@
 		],
 		"client": [
 			"net.nikdo53.moresnifferflowers.MoreSnifferFlowersClient"
+		],
+		"jei_mod_plugin": [
+			"net.nikdo53.moresnifferflowers.compat.jei.MoreSnifferFlowersJEIPlugin"
 		]
 	},
 	"mixins": [
@@ -35,7 +40,4 @@
 		"fabric-api": "*"
 	},
 	"accessWidener" : "moresnifferflowers.accesswidener",
-	"suggests": {
-		"another-mod": "*"
-	}
 }
