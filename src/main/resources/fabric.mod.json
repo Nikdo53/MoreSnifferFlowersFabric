@@ -40,4 +40,6 @@
 		"fabric-api": "*"
 	},
 	"accessWidener" : "moresnifferflowers.accesswidener",
+	"suggests": {
+	}
 }
