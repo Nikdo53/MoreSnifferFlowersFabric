@@ -2,11 +2,11 @@
   "variants": {
     "": [
       {
-        "model": "moresnifferflowers:misc/dyescrapia_plant_stage3",
+        "model": "moresnifferflowers:misc/dyescrapia_plant_stage3_rotated",
         "weight": 1
       },
       {
-        "model": "moresnifferflowers:misc/dyescrapia_plant_stage3_rotated",
+        "model": "moresnifferflowers:misc/dyescrapia_plant_stage3",
         "weight": 1
       }
     ]

@@ -1,5 +1,10 @@
 package net.nikdo53.moresnifferflowers.entities;
 
+import net.minecraft.core.Direction;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.Mth;
+import net.minecraft.world.level.block.Blocks;
+import net.nikdo53.moresnifferflowers.blocks.Corruptable;
 import net.nikdo53.moresnifferflowers.init.ModBlocks;
 import net.nikdo53.moresnifferflowers.init.ModEntityTypes;
 import net.nikdo53.moresnifferflowers.init.ModItems;
@@ -78,30 +83,49 @@ public class CorruptedProjectile extends ThrowableItemProjectile {
     @Override
     protected void onHitBlock(BlockHitResult pResult) {
         super.onHitBlock(pResult);
-        var hitPos = pResult.getBlockPos();
-        
-        if(checkState(this.level().getBlockState(hitPos))) {
-            var state = this.level().getBlockState(hitPos);
+        var pos = pResult.getBlockPos();
+        var posRelative = pResult.getBlockPos().relative(pResult.getDirection());
+        var posRelativeBelow = pResult.getBlockPos().relative(pResult.getDirection()).below();
+
+        var state = this.level().getBlockState(pos);
+        var stateRelative = this.level().getBlockState(posRelative);
+        var stateRelativeBelow = this.level().getBlockState(pResult.getBlockPos().relative(pResult.getDirection()).below());
+
+        if(checkState(this.level().getBlockState(pResult.getBlockPos()))) {
             var layer = state.getValue(ModStateProperties.LAYER);
             this.level().setBlockAndUpdate(
-                    hitPos,
+                    pos,
                     ModBlocks.CORRUPTED_SLIME_LAYER.get().defaultBlockState().setValue(ModStateProperties.LAYER, layer + 1));
-        } else if (checkState(this.level().getBlockState(pResult.getBlockPos().above()))) {
-            var posAbove = hitPos.above();
-            var state = this.level().getBlockState(posAbove);
-            var layer = state.getValue(ModStateProperties.LAYER);
-            this.level().setBlockAndUpdate(
-                    posAbove,
-                    ModBlocks.CORRUPTED_SLIME_LAYER.get().defaultBlockState().setValue(ModStateProperties.LAYER, layer + 1));
+
         } else {
-           /* if(!transformBlock(this.level(), pResult.getBlockPos())) {
-                transformBlock(this.level(), pResult.getBlockPos().above());
+            // transformBlock(this.level(), pos);
+
+            if (checkState(this.level().getBlockState(pResult.getBlockPos().relative(pResult.getDirection())))) {
+                var layerRelative = stateRelative.getValue(ModStateProperties.LAYER);
                 this.level().setBlockAndUpdate(
-                        pResult.getBlockPos().relative(pResult.getDirection()),
-                        ModBlocks.CORRUPTED_SLIME_LAYER.get().defaultBlockState().setValue(ModStateProperties.LAYER, 1));
+                        posRelative,
+                        ModBlocks.CORRUPTED_SLIME_LAYER.get().defaultBlockState().setValue(ModStateProperties.LAYER, layerRelative + 1));
             }
 
-            */
+            if (stateRelative.is(Blocks.AIR) || stateRelative.is(BlockTags.FIRE) || (stateRelative.canBeReplaced() && !stateRelative.liquid())) {
+
+                    if(pResult.getDirection() == Direction.UP && !state.is(Blocks.AIR)) {
+                        this.level().setBlockAndUpdate(
+                                pResult.getBlockPos().relative(pResult.getDirection()),
+                                ModBlocks.CORRUPTED_SLIME_LAYER.get().defaultBlockState().setValue(ModStateProperties.LAYER, 1));
+                        this.discard();
+                    } else {
+                        CorruptedProjectile projectile = new CorruptedProjectile(this.level());
+                        projectile.setPos(this.getX(),this.getY(), this.getZ());
+                        projectile.setRot(this.getYRot(), Mth.PI / 90.0F);
+                        this.level().addFreshEntity(projectile);
+                    }
+
+            } else {
+           /*     if(CorruptionRecipe.canBeCorrupted(stateRelative.getBlock(), this.level())){
+                    transformBlock(this.level(), posRelative);
+                }*/
+            }
         }
         this.discard();
     }
@@ -113,11 +137,19 @@ public class CorruptedProjectile extends ThrowableItemProjectile {
         if(CorruptionRecipe.canBeCorrupted(state.getBlock(), level)) {
             Optional<Block> optional = CorruptionRecipe.getCorruptedBlock(state.getBlock(), level);
             optional.ifPresent(block -> {
-                if (level.getBlockState(blockPos).getBlock() instanceof net.nikdo53.moresnifferflowers.blocks.Corruptable corruptable) {
+                if (level.getBlockState(blockPos).getBlock() instanceof Corruptable corruptable) {
                     corruptable.onCorrupt(level, blockPos, level.getBlockState(blockPos), block);
                 } else {
                     level.setBlockAndUpdate(blockPos, block.withPropertiesOf(state));
                 }
+
+                state.getShape(level, blockPos).forAllBoxes((minX, minY, minZ, maxX, maxY, maxZ) -> {
+                    for (int i = 0; i < 2; i++) {
+                        for (Vec3 vec3 : generateTwoPoints(level, minX, minY, minZ, maxX, maxY, maxZ)) {
+                            this.level().broadcastEntityEvent(this, (byte) 4);
+                        }
+                    }
+                });
                 level.addParticle(
                         new DustParticleOptions(Vec3.fromRGB24(0x0443248).toVector3f(), 1.0F),
                         blockPos.getX() + level.random.nextDouble(), blockPos.getY() + level.random.nextDouble(), blockPos.getZ() + level.random.nextDouble(),
@@ -128,10 +160,22 @@ public class CorruptedProjectile extends ThrowableItemProjectile {
         }
         
         return false;
+    }*/
+
+    private Vec3[] generateTwoPoints(Level level, double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
+        Vec3[] points = new Vec3[2];
+        points[0] = new Vec3(
+                (double) level.random.nextIntBetweenInclusive((int) (minX * 10), (int) (maxX * 10)) / 10,
+                maxZ,
+                (double) level.random.nextIntBetweenInclusive((int) (minY * 10), (int) (maxY * 10)) / 10);
+        points[1] = new Vec3(
+                maxX,
+                (double) level.random.nextIntBetweenInclusive((int) (minZ * 10), (int) (maxZ * 10)) / 10,
+                (double) level.random.nextIntBetweenInclusive((int) (minY * 10), (int) (maxY * 10)) / 10);
+
+        return points;
     }
-
-
-    */
+    
     private static boolean checkState(BlockState state) {
         return state.is(ModBlocks.CORRUPTED_SLIME_LAYER.get()) && state.getValue(ModStateProperties.LAYER) != 8;
     }
