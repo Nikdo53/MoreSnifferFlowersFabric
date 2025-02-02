@@ -2,6 +2,7 @@ package net.nikdo53.moresnifferflowers.recipes;
 
 import com.google.common.collect.Maps;
 import com.google.gson.JsonElement;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.nikdo53.moresnifferflowers.init.ModBlocks;
 import net.nikdo53.moresnifferflowers.init.ModRecipeSerializers;
 import net.nikdo53.moresnifferflowers.init.ModRecipeTypes;
@@ -28,7 +29,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public record CorruptionRecipe(ResourceLocation id, String source, List<Map.Entry> list) {} /*implements Recipe<Container> {
+public record CorruptionRecipe(ResourceLocation id, String source, List<Entry> list) implements Recipe<Container> {
     public static final Map<Block, Block> HARDCODED_BLOCK = Util.make(Maps.newHashMap(), map -> {
         map.put(ModBlocks.DYESPRIA_PLANT.get(), ModBlocks.DYESCRAPIA_PLANT.get());
         map.put(ModBlocks.DAWNBERRY_VINE.get(), ModBlocks.GLOOMBERRY_VINE.get());
@@ -38,7 +39,8 @@ public record CorruptionRecipe(ResourceLocation id, String source, List<Map.Entr
         map.put(ModBlocks.AMBUSH_TOP.get(), ModBlocks.GARBUSH_TOP.get());
     });
     public static final List<Block> BLACKLIST = List.of(ModBlocks.CORRUPTED_LOG.get(), ModBlocks.STRIPPED_CORRUPTED_LOG.get(), ModBlocks.CORRUPTED_LEAVES.get(), ModBlocks.CORRUPTED_LEAVES_BUSH.get());
-    
+
+
     public boolean tagOrBlock() {
         return source.charAt(0) == '#';
     }
@@ -48,7 +50,7 @@ public record CorruptionRecipe(ResourceLocation id, String source, List<Map.Entr
     }
     
     public Optional<Block> inputBlock() {
-        return Optional.of(ForgeRegistries.BLOCKS.getValue(ResourceLocation.tryParse(source)));
+        return Optional.of(BuiltInRegistries.BLOCK.get(ResourceLocation.tryParse(source)));
     }
     
     @Override
@@ -56,7 +58,7 @@ public record CorruptionRecipe(ResourceLocation id, String source, List<Map.Entr
         var block = Block.byItem(container.getItem(0).getItem()).defaultBlockState();
         if(tagOrBlock()) {
             return block.is(inputTag().get());
-        } else if(ForgeRegistries.BLOCKS.getValue(ResourceLocation.tryParse(source)) != null) {
+        } else if((ResourceLocation.tryParse(source)) != null) {
             return block.is(inputBlock().get());
         } else throw (new ResourceLocationException(ResourceLocation.tryParse(source) + "must be a block or block tag"));
     }
@@ -73,13 +75,13 @@ public record CorruptionRecipe(ResourceLocation id, String source, List<Map.Entr
 
     public static Optional<Block> getCorruptedBlock(Block block, Level level) {
         Block hardcoded = HARDCODED_BLOCK.getOrDefault(block, Blocks.AIR);
-        
+
         if(hardcoded != Blocks.AIR) {
             return Optional.of(hardcoded);
         }
-        
-       *//* Optional<CorruptionRecipe> optionalRecipe = level.getRecipeManager().getRecipeFor(ModRecipeTypes.CORRUPTION.get(), new SimpleContainer(block.asItem().getDefaultInstance()), level);
-        return optionalRecipe.map(corruptionRecipe -> corruptionRecipe.getResultBlock(level.random));*//*
+
+        Optional<CorruptionRecipe> optionalRecipe = level.getRecipeManager().getRecipeFor(ModRecipeTypes.CORRUPTION.get(), new SimpleContainer(block.asItem().getDefaultInstance()), level);
+        return optionalRecipe.map(corruptionRecipe -> corruptionRecipe.getResultBlock(level.random));
 
         //for (Map.Entry<String, Block> entry : HARDCODED_BLOCK.entrySet()) {
         //    var source = entry.getKey();
@@ -87,7 +89,7 @@ public record CorruptionRecipe(ResourceLocation id, String source, List<Map.Entr
         //        TagKey<Block> tagKey = TagKey.create(Registries.BLOCK, ResourceLocation.tryParse(source.replace("#", "")));
         //        if(block.defaultBlockState().is(tagKey)) return Optional.of(entry.getValue());
         //    } else {
-        //        var block1 = ForgeRegistries.BLOCKS.getValue(ResourceLocation.tryBuild(source.split(":")[0], source.split(":")[1]));
+        //        var block1 = (ResourceLocation.tryBuild(source.split(":")[0], source.split(":")[1]));
         //        if(block1.defaultBlockState().is(block)) return Optional.of(entry.getValue());
         //    }
         //}
@@ -102,7 +104,7 @@ public record CorruptionRecipe(ResourceLocation id, String source, List<Map.Entr
 
         return getCorruptedBlock(block, level).isPresent();
     }
-    
+
     public Block getResultBlock(RandomSource randomSource) {
         int totalWeight = list.stream().mapToInt(Entry::weight).sum();
         int randomValue = randomSource.nextInt(totalWeight);
@@ -114,10 +116,10 @@ public record CorruptionRecipe(ResourceLocation id, String source, List<Map.Entr
                 return entry.block;
             }
         }
-        
+
         return Blocks.AIR;
     }
-    
+
     @Override
     public ItemStack getResultItem(RegistryAccess registryAccess) {
         return getResultBlock(Minecraft.getInstance().level.getRandom()).asItem().getDefaultInstance();
@@ -137,13 +139,13 @@ public record CorruptionRecipe(ResourceLocation id, String source, List<Map.Entr
     public RecipeType<?> getType() {
         return ModRecipeTypes.CORRUPTION.get();
     }
-    
+
     public record Entry(Block block, int weight) {
         public static Entry fromJsonElement(JsonElement element) {
-            Block block = ForgeRegistries.BLOCKS.getValue(ResourceLocation.tryParse(GsonHelper.getAsString(element.getAsJsonObject(), "block")));
+            Block block = BuiltInRegistries.BLOCK.get(ResourceLocation.tryParse(GsonHelper.getAsString(element.getAsJsonObject(), "block")));
             int weight = GsonHelper.getAsInt(element.getAsJsonObject(), "weight");
             
             return new Entry(block, weight);
         }
     }
-}*/
+}

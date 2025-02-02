@@ -19,6 +19,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
+import net.nikdo53.moresnifferflowers.recipes.CorruptionRecipe;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -27,7 +28,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-public class CorruptionCategory {} /*implements IRecipeCategory<CorruptionRecipe> {
+public class CorruptionCategory implements IRecipeCategory<CorruptionRecipe> {
     public static final RecipeType<CorruptionRecipe> CORRUPTION = RecipeType.create(MoreSnifferFlowers.MOD_ID, "corruption", CorruptionRecipe.class);
     private final IDrawable background;
     private final IDrawable icon;
@@ -74,7 +75,7 @@ public class CorruptionCategory {} /*implements IRecipeCategory<CorruptionRecipe
         if(recipe.tagOrBlock()) {
             TagKey<Block> tagKey = recipe.inputTag().get();
             List<ItemStack> items = StreamSupport.stream(BuiltInRegistries.BLOCK.getTagOrEmpty(tagKey).spliterator(), false)
-                    .map(Holder::get)
+                    .map(Holder::value)
                     .map(block -> block.asItem().getDefaultInstance())
                     .filter(itemStack -> !itemStack.isEmpty())
                     .toList();
@@ -103,4 +104,3 @@ public class CorruptionCategory {} /*implements IRecipeCategory<CorruptionRecipe
                 });
     }
 }
-*/

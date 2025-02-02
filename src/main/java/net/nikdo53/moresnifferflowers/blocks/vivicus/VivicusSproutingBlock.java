@@ -1,5 +1,6 @@
 package net.nikdo53.moresnifferflowers.blocks.vivicus;
 
+import net.minecraft.world.item.DyeColor;
 import net.nikdo53.moresnifferflowers.blocks.ColorableVivicusBlock;
 import net.nikdo53.moresnifferflowers.blocks.ModCropBlock;
 import net.nikdo53.moresnifferflowers.entities.BoblingEntity;
@@ -21,7 +22,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 public class VivicusSproutingBlock extends VivicusLeavesBlock implements ModCropBlock, ColorableVivicusBlock {
     public VivicusSproutingBlock(Properties p_54422_) {
         super(p_54422_);
-        defaultBlockState().setValue(ModStateProperties.VIVICUS_TYPE, false);
+        this.registerDefaultState(defaultBlockState().setValue(ModStateProperties.COLOR, DyeColor.WHITE).setValue(ModStateProperties.VIVICUS_TYPE, false));
     }
 
     @Override

@@ -1,11 +1,14 @@
 package net.nikdo53.moresnifferflowers;
 
+import io.github.fabricators_of_create.porting_lib.event.common.AddPackFindersEvent;
+import io.github.fabricators_of_create.porting_lib.resources.PathPackResources;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
-import net.minecraft.client.gui.screens.MenuScreens;
+import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
 import net.minecraft.client.model.BoatModel;
 import net.minecraft.client.model.ChestBoatModel;
 import net.minecraft.client.renderer.RenderType;
@@ -14,11 +17,13 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.client.renderer.blockentity.HangingSignRenderer;
 import net.minecraft.client.renderer.blockentity.SignRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
-import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.repository.Pack;
+import net.minecraft.server.packs.repository.PackSource;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.nikdo53.moresnifferflowers.client.ClientEvents;
 import net.nikdo53.moresnifferflowers.client.ModColorHandler;
-import net.nikdo53.moresnifferflowers.client.gui.screen.RebrewingStandScreen;
 import net.nikdo53.moresnifferflowers.client.model.ModModelLayerLocations;
 import net.nikdo53.moresnifferflowers.client.model.block.BondripiaModel;
 import net.nikdo53.moresnifferflowers.client.model.block.CropressorModel;
@@ -36,7 +41,6 @@ import net.nikdo53.moresnifferflowers.client.renderer.entity.CorruptedProjectile
 import net.nikdo53.moresnifferflowers.client.renderer.entity.DragonflyRenderer;
 import net.nikdo53.moresnifferflowers.client.renderer.entity.ModBoatRenderer;
 import net.nikdo53.moresnifferflowers.init.*;
-import net.nikdo53.moresnifferflowers.networking.ModPacketHandler;
 
 public class MoreSnifferFlowersClient implements ClientModInitializer {
 
@@ -54,6 +58,7 @@ public class MoreSnifferFlowersClient implements ClientModInitializer {
         registerWoodTypes(ModWoodTypes.VIVICUS);
         registerRenderTypes();
         ClientEvents.init();
+        AddPackFindersEvent.EVENT.register(MoreSnifferFlowersClient::addPackFinders);
 
     }
 
@@ -136,21 +141,15 @@ public class MoreSnifferFlowersClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(ModParticles.GIANT_CROP.get(), GiantCropParticle.Provider::new);
     }
 
-  /*  @SubscribeEvent
     public static void addPackFinders(AddPackFindersEvent event) {
+        ModContainer mf = FabricLoader.getInstance().getModContainer(MoreSnifferFlowers.MOD_ID).get();
         if(event.getPackType() == PackType.CLIENT_RESOURCES) {
-            IModFileInfo iModFileInfo = ModList.get().getModFileById(MoreSnifferFlowers.MOD_ID);
-            if(iModFileInfo == null) {
-                MoreSnifferFlowers.LOGGER.error("Could not find More Sniffer Flowers mod file info; built-in resource packs will be missing!");
-            }
-
-            IModFile modFile = iModFileInfo.getFile();
             event.addRepositorySource(pOnLoad -> {
                 Pack rtx = Pack.readMetaAndCreate(
                         MoreSnifferFlowers.loc("more_sniffer_flowers_rtx").toString(),
                         Component.literal("RTX More Sniffer Flowers"),
                         false,
-                        pId -> new PathPackResources(pId, modFile.findResource("resourcepacks/more_sniffer_flowers_rtx"), true),
+                        pId -> new PathPackResources(pId, true, mf.findPath("resourcepacks/more_sniffer_flowers_rtx").get()),
                         PackType.CLIENT_RESOURCES,
                         Pack.Position.TOP,
                         PackSource.BUILT_IN);
@@ -160,12 +159,11 @@ public class MoreSnifferFlowersClient implements ClientModInitializer {
             });
 
             event.addRepositorySource(pOnLoad -> {
-
                 Pack customStyleGUI = Pack.readMetaAndCreate(
                         MoreSnifferFlowers.loc("more_sniffer_flowers_boring").toString(),
                         Component.literal("Boring More Sniffer Flowers"),
                         false,
-                        pId -> new PathPackResources(pId, modFile.findResource("resourcepacks/more_sniffer_flowers_boring"), true),
+                        pId -> new PathPackResources(pId, true, mf.findPath("resourcepacks/more_sniffer_flowers_boring").get()),
                         PackType.CLIENT_RESOURCES,
                         Pack.Position.TOP,
                         PackSource.BUILT_IN);
@@ -176,5 +174,4 @@ public class MoreSnifferFlowersClient implements ClientModInitializer {
         }
     }
 
-   */
 }

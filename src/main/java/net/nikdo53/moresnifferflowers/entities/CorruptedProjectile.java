@@ -28,6 +28,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import net.nikdo53.moresnifferflowers.recipes.CorruptionRecipe;
 
 import java.util.Optional;
 
@@ -98,7 +99,7 @@ public class CorruptedProjectile extends ThrowableItemProjectile {
                     ModBlocks.CORRUPTED_SLIME_LAYER.get().defaultBlockState().setValue(ModStateProperties.LAYER, layer + 1));
 
         } else {
-            // transformBlock(this.level(), pos);
+             transformBlock(this.level(), pos);
 
             if (checkState(this.level().getBlockState(pResult.getBlockPos().relative(pResult.getDirection())))) {
                 var layerRelative = stateRelative.getValue(ModStateProperties.LAYER);
@@ -122,15 +123,15 @@ public class CorruptedProjectile extends ThrowableItemProjectile {
                     }
 
             } else {
-           /*     if(CorruptionRecipe.canBeCorrupted(stateRelative.getBlock(), this.level())){
+                if(CorruptionRecipe.canBeCorrupted(stateRelative.getBlock(), this.level())){
                     transformBlock(this.level(), posRelative);
-                }*/
+                }
             }
         }
         this.discard();
     }
     
-   /* private boolean transformBlock(Level level, BlockPos blockPos) {
+    private boolean transformBlock(Level level, BlockPos blockPos) {
         var pos = BlockPos.findClosestMatch(blockPos, 1, 1, blockPos1 -> CorruptionRecipe.canBeCorrupted(level.getBlockState(blockPos1).getBlock(), level));
         var state = level.getBlockState(blockPos);
         
@@ -160,7 +161,7 @@ public class CorruptedProjectile extends ThrowableItemProjectile {
         }
         
         return false;
-    }*/
+    }
 
     private Vec3[] generateTwoPoints(Level level, double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
         Vec3[] points = new Vec3[2];

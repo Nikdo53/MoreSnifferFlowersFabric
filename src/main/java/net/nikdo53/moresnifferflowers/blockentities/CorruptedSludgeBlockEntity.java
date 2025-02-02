@@ -23,6 +23,7 @@ import net.minecraft.world.level.gameevent.GameEventListener;
 import net.minecraft.world.level.gameevent.PositionSource;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.nikdo53.moresnifferflowers.recipes.CorruptionRecipe;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -110,7 +111,7 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
                 return false;
             }
 
-/*            if(pGameEvent == GameEvent.BLOCK_PLACE && CorruptionRecipe.canBeCorrupted(pContext.affectedState().getBlock(), pLevel)) {
+            if(pGameEvent == GameEvent.BLOCK_PLACE && CorruptionRecipe.canBeCorrupted(pContext.affectedState().getBlock(), pLevel)) {
                 Vec3 startPos = this.getListenerSource().getPosition(pLevel).get();
                 Vec3 dirNormal = new Vec3(pPos.x - startPos.x, pPos.y - startPos.y, pPos.z - startPos.z).normalize();
                 Optional<Block> corrupted = CorruptionRecipe.getCorruptedBlock(pContext.affectedState().getBlock(), pLevel);
@@ -118,7 +119,7 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
                 corrupted.ifPresent(block -> {
                     ModPacketHandler.CHANNEL.sendToClientsAround(new CorruptedSludgePacket (startPos.toVector3f(), pPos.toVector3f(), dirNormal.toVector3f()), pLevel, pPos , getListenerRadius());
 
-                    if(pLevel.getBlockState(BlockPos.containing(pPos)).getBlock() instanceof net.abraxator.moresnifferflowers.blocks.Corruptable corruptable) {
+                    if(pLevel.getBlockState(BlockPos.containing(pPos)).getBlock() instanceof net.nikdo53.moresnifferflowers.blocks.Corruptable corruptable) {
                         corruptable.onCorrupt(pLevel, blockPos, pLevel.getBlockState(BlockPos.containing(pPos)), block);
                     } else {
                         pLevel.setBlockAndUpdate(BlockPos.containing(pPos), block.withPropertiesOf(pContext.affectedState()));
@@ -135,7 +136,7 @@ public class CorruptedSludgeBlockEntity extends ModBlockEntity implements GameEv
                 });
 
                 return corrupted.isPresent();
-            }*/
+            }
 
             if(pGameEvent == GameEvent.BLOCK_DESTROY && pContext.affectedState().is(ModTags.ModBlockTags.CORRUPTED_SLUDGE) && !pPos.equals(this.positionSource.getPosition(pLevel).get())) {
                 var projectileNumber = (pContext.affectedState().is(ModBlocks.CORRUPTED_LEAVES.get()) || pContext.affectedState().is(ModBlocks.CORRUPTED_LEAVES_BUSH.get())  ? pLevel.random.nextInt(1) : pLevel.random.nextInt(5)) + 2;

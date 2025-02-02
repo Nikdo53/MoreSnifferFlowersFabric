@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 public class VivicusTreeGrower {
     @Nullable
     private ResourceKey<ConfiguredFeature<?, ?>> getConfiguredFeature(RandomSource pRandom, BlockState saplingState) {
-        return saplingState.getValue(ModStateProperties.VIVICUS_TYPE) == false ? ModConfiguredFeatures.CORRUPTED_VIVICUS_TREE : ModConfiguredFeatures.CURED_VIVICUS_TREE;
+        return !saplingState.getValue(ModStateProperties.VIVICUS_TYPE) ? ModConfiguredFeatures.CORRUPTED_VIVICUS_TREE : ModConfiguredFeatures.CURED_VIVICUS_TREE;
     }
 
     public boolean growTree(ServerLevel pLevel, ChunkGenerator pChunkGenerator, BlockPos pPos, BlockState saplingState, RandomSource pRandom) {
