@@ -101,7 +101,7 @@ public class ForgeEvents {
         }
     }
 
-/*    public static void onGetAdvancement(AdvancementEvent.AdvancementEarnEvent event) {
+ /*   public static void onGetAdvancement(AdvancementEvent.AdvancementEarnEvent event) {
         if(event.getAdvancement().getId().equals(ResourceLocation.tryParse("husbandry/obtain_sniffer_egg")) && event.getEntity() instanceof ServerPlayer serverPlayer) {
             ModAdvancementCritters.EARN_SNIFFER_ADVANCEMENT.trigger(serverPlayer);
         }

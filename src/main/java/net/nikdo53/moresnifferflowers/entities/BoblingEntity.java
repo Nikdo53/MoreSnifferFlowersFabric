@@ -3,6 +3,7 @@ package net.nikdo53.moresnifferflowers.entities;
 import net.nikdo53.moresnifferflowers.MoreSnifferFlowers;
 import net.nikdo53.moresnifferflowers.entities.goals.BoblingAttackPlayerGoal;
 import net.nikdo53.moresnifferflowers.entities.goals.BoblingAvoidPlayerGoal;
+import net.nikdo53.moresnifferflowers.init.ModAdvancementCritters;
 import net.nikdo53.moresnifferflowers.init.ModBlocks;
 import net.nikdo53.moresnifferflowers.init.ModEntityTypes;
 import net.nikdo53.moresnifferflowers.init.ModItems;
@@ -15,6 +16,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializer;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.Mth;
 import net.minecraft.util.StringRepresentable;
@@ -157,6 +159,10 @@ public class BoblingEntity extends PathfinderMob {
             var checkR = 1.5;
             Set<Vec3> set = new HashSet<>();
 
+            if (pDamageSource.getEntity() instanceof ServerPlayer serverPlayer) {
+                ModAdvancementCritters.BOBLING_ATTACK.trigger(serverPlayer);
+            }
+
             for (double theta = 0; theta <= Mth.TWO_PI * 3; theta += Mth.TWO_PI / random.nextIntBetweenInclusive(2, 5)) {
                 generateProjectile(set, r, theta + this.level().random.nextDouble(), checkR);
             }
@@ -176,7 +182,7 @@ public class BoblingEntity extends PathfinderMob {
     @Override
     public void tick() {
         super.tick();
-
+        
         if (this.isPlanting()) {
             this.plantingProgress++;
             if (plantingProgress >= MAX_PLANTING_PROGRESS) {
@@ -184,7 +190,7 @@ public class BoblingEntity extends PathfinderMob {
                 this.setPlanting(false);
             }
         }
-
+        
         if(this.level().isClientSide) {
             this.setupAnimationStates();
         }
@@ -202,9 +208,9 @@ public class BoblingEntity extends PathfinderMob {
                 MoreSnifferFlowers.LOGGER.error("NULL");
             }
         }
-
+        
         super.aiStep();
-
+        
         if (canPlant()) {
             this.plantingProgress = 0;
             this.setPlanting(true);
@@ -218,14 +224,14 @@ public class BoblingEntity extends PathfinderMob {
             this.discard();
         }
     }
-
+    
     private boolean canPlant() {
         return
-                this.isRunning() &&
-                        this.isAlive() &&
-                        !this.isPlanting() &&
-                        this.getWantedPos() != null &&
-                        this.position().closerThan(getWantedPos().getCenter(), 0.75F);
+                this.isRunning() && 
+                this.isAlive() && 
+                !this.isPlanting() && 
+                this.getWantedPos() != null && 
+                this.position().closerThan(getWantedPos().getCenter(), 0.75F);
     }
 
     private void setupAnimationStates() {

@@ -9,6 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.phys.Vec3;
 import net.nikdo53.moresnifferflowers.entities.BoblingEntity;
+import net.nikdo53.moresnifferflowers.init.ModAdvancementCritters;
 import net.nikdo53.moresnifferflowers.init.ModBlocks;
 import net.nikdo53.moresnifferflowers.init.ModStateProperties;
 
@@ -34,7 +35,7 @@ public class VivicusAntidoteItem extends Item {
             }
             
             if (player instanceof ServerPlayer serverPlayer) {
-                CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(serverPlayer, blockPos, pContext.getItemInHand());
+                ModAdvancementCritters.USED_CURE.trigger(serverPlayer);
             }
             
             return InteractionResult.sidedSuccess(level.isClientSide);

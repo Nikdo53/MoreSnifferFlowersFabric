@@ -13,7 +13,6 @@ import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.nikdo53.moresnifferflowers.MoreSnifferFlowers;
-import net.nikdo53.moresnifferflowers.blocks.BoblingHeadBlock;
 import net.nikdo53.moresnifferflowers.blocks.DawnberryVineBlock;
 import net.nikdo53.moresnifferflowers.blocks.*;
 import net.nikdo53.moresnifferflowers.blocks.corrupted.CorruptedGrassBlock;
@@ -85,7 +84,6 @@ public class ModBlocks {
     public static final RegistryObject<Block> CROPRESSOR_CENTER = registerBlockNoItem("cropressor_center", () ->  new CropressorBlockBase(BlockBehaviour.Properties.copy(Blocks.ANVIL), CropressorBlockBase.Part.CENTER));
     public static final RegistryObject<Block> CROPRESSOR_OUT = registerBlockNoItem("cropressor_out", () ->  new CropressorBlockOut(BlockBehaviour.Properties.copy(Blocks.ANVIL), CropressorBlockBase.Part.OUT));
 
-
     public static final RegistryObject<Block> REBREWING_STAND_BOTTOM = registerBlockNoItem("rebrewing_stand_bottom", () -> new RebrewingStandBlockBase(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(0.5F).noOcclusion()));
     public static final RegistryObject<Block> REBREWING_STAND_TOP = registerBlockNoItem("rebrewing_stand_top", () -> new RebrewingStandBlockTop(BlockBehaviour.Properties.of().requiresCorrectToolForDrops().strength(0.5F).noOcclusion()));
 
@@ -139,7 +137,6 @@ public class ModBlocks {
     public static final RegistryObject<Block> VIVICUS_HANGING_SIGN = registerBlockNoItem("vivicus_hanging_sign", () -> new VivicusHangingSignBlock(ModWoodTypes.VIVICUS, BlockBehaviour.Properties.copy(Blocks.CHERRY_HANGING_SIGN)));
     public static final RegistryObject<Block> VIVICUS_WALL_HANGING_SIGN = registerBlockNoItem("vivicus_wall_hanging_sign", () -> new VivicusHangingWallSignBlock(ModWoodTypes.VIVICUS, BlockBehaviour.Properties.copy(Blocks.CHERRY_WALL_HANGING_SIGN)));
 
-    public static final RegistryObject<Block> BOBLING_HEAD = registerBlockNoItem("bobling_head", () -> new BoblingHeadBlock(BlockBehaviour.Properties.copy(Blocks.MOSS_BLOCK).noOcclusion()));
     public static final RegistryObject<Block> BOBLING_SACK = registerBlockNoItem("bobling_sack", () -> new BoblingSackBlock(BlockBehaviour.Properties.copy(Blocks.CHERRY_LEAVES)));
 
     public static final RegistryObject<FlowerPotBlock> POTTED_DYESPRIA = registerBlockNoItem("potted_dyespria", () -> new FlowerPotBlock(DYESPRIA_PLANT.get(), BlockBehaviour.Properties.copy(Blocks.FLOWER_POT)));

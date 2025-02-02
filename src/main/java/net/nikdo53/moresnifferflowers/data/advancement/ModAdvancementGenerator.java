@@ -13,6 +13,8 @@ import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.ItemUsedOnLocationTrigger;
 import net.minecraft.advancements.critereon.LocationPredicate;
+import net.minecraft.advancements.critereon.*;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Items;
 
@@ -117,7 +119,7 @@ public class ModAdvancementGenerator extends FabricAdvancementProvider {
                 .display(
                         ModItems.CORRUPTED_BOBLING_CORE.get(),
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.bobling", "Fight back!"),
-                        Component.translatableWithFallback("advancements.more_sniffer_flowers.bobling.desc", "Fight back the tree madness"),
+                        Component.translatableWithFallback("advancements.more_sniffer_flowers.bobling.desc", "Fight back the trees"),
                         null,
                         FrameType.TASK,
                         true,
@@ -132,7 +134,7 @@ public class ModAdvancementGenerator extends FabricAdvancementProvider {
                 .display(
                         ModItems.CORRUPTED_SLIME_BALL.get(),
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.corruption", "Evil Blocks"),
-                        Component.translatableWithFallback("advancements.more_sniffer_flowers.corruption.desc", "Corrupt blocks around you, to make them evil"),
+                        Component.translatableWithFallback("advancements.more_sniffer_flowers.corruption.desc", "Corrupt blocks around you, making them evil"),
                         null,
                         FrameType.TASK,
                         true,
@@ -154,8 +156,7 @@ public class ModAdvancementGenerator extends FabricAdvancementProvider {
                         true,
                         false
                 )
-                .addCriterion("used_antidote",
-                        ItemUsedOnLocationTrigger.TriggerInstance.itemUsedOnBlock(LocationPredicate.Builder.location(), ItemPredicate.Builder.item().of(ModItems.VIVICUS_ANTIDOTE.get())))
+                .addCriterion("dye_boat", ModAdvancementCritters.usedCure())
                 .save(consumer, MoreSnifferFlowers.loc("cure").toString());
 
         var ambush = Advancement.Builder.advancement()
@@ -163,7 +164,7 @@ public class ModAdvancementGenerator extends FabricAdvancementProvider {
                 .display(
                         ModItems.AMBUSH_SEEDS.get(),
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.ambush", "Ambushed by great loot"),
-                        Component.translatableWithFallback("advancements.more_sniffer_flowers.ambush.desc", "Break an amber block to get whats inside (the \"great\" part not quaranteed)"),
+                        Component.translatableWithFallback("advancements.more_sniffer_flowers.ambush.desc", "Break an amber block to get whats inside (the \"great\" part not guaranteed)"),
                         null,
                         FrameType.TASK,
                         true,
