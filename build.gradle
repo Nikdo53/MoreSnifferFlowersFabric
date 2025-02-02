@@ -89,6 +89,7 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	compileOnly("curse.maven:RightClickHarvest-${RCH_id}:${RCH_version}")
+	compileOnly "curse.maven:jamlib-623764:4662529"
 	
 }
 
