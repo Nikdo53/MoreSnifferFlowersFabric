@@ -117,7 +117,7 @@ public class ModConfiguredFeatures {
                                         1,
                                         0,
                                         BlockStateProvider.simple(ModBlocks.VIVICUS_LEAVES_SPROUT.get().defaultBlockState()
-                                                .setValue(ModStateProperties.VIVICUS_TYPE, false)),
+                                                .setValue(ModStateProperties.VIVICUS_CURED, true)),
                                         2,
                                         List.of(Direction.DOWN)
                                 )
@@ -132,7 +132,7 @@ public class ModConfiguredFeatures {
                                         1,
                                         0,
                                         BlockStateProvider.simple(ModBlocks.VIVICUS_LEAVES_SPROUT.get().defaultBlockState()
-                                                .setValue(ModStateProperties.VIVICUS_TYPE, false)),
+                                                .setValue(ModStateProperties.VIVICUS_CURED, false)),
                                         2,
                                         List.of(Direction.DOWN)
                                 )

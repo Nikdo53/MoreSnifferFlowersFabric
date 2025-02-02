@@ -270,11 +270,11 @@ public class ModBlockLoottableProvider extends ModdedBlockLootSubProvider {
                         )
         );
 
-    /*    dropPottedContents(ModBlocks.POTTED_DYESPRIA.get());
+        dropPottedContents(ModBlocks.POTTED_DYESPRIA.get());
         dropPottedContents(ModBlocks.POTTED_CORRUPTED_SAPLING.get());
         dropPottedContents(ModBlocks.POTTED_VIVICUS_SAPLING.get());
 
-     */
+
         
         dropOther(ModBlocks.CORRUPTED_SIGN.get(), ModItems.CORRUPTED_SIGN.get());
         dropOther(ModBlocks.CORRUPTED_WALL_SIGN.get(), ModItems.CORRUPTED_SIGN.get());
@@ -290,8 +290,23 @@ public class ModBlockLoottableProvider extends ModdedBlockLootSubProvider {
         add(ModBlocks.ACID_FILLED_CAULDRON.get(), createSingleItemTable(Blocks.CAULDRON));
 
 
-        add(ModBlocks.BONDRIPIA.get(), noDrop());
-        add(ModBlocks.ACIDRIPIA.get(), noDrop());
+        add(ModBlocks.BONDRIPIA.get(),
+                LootTable.lootTable()
+                        .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                                .add(LootItem.lootTableItem(ModItems.BONDRIPIA_SEEDS.get()))
+                                .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.BONDRIPIA.get())
+                                        .setProperties(StatePropertiesPredicate.Builder.properties()
+                                                .hasProperty(ModStateProperties.CENTER, true)))
+                        ));
+
+        add(ModBlocks.ACIDRIPIA.get(),
+                LootTable.lootTable()
+                .withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                        .add(LootItem.lootTableItem(ModItems.ACIDRIPIA_SEEDS.get()))
+                        .when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(ModBlocks.ACIDRIPIA.get())
+                                .setProperties(StatePropertiesPredicate.Builder.properties()
+                                        .hasProperty(ModStateProperties.CENTER, true)))
+                ));
     }
 
     private LootTable.Builder giantCropLoot(Item crop, Item cropressed, Item special, Item piece, Item trim) {

@@ -22,7 +22,7 @@ import net.nikdo53.moresnifferflowers.entities.boat.VivicusChestBoatEntity;
 public class ModEntityTypes {
     public static LazyRegistrar<EntityType<?>> ENTITIES = LazyRegistrar.create(BuiltInRegistries.ENTITY_TYPE, MoreSnifferFlowers.MOD_ID);
 
-    public static final RegistryObject<EntityType<BoblingEntity>> BOBLING = buildNoEgg(MoreSnifferFlowers.loc("bobling"), makeBuilder(BoblingEntity::new, MobCategory.MISC, 0.375F, 0.8125F, 80, 3), false);
+    public static final RegistryObject<EntityType<BoblingEntity>> BOBLING = buildNoEgg(MoreSnifferFlowers.loc("bobling"), makeBuilder(BoblingEntity::new, MobCategory.CREATURE, 0.375F, 0.8125F, 80, 3), false);
     public static final RegistryObject<EntityType<DragonflyProjectile>> DRAGONFLY = buildNoEgg(MoreSnifferFlowers.loc("dragonfly"), makeBuilder(DragonflyProjectile::new, MobCategory.MISC, 0.21875F, 0.21875F, 80, 3), false);
     public static final RegistryObject<EntityType<CorruptedProjectile>> CORRUPTED_SLIME_BALL = buildNoEgg(MoreSnifferFlowers.loc("corrupted_slime_ball"), makeBuilder(CorruptedProjectile::new, MobCategory.MISC, 0.25F, 0.25F, 80, 3), false);
     public static final RegistryObject<EntityType<ModBoatEntity>> MOD_CORRUPTED_BOAT = buildNoEgg(MoreSnifferFlowers.loc("mod_corrupted_boat"), makeBuilder(ModBoatEntity::new, MobCategory.MISC, 1.375f, 0.5625f, 80, 3), false);

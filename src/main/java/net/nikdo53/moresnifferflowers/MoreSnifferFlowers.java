@@ -10,6 +10,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.FlowerPotBlock;
+import net.nikdo53.moresnifferflowers.data.loot.ModEntityLoot;
 import net.nikdo53.moresnifferflowers.events.ForgeEvents;
 import net.nikdo53.moresnifferflowers.init.*;
 import net.nikdo53.moresnifferflowers.networking.ModPacketHandler;
@@ -29,6 +30,7 @@ public class MoreSnifferFlowers implements ModInitializer {
 	public void onInitialize() {
 		ModBlocks.BLOCKS.register();
 		ModItems.ITEMS.register();
+		ModLoot.CONDITIONS.register();
 		ModFeatures.FEATURES.register();
 		ModCreativeTabs.TABS.register();
 		ModMobEffects.EFFECTS.register();

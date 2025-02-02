@@ -1,6 +1,7 @@
 package net.nikdo53.moresnifferflowers.data.advancement;
 
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.minecraft.world.level.block.Blocks;
 import net.nikdo53.moresnifferflowers.MoreSnifferFlowers;
 import net.nikdo53.moresnifferflowers.init.ModAdvancementCritters;
 import net.nikdo53.moresnifferflowers.init.ModBlocks;
@@ -38,7 +39,7 @@ public class ModAdvancementGenerator extends FabricAdvancementProvider {
                         true,
                         false,
                         false)
-                .addCriterion("has_advancement", ModAdvancementCritters.getSnifferAdvancement())
+                .addCriterion("has_advancement", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(Blocks.SNIFFER_EGG).build()))
                 .save(consumer, MoreSnifferFlowers.loc("root").toString());
 
         var dyespria_plant = Advancement.Builder.advancement()
@@ -119,7 +120,7 @@ public class ModAdvancementGenerator extends FabricAdvancementProvider {
                 .display(
                         ModItems.CORRUPTED_BOBLING_CORE.get(),
                         Component.translatableWithFallback("advancements.more_sniffer_flowers.bobling", "Fight back!"),
-                        Component.translatableWithFallback("advancements.more_sniffer_flowers.bobling.desc", "Fight back the trees"),
+                        Component.translatableWithFallback("advancements.more_sniffer_flowers.bobling.desc", "Fight back against the trees"),
                         null,
                         FrameType.TASK,
                         true,

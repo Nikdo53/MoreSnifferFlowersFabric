@@ -80,7 +80,7 @@ dependencies {
 
 	modImplementation("mezz.jei:jei-${minecraft_version}-fabric:${jei_version}")
 
-	def portingLibs = ["accessors", "asm", "attributes", "base", "blocks", "brewing", "chunk_loading", "client_events", "common", "core", "data", "entity", "extensions", "fluids", "gametest", "gui_utils", "items", "lazy_registration", "level_events", "loot", "mixin_extensions", "model_builders", "model_generators", "model_loader", "model_materials", "models", "networking", "obj_loader", "recipe_book_categories", "registries", "tags", "tool_actions", "transfer", "utility"]
+	def portingLibs = [ "attributes", "base", "blocks", "brewing", "client_events", "common", "core", "data", "entity", "extensions", "gui_utils", "items", "lazy_registration", "level_events", "loot", "mixin_extensions", "model_generators", "model_loader", "model_materials", "models", "networking", "obj_loader", "recipe_book_categories", "registries", "tags", "tool_actions", "utility"]
 	for (final def lib in portingLibs) {
 		modImplementation(include("io.github.fabricators_of_create.Porting-Lib:$lib:${property("porting_lib_version")}"))
 	}
@@ -88,9 +88,10 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	compileOnly("curse.maven:RightClickHarvest-${RCH_id}:${RCH_version}")
-	compileOnly "curse.maven:jamlib-623764:4662529"
-	
+	modImplementation("curse.maven:RightClickHarvest-${RCH_id}:${RCH_version}")
+	modImplementation "curse.maven:jamlib-623764:4662529"
+
+
 }
 
 processResources {
@@ -111,8 +112,8 @@ java {
 	// If you remove this line, sources will not be generated.
 	withSourcesJar()
 
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
+	sourceCompatibility = JavaVersion.VERSION_17
+	targetCompatibility = JavaVersion.VERSION_17
 }
 
 jar {

@@ -12,13 +12,13 @@ import net.minecraft.world.level.block.state.StateDefinition;
 public class VivicusRotatedPillarBlock extends RotatedPillarBlock implements ColorableVivicusBlock {
     public VivicusRotatedPillarBlock(Properties p_55926_) {
         super(p_55926_);
-        this.registerDefaultState(defaultBlockState().setValue(ModStateProperties.COLOR, DyeColor.WHITE).setValue(ModStateProperties.VIVICUS_TYPE, false));
+        this.registerDefaultState(defaultBlockState().setValue(ModStateProperties.COLOR, DyeColor.WHITE).setValue(ModStateProperties.VIVICUS_CURED, false));
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> pBuilder) {
         super.createBlockStateDefinition(pBuilder);
         pBuilder.add(ModStateProperties.COLOR);
-        pBuilder.add(ModStateProperties.VIVICUS_TYPE);
+        pBuilder.add(ModStateProperties.VIVICUS_CURED);
     }
 }

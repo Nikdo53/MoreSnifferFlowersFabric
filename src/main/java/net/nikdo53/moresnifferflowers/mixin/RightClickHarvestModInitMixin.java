@@ -1,7 +1,6 @@
 package net.nikdo53.moresnifferflowers.mixin;
 
 import io.github.jamalam360.rightclickharvest.RightClickHarvestModInit;
-import net.nikdo53.moresnifferflowers.MoreSnifferFlowers;
 import net.nikdo53.moresnifferflowers.init.ModItems;
 import net.nikdo53.moresnifferflowers.init.ModTags;
 import net.minecraft.world.InteractionHand;
@@ -15,11 +14,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 
-@Mixin(targets = "io.github.jamalam360.rightclickharvest.RightClickHarvestModInit")
+@Mixin(RightClickHarvestModInit.class)
 public class RightClickHarvestModInitMixin {
-    @Inject(method = "onBlockUse(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/phys/BlockHitResult;Z)Lnet/minecraft/world/InteractionResult;", at = @At("HEAD"), cancellable = true, remap = false)
-    private static void moresnifferflowers$onBlockUse(Player player, Level level, InteractionHand hand, BlockHitResult hitResult, boolean initialCall, CallbackInfoReturnable<InteractionResult> cir) {
-        if(player.getItemInHand(hand).is(ModItems.JAR_OF_BONMEEL.get()) && level.getBlockState(hitResult.getBlockPos()).is(ModTags.ModBlockTags.BONMEELABLE)) {
+    @Inject(method = "onBlockUse(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/Level;Lnet/minecraft/world/InteractionHand;Lnet/minecraft/world/phys/BlockHitResult;Z)Lnet/minecraft/world/InteractionResult;", at = @At("HEAD"), cancellable = true, remap = true)
+    private static void moresnifferflowers$onBlockUse(Player player, Level world, InteractionHand hand, BlockHitResult hitResult, boolean initialCall, CallbackInfoReturnable<InteractionResult> cir) {
+        if(player.getItemInHand(hand).is(ModItems.JAR_OF_BONMEEL.get()) && world.getBlockState(hitResult.getBlockPos()).is(ModTags.ModBlockTags.BONMEELABLE)) {
             cir.setReturnValue(InteractionResult.PASS);
         }
     }

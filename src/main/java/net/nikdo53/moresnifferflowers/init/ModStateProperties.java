@@ -13,7 +13,7 @@ public class ModStateProperties {
     public static final BooleanProperty FLIPPED = BooleanProperty.create("flipped");
     public static final EnumProperty<DyeColor> COLOR = EnumProperty.create("color", DyeColor.class);
     public static final BooleanProperty SHEARED = BooleanProperty.create("sheared");
-    public static final BooleanProperty VIVICUS_TYPE = BooleanProperty.create("vivicus_type");
+    public static final BooleanProperty VIVICUS_CURED = BooleanProperty.create("vivicus_cured");
     public static final IntegerProperty LAYER = BlockStateProperties.LAYERS;
     public static final BooleanProperty CENTER = BooleanProperty.create("center");
     public static final BooleanProperty EMPTY = BooleanProperty.create("empty");

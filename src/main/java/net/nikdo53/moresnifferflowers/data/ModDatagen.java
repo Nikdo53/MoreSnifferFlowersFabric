@@ -18,9 +18,11 @@ public class ModDatagen implements DataGeneratorEntrypoint {
 
     @Override
     public void onInitializeDataGenerator(FabricDataGenerator gen) {
-        FabricDataGenerator.Pack pack = gen.createPack();
+        Pack pack = gen.createPack();
         ExistingFileHelper efh = ExistingFileHelper.withResourcesFromArg();
         ProviderProvider generator = new ProviderProvider(pack, efh);
+
+        RegistryDataGenerator datapackProvider = generator.addProvider(RegistryDataGenerator::new);
 
         generator.addProvider(ModAdvancementGenerator::new);
         generator.addProvider(ModItemModelProvider::new);
