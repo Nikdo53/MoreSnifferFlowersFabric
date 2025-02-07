@@ -3,6 +3,7 @@ package net.nikdo53.moresnifferflowers.init;
 import io.github.fabricators_of_create.porting_lib.util.LazyRegistrar;
 import io.github.fabricators_of_create.porting_lib.util.RegistryObject;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.*;
@@ -47,15 +48,15 @@ public class ModEntityTypes {
         return build(id, makeBuilder(factory, classification, width, height, 80, 3), fireproof, primary, secondary);
     }
 
-    private static <E extends Entity> RegistryObject<EntityType<E>> buildNoEgg(ResourceLocation id, EntityType.Builder<E> builder, boolean fireproof) {
+    private static <E extends Entity> RegistryObject<EntityType<E>> buildNoEgg(ResourceLocation id, FabricEntityTypeBuilder<E> builder, boolean fireproof) {
         if (fireproof) builder.fireImmune();
-        return ENTITIES.register(id.getPath(), () -> builder.build(id.toString()));
+        return ENTITIES.register(id.getPath(), builder::build);
     }
 
     @SuppressWarnings("unchecked")
-    private static <E extends Entity> RegistryObject<EntityType<E>> build(ResourceLocation id, EntityType.Builder<E> builder, boolean fireproof, int primary, int secondary) {
+    private static <E extends Entity> RegistryObject<EntityType<E>> build(ResourceLocation id, FabricEntityTypeBuilder<E> builder, boolean fireproof, int primary, int secondary) {
         if (fireproof) builder.fireImmune();
-        RegistryObject<EntityType<E>> ret = ENTITIES.register(id.getPath(), () -> builder.build(id.toString()));
+        RegistryObject<EntityType<E>> ret = ENTITIES.register(id.getPath(), builder::build);
         if (primary != 0 && secondary != 0) {
             ModItems.ITEMS.register(id.getPath() + "_spawn_egg", () -> new SpawnEggItem((EntityType<? extends Mob>) ret.get(), primary, secondary, new Item.Properties()));
         }
@@ -63,15 +64,15 @@ public class ModEntityTypes {
         return ret;
     }
 
-    private static <E extends Entity> EntityType.Builder<E> makeCastedBuilder(@SuppressWarnings("unused") Class<E> cast, EntityType.EntityFactory<E> factory, float width, float height, int range, int interval) {
+    private static <E extends Entity> FabricEntityTypeBuilder<E> makeCastedBuilder(@SuppressWarnings("unused") Class<E> cast, EntityType.EntityFactory<E> factory, float width, float height, int range, int interval) {
         return makeBuilder(factory, MobCategory.MISC, width, height, range, interval);
     }
 
-    private static <E extends Entity> EntityType.Builder<E> makeBuilder(EntityType.EntityFactory<E> factory, MobCategory classification, float width, float height, int range, int interval) {
-        return EntityType.Builder.of(factory, classification).
-                sized(width, height).
-                clientTrackingRange(range).
-                updateInterval(interval);
+    private static <E extends Entity> FabricEntityTypeBuilder<E> makeBuilder(EntityType.EntityFactory<E> factory, MobCategory classification, float width, float height, int range, int interval) {
+        return FabricEntityTypeBuilder.create(classification, factory).
+                dimensions(EntityDimensions.fixed(width, height)).
+                trackRangeChunks(range).
+                trackedUpdateRate(interval);
     }
 
     public static void init() {
