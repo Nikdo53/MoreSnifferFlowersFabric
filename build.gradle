@@ -80,10 +80,10 @@ dependencies {
 
 	modImplementation("mezz.jei:jei-${minecraft_version}-fabric:${jei_version}")
 
-	def portingLibs = [ "attributes", "base", "blocks", "brewing", "client_events", "common", "core", "data", "entity", "extensions", "gui_utils", "items", "lazy_registration", "level_events", "loot", "mixin_extensions", "model_generators", "model_loader", "model_materials", "models", "networking", "obj_loader", "recipe_book_categories", "registries", "tags", "tool_actions", "utility"]
-	for (final def lib in portingLibs) {
-		modImplementation(include("io.github.fabricators_of_create.Porting-Lib:$lib:${property("porting_lib_version")}"))
+	for (String module in port_lib_modules_min.split(",")) {
+		modApi(include("io.github.fabricators_of_create.Porting-Lib:$module:$porting_lib_version"))
 	}
+
 
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
@@ -110,7 +110,7 @@ java {
 	// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
 	// if it is present.
 	// If you remove this line, sources will not be generated.
-	withSourcesJar()
+	// withSourcesJar()
 
 	sourceCompatibility = JavaVersion.VERSION_17
 	targetCompatibility = JavaVersion.VERSION_17
