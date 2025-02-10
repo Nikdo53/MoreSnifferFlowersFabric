@@ -104,6 +104,7 @@ public class ModCreativeTabs {
 
                 output.accept(ModBlocks.DECAYED_LOG.get());
                 output.accept(ModBlocks.CORRUPTED_GRASS_BLOCK.get());
+                output.accept(ModBlocks.CURED_GRASS_BLOCK.get());
 
                 output.accept(ModBlocks.VIVICUS_LOG.get());
                 output.accept(ModBlocks.VIVICUS_WOOD.get());
