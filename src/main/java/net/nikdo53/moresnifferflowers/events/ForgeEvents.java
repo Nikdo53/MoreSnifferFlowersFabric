@@ -94,17 +94,11 @@ public class ForgeEvents {
             Direction.Plane.HORIZONTAL.forEach(direction -> {
                 BlockPos blockPos = entity.center.relative(direction);
 
-                breakEvent.getLevel().destroyBlock(blockPos, true);
+                if (breakEvent.getLevel().getBlockState(blockPos).is(ModTags.ModBlockTags.GIANT_CROPS)) breakEvent.getLevel().destroyBlock(blockPos, true);
             });
 
             breakEvent.getLevel().destroyBlock(entity.center, true);
         }
     }
-
- /*   public static void onGetAdvancement(AdvancementEvent.AdvancementEarnEvent event) {
-        if(event.getAdvancement().getId().equals(ResourceLocation.tryParse("husbandry/obtain_sniffer_egg")) && event.getEntity() instanceof ServerPlayer serverPlayer) {
-            ModAdvancementCritters.EARN_SNIFFER_ADVANCEMENT.trigger(serverPlayer);
-        }
-    }*/
 
 }

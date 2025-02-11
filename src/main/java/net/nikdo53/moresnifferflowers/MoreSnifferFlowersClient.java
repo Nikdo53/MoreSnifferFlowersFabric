@@ -31,10 +31,7 @@ import net.nikdo53.moresnifferflowers.client.model.block.GiantCropModels;
 import net.nikdo53.moresnifferflowers.client.model.entity.BoblingModel;
 import net.nikdo53.moresnifferflowers.client.model.entity.CorruptedProjectileModel;
 import net.nikdo53.moresnifferflowers.client.model.entity.DragonflyModel;
-import net.nikdo53.moresnifferflowers.client.particle.AmbushParticle;
-import net.nikdo53.moresnifferflowers.client.particle.CarrotParticle;
-import net.nikdo53.moresnifferflowers.client.particle.FlyParticle;
-import net.nikdo53.moresnifferflowers.client.particle.GiantCropParticle;
+import net.nikdo53.moresnifferflowers.client.particle.*;
 import net.nikdo53.moresnifferflowers.client.renderer.block.*;
 import net.nikdo53.moresnifferflowers.client.renderer.entity.BoblingRenderer;
 import net.nikdo53.moresnifferflowers.client.renderer.entity.CorruptedProjectileRenderer;
@@ -139,6 +136,14 @@ public class MoreSnifferFlowersClient implements ClientModInitializer {
         ParticleFactoryRegistry.getInstance().register(ModParticles.AMBUSH.get(), AmbushParticle.Provider::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.GARBUSH.get(), AmbushParticle.Provider::new);
         ParticleFactoryRegistry.getInstance().register(ModParticles.GIANT_CROP.get(), GiantCropParticle.Provider::new);
+
+        ParticleFactoryRegistry.getInstance().register(ModParticles.BONDRIPIA_DRIP.get(), BondripiaParticle.BondripiaDripProvider::new);
+        ParticleFactoryRegistry.getInstance().register(ModParticles.BONDRIPIA_FALL.get(), BondripiaParticle.BondripiaFallProvider::new);
+        ParticleFactoryRegistry.getInstance().register(ModParticles.BONDRIPIA_LAND.get(), BondripiaParticle.BondripiaLandProvider::new);
+        ParticleFactoryRegistry.getInstance().register(ModParticles.ACIDRIPIA_DRIP.get(), BondripiaParticle.AcidripiaDripProvider::new);
+        ParticleFactoryRegistry.getInstance().register(ModParticles.ACIDRIPIA_FALL.get(), BondripiaParticle.AcidripiaFallProvider::new);
+        ParticleFactoryRegistry.getInstance().register(ModParticles.ACIDRIPIA_LAND.get(), BondripiaParticle.AcidripiaLandProvider::new);
+
     }
 
     public static void addPackFinders(AddPackFindersEvent event) {
