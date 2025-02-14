@@ -6,23 +6,20 @@ import mezz.jei.api.registration.IGuiHandlerRegistration;
 import mezz.jei.api.registration.IRecipeCatalystRegistration;
 import mezz.jei.api.registration.IRecipeCategoryRegistration;
 import mezz.jei.api.registration.IRecipeRegistration;
+import net.minecraft.client.Minecraft;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.crafting.RecipeManager;
 import net.nikdo53.moresnifferflowers.MoreSnifferFlowers;
 import net.nikdo53.moresnifferflowers.client.gui.screen.RebrewingStandScreen;
-import net.nikdo53.moresnifferflowers.compat.jei.corruption.CorruptionCategory;
 import net.nikdo53.moresnifferflowers.compat.jei.cropressing.CropressingRecipeCategory;
 import net.nikdo53.moresnifferflowers.compat.jei.rebrewing.JeiRebrewingRecipe;
 import net.nikdo53.moresnifferflowers.compat.jei.rebrewing.RebrewingCategory;
 import net.nikdo53.moresnifferflowers.init.ModItems;
 import net.nikdo53.moresnifferflowers.init.ModRecipeTypes;
 import net.nikdo53.moresnifferflowers.recipes.CropressingRecipe;
-import net.minecraft.client.Minecraft;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraft.world.level.block.Block;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @JeiPlugin
 public class MoreSnifferFlowersJEIPlugin implements IModPlugin {
