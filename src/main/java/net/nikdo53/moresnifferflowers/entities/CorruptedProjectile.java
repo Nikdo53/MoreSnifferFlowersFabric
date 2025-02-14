@@ -1,14 +1,12 @@
 package net.nikdo53.moresnifferflowers.entities;
 
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.Blocks;
 import net.nikdo53.moresnifferflowers.blocks.Corruptable;
-import net.nikdo53.moresnifferflowers.init.ModBlocks;
-import net.nikdo53.moresnifferflowers.init.ModEntityTypes;
-import net.nikdo53.moresnifferflowers.init.ModItems;
-import net.nikdo53.moresnifferflowers.init.ModStateProperties;
+import net.nikdo53.moresnifferflowers.init.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ItemParticleOption;
@@ -142,6 +140,10 @@ public class CorruptedProjectile extends ThrowableItemProjectile {
                     corruptable.onCorrupt(level, blockPos, level.getBlockState(blockPos), block);
                 } else {
                     level.setBlockAndUpdate(blockPos, block.withPropertiesOf(state));
+                }
+
+                if (level.getNearestPlayer(this, 15) instanceof ServerPlayer serverPlayer) {
+                    ModAdvancementCritters.CORRUPTED_BLOCK.trigger(serverPlayer);
                 }
 
                 state.getShape(level, blockPos).forAllBoxes((minX, minY, minZ, maxX, maxY, maxZ) -> {
