@@ -61,7 +61,7 @@ public class ForgeEvents {
 
         if(item.getItem() instanceof JarOfBonmeelItem item2 && block.is(ModTags.ModBlockTags.BONMEELABLE)) {
             item2.useOn(new UseOnContext(player, interactionHand, blockHitResult));
-            player.setItemInHand(interactionHand, ItemUtils.createFilledResult(item, player, new ItemStack(Items.GLASS_BOTTLE)));
+            player.setItemInHand(interactionHand, ItemUtils.createFilledResult(player.getItemInHand(interactionHand), player, new ItemStack(Items.GLASS_BOTTLE)));
             return InteractionResult.SUCCESS;
         } else
         if((item.is(ModItems.REBREWED_POTION.get()) || item.is(ModItems.EXTRACTED_BOTTLE.get())) && block.is(Blocks.DIRT)) {
