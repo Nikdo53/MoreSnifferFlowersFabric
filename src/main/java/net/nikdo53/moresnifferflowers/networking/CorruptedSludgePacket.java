@@ -6,10 +6,8 @@ import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.multiplayer.ClientPacketListener;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
 
@@ -53,7 +51,6 @@ public class CorruptedSludgePacket implements S2CPacket {
                 assert level != null;
                 if (level.isClientSide()) {
                     float distance = message.start.distance(message.target);
-
                     for (int i = 0; i < 15; i++) {
                         double progress = (double) i / 15;
                         Vector3f pos = new Vector3f(message.start).add(new Vector3f(message.direction).mul((float) (distance * progress)));

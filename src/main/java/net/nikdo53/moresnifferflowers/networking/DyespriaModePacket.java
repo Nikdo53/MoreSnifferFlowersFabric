@@ -3,12 +3,11 @@ package net.nikdo53.moresnifferflowers.networking;
 import me.pepperbell.simplenetworking.C2SPacket;
 import me.pepperbell.simplenetworking.SimpleChannel;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
-import net.minecraft.client.Minecraft;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.server.network.ServerGamePacketListenerImpl;
 import net.nikdo53.moresnifferflowers.items.DyespriaItem;
-import net.minecraft.network.FriendlyByteBuf;
 
 import java.util.concurrent.Executor;
 
@@ -25,26 +24,25 @@ public class DyespriaModePacket implements C2SPacket {
     }
 
     public void encode(FriendlyByteBuf buf) {
-        buf.writeInt(amount);
+        buf.writeInt(this.amount);
     }
 
     @Override
     public void handle(MinecraftServer server, ServerPlayer player, ServerGamePacketListenerImpl listener, PacketSender responseSender, SimpleChannel channel) {
-        DyespriaModePacket.Handler.onMessage(this, server);
+        Handler.onMessage(this, server, player);
 
     }
 
     public static class Handler {
-        public static boolean onMessage(DyespriaModePacket message, Executor executor) {
+        public static boolean onMessage(DyespriaModePacket message, Executor executor, ServerPlayer player) {
             executor.execute(() -> {
-                var player = Minecraft.getInstance().player;
-                assert player != null;
                 var stack = player.getMainHandItem();
+
                 if (stack.getItem() instanceof DyespriaItem dyespriaItem) {
                     dyespriaItem.changeMode(player, stack, message.amount);
                 }
             });
-            return false;
+            return true;
         }
     }
 

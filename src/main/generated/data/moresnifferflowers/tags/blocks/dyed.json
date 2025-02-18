@@ -1,5 +1,7 @@
 {
   "values": [
+    "#forge:stained_glass_panes",
+    "#forge:stained_glass",
     "minecraft:white_wool",
     "minecraft:white_carpet",
     "minecraft:white_terracotta",

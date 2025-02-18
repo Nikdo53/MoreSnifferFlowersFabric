@@ -1,15 +1,6 @@
 package net.nikdo53.moresnifferflowers.items;
 
 import com.google.common.collect.Maps;
-import net.minecraft.client.player.LocalPlayer;
-import net.nikdo53.moresnifferflowers.blockentities.DyespriaPlantBlockEntity;
-import net.nikdo53.moresnifferflowers.components.Colorable;
-import net.nikdo53.moresnifferflowers.components.Dye;
-import net.nikdo53.moresnifferflowers.components.DyespriaMode;
-import net.nikdo53.moresnifferflowers.components.EntityDistanceComparator;
-import net.nikdo53.moresnifferflowers.init.ModBlocks;
-import net.nikdo53.moresnifferflowers.init.ModStateProperties;
-import net.nikdo53.moresnifferflowers.init.ModTags;
 import net.minecraft.ChatFormatting;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
@@ -18,6 +9,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.TagKey;
 import net.minecraft.util.Mth;
@@ -39,9 +31,14 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.phys.BlockHitResult;
-import net.nikdo53.moresnifferflowers.networking.DyespriaDisplayModeChangePacket;
-import net.nikdo53.moresnifferflowers.networking.DyespriaModePacket;
-import net.nikdo53.moresnifferflowers.networking.ModPacketHandler;
+import net.nikdo53.moresnifferflowers.blockentities.DyespriaPlantBlockEntity;
+import net.nikdo53.moresnifferflowers.components.Colorable;
+import net.nikdo53.moresnifferflowers.components.Dye;
+import net.nikdo53.moresnifferflowers.components.DyespriaMode;
+import net.nikdo53.moresnifferflowers.components.EntityDistanceComparator;
+import net.nikdo53.moresnifferflowers.init.ModBlocks;
+import net.nikdo53.moresnifferflowers.init.ModStateProperties;
+import net.nikdo53.moresnifferflowers.init.ModTags;
 import org.apache.commons.lang3.text.WordUtils;
 import org.jetbrains.annotations.Nullable;
 
@@ -346,7 +343,7 @@ public class DyespriaItem extends BlockItem implements Colorable {
         return baseText.append(modeText);
     }
     
-    public void changeMode(LocalPlayer player, ItemStack stack, int amount) {
+    public void changeMode(ServerPlayer player, ItemStack stack, int amount) {
         var currentMode = getMode(stack);
         var newMode = DyespriaMode.shift(currentMode, amount);
         var tag = stack.getOrCreateTag();

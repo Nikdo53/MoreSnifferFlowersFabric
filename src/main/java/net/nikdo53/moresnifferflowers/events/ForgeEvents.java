@@ -20,6 +20,7 @@ import net.minecraft.world.item.ItemUtils;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.LayeredCauldronBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
@@ -36,7 +37,7 @@ import net.nikdo53.moresnifferflowers.items.JarOfBonmeelItem;
 
 public class ForgeEvents {
 
-    public static void init(){
+    public static void init() {
         LivingEntityEvents.LivingJumpEvent.JUMP.register(ForgeEvents::onLivingJump);
         UseBlockCallback.EVENT.register(ForgeEvents::onPlayerInteractRightClickItem);
         BlockEvents.BLOCK_BREAK.register(ForgeEvents::onBlockBreak);
@@ -49,71 +50,76 @@ public class ForgeEvents {
         Vec3 loc = livingEntity.position();
         BlockPos blockPos = BlockPos.containing(loc);
 
-        if(level.getBlockState(blockPos).is(ModBlocks.CORRUPTED_SLIME_LAYER.get()) || level.getBlockState(blockPos.below()).is(ModBlocks.CORRUPTED_SLIME_LAYER.get())) {
+        if (level.getBlockState(blockPos).is(ModBlocks.CORRUPTED_SLIME_LAYER.get()) || level.getBlockState(blockPos.below()).is(ModBlocks.CORRUPTED_SLIME_LAYER.get())) {
             livingEntity.setDeltaMovement(livingEntity.getDeltaMovement().multiply(1, 0.3, 1));
         }
     }
 
 
-    private static InteractionResult onPlayerInteractRightClickItem(Player player, Level level, InteractionHand interactionHand, BlockHitResult blockHitResult) {
-        var item = player.getItemInHand(interactionHand).getItem().getDefaultInstance();
-        var block = level.getBlockState(blockHitResult.getBlockPos());
+    private static InteractionResult onPlayerInteractRightClickItem(Player player, Level level, InteractionHand hand, BlockHitResult blockHitResult) {
+        ItemStack itemStack = player.getItemInHand(hand);
+        BlockPos pos = blockHitResult.getBlockPos();
+        var state = level.getBlockState(pos);
+        var item = player.getItemInHand(hand).getItem().getDefaultInstance();
 
-        if(item.getItem() instanceof JarOfBonmeelItem item2 && block.is(ModTags.ModBlockTags.BONMEELABLE)) {
-            item2.useOn(new UseOnContext(player, interactionHand, blockHitResult));
-            player.setItemInHand(interactionHand, ItemUtils.createFilledResult(player.getItemInHand(interactionHand), player, new ItemStack(Items.GLASS_BOTTLE)));
-            return InteractionResult.SUCCESS;
-        } else
-        if((item.is(ModItems.REBREWED_POTION.get()) || item.is(ModItems.EXTRACTED_BOTTLE.get())) && block.is(Blocks.DIRT)) {
+
+        if (item.getItem() instanceof JarOfBonmeelItem item2 && state.is(ModTags.ModBlockTags.BONMEELABLE)) {
+            return (item2.useOn(new UseOnContext(player, hand, blockHitResult)));
+
+        } else if ((item.is(ModItems.REBREWED_POTION.get()) || item.is(ModItems.EXTRACTED_BOTTLE.get())) && state.is(Blocks.DIRT)) {
             return InteractionResult.FAIL;
-        } else
-        if(item.is(ItemTags.AXES) && (block.is(ModBlocks.VIVICUS_LOG.get()) || block.is(ModBlocks.VIVICUS_WOOD.get()))) {
-            var strippedBlock = AxeItem.STRIPPABLES.get(block.getBlock());
-            var state = strippedBlock.defaultBlockState()
-                    .setValue(RotatedPillarBlock.AXIS, block.getValue(RotatedPillarBlock.AXIS))
-                    .setValue(ModStateProperties.COLOR, block.getValue(ModStateProperties.COLOR));
+        } else {
+            if (item.is(ItemTags.AXES) && (state.is(ModBlocks.VIVICUS_LOG.get()) || state.is(ModBlocks.VIVICUS_WOOD.get()))) {
+                var strippedBlock = AxeItem.STRIPPABLES.get(state.getBlock());
+                var state1 = strippedBlock.defaultBlockState()
+                        .setValue(RotatedPillarBlock.AXIS, state.getValue(RotatedPillarBlock.AXIS))
+                        .setValue(ModStateProperties.COLOR, state.getValue(ModStateProperties.COLOR));
 
-            if (player instanceof ServerPlayer serverPlayer) {
-                CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(serverPlayer, blockHitResult.getBlockPos(), item);
+                if (player instanceof ServerPlayer serverPlayer) {
+                    CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger(serverPlayer, pos, item);
+                }
+
+                level.playSound(player, pos, SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
+
+                level.setBlock(pos, state1, 3);
+                level.gameEvent(GameEvent.BLOCK_CHANGE, pos, GameEvent.Context.of(player, state1));
+                itemStack.hurtAndBreak(1, player, player1 -> {
+                    player1.broadcastBreakEvent(player1.getUsedItemHand());
+                });
+
+                return InteractionResult.SUCCESS;
+
+            } else if (((item.is(ModItems.JAR_OF_BONMEEL.get()) || item.is(ModItems.JAR_OF_ACID.get())) && state.is(Blocks.CAULDRON))) {
+                var cauldronType = item.is(ModItems.JAR_OF_BONMEEL.get()) ? ModBlocks.BONMEEL_FILLED_CAULDRON.get() : ModBlocks.ACID_FILLED_CAULDRON.get();
+                var state1 = cauldronType.defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, 3);
+                level.setBlock(pos, state1, 3);
+                level.playSound(null, pos, SoundEvents.BOTTLE_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
+                level.gameEvent(null, GameEvent.FLUID_PLACE, pos);
+                player.setItemInHand(hand, ItemUtils.createFilledResult(itemStack, player, new ItemStack(Items.GLASS_BOTTLE)));
+                return InteractionResult.SUCCESS;
             }
-
-            level.playSound(player, blockHitResult.getBlockPos(), SoundEvents.AXE_STRIP, SoundSource.BLOCKS, 1.0F, 1.0F);
-
-            level.setBlock(blockHitResult.getBlockPos(), state, 3);
-            level.gameEvent(GameEvent.BLOCK_CHANGE, blockHitResult.getBlockPos(), GameEvent.Context.of(player, state));
-            player.getItemInHand(interactionHand).hurtAndBreak(1, player, player2 -> {
-                player2.broadcastBreakEvent(player2.getUsedItemHand());
-            });
-
-            return InteractionResult.SUCCESS;
-
-        } else
-        if (((item.is(ModItems.JAR_OF_BONMEEL.get()) || item.is(ModItems.JAR_OF_ACID.get())) && block.is(Blocks.CAULDRON))){
-            var cauldronType = item.is(ModItems.JAR_OF_BONMEEL.get()) ? ModBlocks.BONMEEL_FILLED_CAULDRON.get() :  ModBlocks.ACID_FILLED_CAULDRON.get();
-            var state = cauldronType.defaultBlockState().setValue(LayeredCauldronBlock.LEVEL, 3);
-            level.setBlock(blockHitResult.getBlockPos(), state, 3);
-            player.setItemInHand(interactionHand, ItemUtils.createFilledResult(player.getItemInHand(interactionHand), player, new ItemStack(Items.GLASS_BOTTLE)));
-            return InteractionResult.SUCCESS;
         }
         return InteractionResult.PASS;
     }
 
     private static void onBlockBreak(BlockEvents.BreakEvent breakEvent) {
+        LevelAccessor level = breakEvent.getLevel();
+        BlockPos pos = breakEvent.getPos();
 
-        if(breakEvent.getLevel().getBlockEntity(breakEvent.getPos()) instanceof GiantCropBlockEntity entity) {
+        if(level.getBlockEntity(pos) instanceof GiantCropBlockEntity entity) {
             BlockPos.withinManhattanStream(entity.center, 1, 1, 1).forEach(blockPos -> {
-                breakEvent.getLevel().destroyBlock(blockPos, true);
+                level.destroyBlock(blockPos, true);
             });
         }
         
-        if (breakEvent.getLevel().getBlockEntity(breakEvent.getPos()) instanceof BondripiaBlockEntity entity) {
+        if (level.getBlockEntity(pos) instanceof BondripiaBlockEntity entity) {
             Direction.Plane.HORIZONTAL.forEach(direction -> {
                 BlockPos blockPos = entity.center.relative(direction);
 
-                if (breakEvent.getLevel().getBlockState(blockPos).is(ModTags.ModBlockTags.GIANT_CROPS)) breakEvent.getLevel().destroyBlock(blockPos, true);
+                if (level.getBlockState(blockPos).is(ModTags.ModBlockTags.GIANT_CROPS)) level.destroyBlock(blockPos, true);
             });
 
-            breakEvent.getLevel().destroyBlock(entity.center, true);
+            level.destroyBlock(entity.center, true);
         }
     }
 
