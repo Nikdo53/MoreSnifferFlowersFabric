@@ -29,6 +29,7 @@ import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.ShulkerBoxBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -221,11 +222,14 @@ public class DyespriaItem extends BlockItem implements Colorable {
         String modId = location.getNamespace();
         String blockId = location.getPath();
 
-        if(blockId.equals("candle") || blockId.equals("shulker_box")) {
+        if(blockId.equals("candle") || blockId.equals("shulker_box") || blockId.equals("terracotta")) {
             blockId = "white_" + blockId;
         }
+        if (blockId.equals("glass") || blockId.equals("glass_pane") ){
+            blockId = "white_stained_" + blockId;
+        }
 
-        String validColorName = "(?:white|light_gray|gray|black|brown|red|orange|yellow|lime|green|cyan|light_blue|blue|purple|magenta|pink)";
+        String validColorName = "white|light_gray|gray|black|brown|red|orange|yellow|lime|green|cyan|light_blue|blue|purple|magenta|pink";
         String finalBlockName = blockId.replaceFirst(validColorName, newColor.getName());
         Block finalBlock = BuiltInRegistries.BLOCK.get(new ResourceLocation(modId, finalBlockName));
         BlockState finalBlockState = finalBlock.defaultBlockState();
@@ -237,7 +241,7 @@ public class DyespriaItem extends BlockItem implements Colorable {
             shulkerData = entity.saveWithoutMetadata();
         }
 
-        level.setBlockAndUpdate(blockPos, copyAllBlockStateProperties(blockState, finalBlockState));
+        if (finalBlock != Blocks.AIR) level.setBlockAndUpdate(blockPos, copyAllBlockStateProperties(blockState, finalBlockState));
 
         if (shulkerData != null && level.getBlockEntity(blockPos) instanceof ShulkerBoxBlockEntity newShulkerBox) {
             newShulkerBox.loadFromTag(shulkerData);
