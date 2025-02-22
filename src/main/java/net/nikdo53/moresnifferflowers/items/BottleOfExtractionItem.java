@@ -1,7 +1,5 @@
 package net.nikdo53.moresnifferflowers.items;
 
-import net.nikdo53.moresnifferflowers.init.ModItems;
-import net.nikdo53.moresnifferflowers.init.ModMobEffects;
 import net.minecraft.ChatFormatting;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.network.chat.Component;
@@ -17,6 +15,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.UseAnim;
 import net.minecraft.world.item.alchemy.PotionUtils;
 import net.minecraft.world.level.Level;
+import net.nikdo53.moresnifferflowers.init.ModItems;
+import net.nikdo53.moresnifferflowers.init.ModMobEffects;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -76,6 +76,6 @@ public class BottleOfExtractionItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack pStack, @Nullable Level pLevel, List<Component> pTooltipComponents, TooltipFlag pIsAdvanced) {
-        pTooltipComponents.add(Component.translatableWithFallback("bottle_of_extraction.tooltip.usage", "Drink to extract all effects into single potion").withStyle(ChatFormatting.GOLD));
+        pTooltipComponents.add(Component.translatableWithFallback("tooltip.bottle_of_extraction.usage", "Drink to extract all effects into single potion").withStyle(ChatFormatting.GOLD));
     }
 }
