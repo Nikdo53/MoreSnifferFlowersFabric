@@ -5,10 +5,14 @@
 	"mixins": [
 		"AgeableMobMixin",
 		"FarmBlockMixin",
-		"SpriteResourceLoaderMixin",
-		"ThrownPotionMixin",
+		"RightClickHarvestModInitMixin",
 		"SnifferEggMixin",
-		"RightClickHarvestModInitMixin"
+		"ThrownPotionMixin"
+	],
+	"client": [
+		"SpriteResourceLoaderMixin",
+		"accessor.PalettedPermutationsAccessor",
+		"accessor.SpriteResourceLoaderAccessor"
 	],
 	"injectors": {
 		"defaultRequire": 1
