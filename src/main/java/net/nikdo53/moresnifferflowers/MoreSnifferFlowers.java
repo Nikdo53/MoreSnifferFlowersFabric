@@ -11,6 +11,7 @@ import net.minecraft.world.level.block.ComposterBlock;
 import net.minecraft.world.level.block.FireBlock;
 import net.nikdo53.moresnifferflowers.events.ForgeEvents;
 import net.nikdo53.moresnifferflowers.init.*;
+import net.nikdo53.moresnifferflowers.lootmodifers.LoottableEvents;
 import net.nikdo53.moresnifferflowers.networking.ModPacketHandler;
 import net.nikdo53.moresnifferflowers.worldgen.configurations.ModTrunkPlacerTypes;
 import net.nikdo53.moresnifferflowers.worldgen.feature.ModFeatures;
@@ -40,12 +41,12 @@ public class MoreSnifferFlowers implements ModInitializer {
 		ModTrunkPlacerTypes.TRUNKS.register();
 		ModRecipeTypes.RECIPE_TYPES.register();
 		ModBlockEntities.BLOCK_ENTITIES.register();
-		ModLootModifiers.LOOT_MODIFIERS.register();
 		ModStructureTypes.STRUCTURE_PIECE.register();
 		ModBannerPatterns.BANNER_PATTERNS.register();
 		ModRecipeSerializers.RECIPE_SERIALIZERS.register();
 		ModEntityTypes.init();
 		ModAdvancementCritters.init();
+		LoottableEvents.modifyVanillaLootTables();
 
 		ModCauldronInteractions.bootstrap();
 		init();
